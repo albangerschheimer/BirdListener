@@ -20,3 +20,7 @@ Démarré le 27/10/2026. Budget : 98 $, 7 jours maximum. Estimation : 2 à 3 jou
 - **27/10, après-midi** : réseau débloqué. BirdNET tourne à ~30x le temps réel par processeur.
   Pipeline complet en place (`scripts/pipeline.sh`) : métadonnées → sélection → empreintes → entraînement.
   Premier essai sur 15 espèces : 92 % de bonnes réponses sur des auteurs jamais entendus.
+- **27/10, 18 h** : le conteneur cloud s'endort quand aucune tâche n'est suivie par la session ;
+  les calculs sont maintenant lancés comme tâches suivies, et tout reprend où ça s'était arrêté.
+  Application web locale prête (`python app.py`), et script de comparaison avec BirdNET.
+  Essai sur 81 espèces (4 passes seulement) : BirdListener 71 %, BirdNET seul 68,5 %.
