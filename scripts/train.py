@@ -137,8 +137,17 @@ def main(nom="birdlistener", epoques=40):
     opt = torch.optim.AdamW(modele.parameters(), lr=1e-3, weight_decay=1e-2)
     pas_par_epoque = len(part["train"]) // 128 + 1
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, 1e-3, total_steps=epoques * pas_par_epoque)
-    meilleur, etat = -1, None
-    for ep in range(epoques):
+    meilleur, etat, debut = -1, None, 0
+    # Reprise après une interruption (les tâches de la session cloud sont limitées à 2 h)
+    reprise = RACINE / "models" / f"{nom}_reprise.pt"
+    if reprise.exists():
+        r = torch.load(reprise, weights_only=False)
+        modele.load_state_dict(r["modele"])
+        opt.load_state_dict(r["opt"])
+        sched.load_state_dict(r["sched"])
+        meilleur, etat, debut = r["meilleur"], r["etat"], r["epoque"]
+        print(f"reprise à l'époque {debut + 1}", flush=True)
+    for ep in range(debut, epoques):
         modele.train()
         t, perte_tot = time.time(), 0
         for _ in range(pas_par_epoque):
@@ -161,6 +170,9 @@ def main(nom="birdlistener", epoques=40):
               f"validation top-1 {ev['top1']:.3f}, top-5 {ev['top5']:.3f} ({time.time() - t:.0f} s)", flush=True)
         if ev["top1_moyen_par_espece"] > meilleur:
             meilleur, etat = ev["top1_moyen_par_espece"], {k: v.clone() for k, v in modele.state_dict().items()}
+        (RACINE / "models").mkdir(exist_ok=True)
+        torch.save({"modele": modele.state_dict(), "opt": opt.state_dict(), "sched": sched.state_dict(),
+                    "meilleur": meilleur, "etat": etat, "epoque": ep + 1}, reprise)
 
     modele.load_state_dict(etat)
     test = evaluer(modele, X, y, part["test"], especes)
@@ -171,7 +183,8 @@ def main(nom="birdlistener", epoques=40):
     json.dump({"test": test, "especes": len(especes), "repartition": {k: len(v) for k, v in part.items()},
                "test_ids": [lignes[i]["id"] for i in part["test"]]},
               open(RACINE / "models" / f"{nom}_eval.json", "w"), ensure_ascii=False, indent=1)
+    reprise.unlink()
 
 
 if __name__ == "__main__":
-    main(*sys.argv[1:2])
+    main(sys.argv[1] if len(sys.argv) > 1 else "birdlistener", int(sys.argv[2]) if len(sys.argv) > 2 else 30)
