@@ -11,6 +11,10 @@ from pathlib import Path
 import pandas as pd
 
 RACINE = Path(__file__).resolve().parents[1]
+# Espèces regroupées ou renommées par IOC, introuvables autrement
+SYNONYMES = {"Acanthis cabaret": "Acanthis flammea", "Acanthis hornemanni": "Acanthis flammea",
+             "Accipiter gentilis": "Astur gentilis", "Acrocephalus baeticatus": "Acrocephalus scirpaceus",
+             "Curruca minula": "Curruca curruca"}
 
 
 def main():
@@ -20,11 +24,27 @@ def main():
     ioc["Family"] = ioc["Family"].ffill()
     ioc["Order"] = ioc["Order"].ffill()
     infos = {r["IOC_15.2"]: r for _, r in ioc.iterrows()}
+    par_anglais = {str(r["English"]).lower(): r for _, r in ioc.iterrows() if pd.notna(r["English"])}
+
+    # Nom anglais xeno-canto de chaque espèce, pour rattraper les changements de genre
+    # (ex. Accipiter gentilis chez xeno-canto = Astur gentilis chez IOC)
+    anglais = {}
+    for fichier in (RACINE / "data" / "metadata").glob("xc_*.jsonl"):
+        for ligne in fichier.open(encoding="utf-8"):
+            try:
+                r = json.loads(ligne)
+            except json.JSONDecodeError:
+                continue
+            anglais.setdefault(f"{r['gen']} {r['sp']}", (r.get("en") or "").lower())
 
     compte = Counter(r["espece"] for r in csv.DictReader(open(RACINE / "data" / "selection.csv", encoding="utf-8")))
     table, sans_nom = {}, []
     for espece, n in sorted(compte.items()):
         r = infos.get(espece)
+        if r is None:
+            r = par_anglais.get(anglais.get(espece, ""))
+        if r is None and espece in SYNONYMES:
+            r = infos.get(SYNONYMES[espece])
         if r is None:
             sans_nom.append(espece)
         texte = lambda c: str(r[c]) if r is not None and pd.notna(r[c]) else ""  # noqa: E731
