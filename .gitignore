@@ -7,3 +7,7 @@ data/cache/
 __pycache__/
 .venv/
 .env
+data/models/
+data/emb/
+data/logs/
+data/metadata/
