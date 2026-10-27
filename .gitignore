@@ -11,3 +11,4 @@ data/models/
 data/emb/
 data/logs/
 data/metadata/
+models/*.pt
