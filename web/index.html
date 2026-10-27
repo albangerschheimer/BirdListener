@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BirdListener</title>
+<style>
+  :root {
+    --fond: #f6f4ee; --carte: #ffffff; --texte: #1d2320; --doux: #5f6b64; --trait: #e2ded3;
+    --accent: #2f6b4f; --accent-texte: #ffffff; --barre: #cfe3d6; --alerte: #a8432f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --fond: #141816; --carte: #1d2320; --texte: #e8ece9; --doux: #9aa7a0; --trait: #2c3430;
+      --accent: #6fbf94; --accent-texte: #0f1712; --barre: #2b4a3a; --alerte: #e08a76;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fond); color: var(--texte);
+         font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 28px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .sous-titre { color: var(--doux); margin: 0 0 24px; }
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  button, label.bouton { appearance: none; border: 1px solid var(--trait); background: var(--carte);
+         color: var(--texte); padding: 12px 18px; border-radius: 10px; font: inherit; cursor: pointer; }
+  button.principal { background: var(--accent); color: var(--accent-texte); border-color: var(--accent); }
+  button.enregistre { background: var(--alerte); border-color: var(--alerte); color: #fff; }
+  input[type=file] { display: none; }
+  .zone { border: 2px dashed var(--trait); border-radius: 12px; padding: 20px; text-align: center;
+          color: var(--doux); margin-bottom: 24px; }
+  .zone.survol { border-color: var(--accent); color: var(--texte); }
+  .etat { color: var(--doux); min-height: 24px; margin-bottom: 8px; }
+  .resultat { display: grid; gap: 12px; }
+  .espece { display: grid; grid-template-columns: 72px 1fr; gap: 14px; align-items: center;
+            background: var(--carte); border: 1px solid var(--trait); border-radius: 12px; padding: 12px; }
+  .espece img, .espece .vide { width: 72px; height: 72px; border-radius: 8px; object-fit: cover; background: var(--trait); }
+  .nom { font-weight: 600; font-size: 18px; }
+  .sci { color: var(--doux); font-style: italic; font-size: 14px; }
+  .jauge { height: 8px; background: var(--trait); border-radius: 4px; margin-top: 6px; overflow: hidden; }
+  .jauge > div { height: 100%; background: var(--accent); }
+  .pct { font-variant-numeric: tabular-nums; color: var(--doux); font-size: 14px; }
+  .type { margin: 4px 0 16px; }
+  .frise { display: flex; gap: 2px; flex-wrap: wrap; margin-top: 16px; }
+  .frise span { font-size: 12px; padding: 2px 6px; border-radius: 4px; background: var(--barre); }
+  footer { color: var(--doux); font-size: 13px; margin-top: 40px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>BirdListener</h1>
+  <p class="sous-titre">Quel oiseau chante ? Enregistre-le ou dépose un fichier audio.</p>
+
+  <div class="actions">
+    <button id="micro" class="principal">🎙️ Enregistrer</button>
+    <label class="bouton" for="fichier">📁 Choisir un fichier</label>
+    <input id="fichier" type="file" accept="audio/*,video/*">
+  </div>
+  <div id="zone" class="zone">… ou glisse un fichier audio ici (mp3, wav, m4a, ogg…)</div>
+
+  <div id="etat" class="etat"></div>
+  <div id="resultat"></div>
+
+  <footer>
+    Oreille : BirdNET V2.4 (Cornell Lab / TU Chemnitz, CC BY-NC-SA 4.0). Classifieur BirdListener
+    entraîné sur les enregistrements de xeno-canto. Photos et descriptions : Wikipédia.
+  </footer>
+</main>
+<script>
+const FREQ = 48000;
+const etat = document.getElementById("etat");
+const resultat = document.getElementById("resultat");
+
+// Décode n'importe quel son lisible par le navigateur et le rééchantillonne en mono 48 kHz
+async function versSignal(tampon) {
+  const ctx = new AudioContext();
+  const audio = await ctx.decodeAudioData(tampon);
+  ctx.close();
+  const hors = new OfflineAudioContext(1, Math.ceil(audio.duration * FREQ), FREQ);
+  const src = hors.createBufferSource();
+  src.buffer = audio; src.connect(hors.destination); src.start();
+  return (await hors.startRendering()).getChannelData(0);
+}
+
+async function analyser(tampon) {
+  resultat.innerHTML = "";
+  etat.textContent = "J'écoute…";
+  try {
+    const signal = await versSignal(tampon);
+    const r = await fetch("/predire", { method: "POST", body: signal.buffer });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.erreur);
+    afficher(d);
+  } catch (e) {
+    etat.textContent = "Impossible d'analyser ce son : " + e.message;
+  }
+}
+
+function afficher(d) {
+  const c = d.chant;
+  const type = c > 0.65 ? "plutôt un chant" : c < 0.35 ? "plutôt un cri" : "chant ou cri, difficile à dire";
+  etat.textContent = `${d.duree} s analysées`;
+  resultat.innerHTML = `<p class="type">Type de son : <strong>${type}</strong></p><div class="resultat"></div>`;
+  const liste = resultat.querySelector(".resultat");
+  for (const e of d.especes) {
+    const div = document.createElement("div");
+    div.className = "espece";
+    const pct = Math.round(e.proba * 100);
+    div.innerHTML = `<div class="vide"></div><div><div class="nom"></div><div class="sci"></div>
+      <div class="jauge"><div style="width:${pct}%"></div></div><div class="pct">${pct} %</div></div>`;
+    div.querySelector(".nom").textContent = e.fr;
+    div.querySelector(".sci").textContent = `${e.scientifique} · ${e.famille}`;
+    liste.appendChild(div);
+    photo(e.scientifique, div.querySelector(".vide"));
+  }
+  if (d.frise.length > 1) {
+    const f = document.createElement("div");
+    f.className = "frise";
+    for (const t of d.frise) {
+      const s = document.createElement("span");
+      s.textContent = `${t.debut} s : ${t.espece.fr}`;
+      f.appendChild(s);
+    }
+    resultat.appendChild(f);
+  }
+}
+
+async function photo(sci, place) {
+  try {
+    const r = await fetch("https://fr.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(sci));
+    const d = await r.json();
+    if (d.thumbnail) {
+      const img = document.createElement("img");
+      img.src = d.thumbnail.source; img.alt = d.title;
+      place.replaceWith(img);
+    }
+  } catch (e) { /* pas de photo, tant pis */ }
+}
+
+document.getElementById("fichier").addEventListener("change", async (ev) => {
+  const f = ev.target.files[0];
+  if (f) analyser(await f.arrayBuffer());
+});
+
+const zone = document.getElementById("zone");
+zone.addEventListener("dragover", (e) => { e.preventDefault(); zone.classList.add("survol"); });
+zone.addEventListener("dragleave", () => zone.classList.remove("survol"));
+zone.addEventListener("drop", async (e) => {
+  e.preventDefault(); zone.classList.remove("survol");
+  const f = e.dataTransfer.files[0];
+  if (f) analyser(await f.arrayBuffer());
+});
+
+let enregistreur = null;
+const micro = document.getElementById("micro");
+micro.addEventListener("click", async () => {
+  if (enregistreur) { enregistreur.stop(); return; }
+  try {
+    const flux = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+    const morceaux = [];
+    enregistreur = new MediaRecorder(flux);
+    enregistreur.ondataavailable = (e) => morceaux.push(e.data);
+    enregistreur.onstop = async () => {
+      flux.getTracks().forEach((t) => t.stop());
+      enregistreur = null;
+      micro.textContent = "🎙️ Enregistrer"; micro.className = "principal";
+      analyser(await new Blob(morceaux).arrayBuffer());
+    };
+    enregistreur.start();
+    micro.textContent = "⏹️ Arrêter et analyser"; micro.className = "enregistre";
+    etat.textContent = "Enregistrement… approche-toi de l'oiseau, 5 à 30 s suffisent.";
+  } catch (e) {
+    etat.textContent = "Micro inaccessible : " + e.message;
+  }
+});
+</script>
+</body>
+</html>

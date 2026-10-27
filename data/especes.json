@@ -1,0 +1,905 @@
+{
+ "Acryllium vulturinum": {
+  "fr": "Pintade vulturine",
+  "en": "Vulturine Guineafowl",
+  "famille": "Numididae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 1
+ },
+ "Aix galericulata": {
+  "fr": "Canard mandarin",
+  "en": "Mandarin Duck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Aix sponsa": {
+  "fr": "Canard branchu",
+  "en": "Wood Duck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 14
+ },
+ "Alaudala heinei": {
+  "fr": "Alouette de Heine",
+  "en": "Turkestan Short-toed Lark",
+  "famille": "Alaudidae",
+  "ordre": "PASSERIFORMES",
+  "n_enregistrements": 2
+ },
+ "Alectoris barbara": {
+  "fr": "Perdrix gambra",
+  "en": "Barbary Partridge",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 27
+ },
+ "Alectoris chukar": {
+  "fr": "Perdrix choukar",
+  "en": "Chukar Partridge",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 54
+ },
+ "Alectoris graeca": {
+  "fr": "Perdrix bartavelle",
+  "en": "Rock Partridge",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 84
+ },
+ "Alectoris rufa": {
+  "fr": "Perdrix rouge",
+  "en": "Red-legged Partridge",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 120
+ },
+ "Alopochen aegyptiaca": {
+  "fr": "Ouette d’Égypte",
+  "en": "Egyptian Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Ammoperdix griseogularis": {
+  "fr": "Perdrix si-si",
+  "en": "See-see Partridge",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 2
+ },
+ "Anas acuta": {
+  "fr": "Canard pilet",
+  "en": "Northern Pintail",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Anas carolinensis": {
+  "fr": "Sarcelle à ailes vertes",
+  "en": "Green-winged Teal",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 1
+ },
+ "Anas crecca": {
+  "fr": "Sarcelle d’hiver",
+  "en": "Eurasian Teal",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Anas platyrhynchos": {
+  "fr": "Canard colvert",
+  "en": "Mallard",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Anser albifrons": {
+  "fr": "Oie rieuse",
+  "en": "Greater White-fronted Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Anser anser": {
+  "fr": "Oie cendrée",
+  "en": "Greylag Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Anser brachyrhynchus": {
+  "fr": "Oie à bec court",
+  "en": "Pink-footed Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Anser caerulescens": {
+  "fr": "Oie des neiges",
+  "en": "Snow Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 5
+ },
+ "Anser cygnoides": {
+  "fr": "Oie cygnoïde",
+  "en": "Swan Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 27
+ },
+ "Anser erythropus": {
+  "fr": "Oie naine",
+  "en": "Lesser White-fronted Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 52
+ },
+ "Anser fabalis": {
+  "fr": "Oie des moissons",
+  "en": "Taiga Bean Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Anser indicus": {
+  "fr": "Oie à tête barrée",
+  "en": "Bar-headed Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 25
+ },
+ "Anser rossii": {
+  "fr": "Oie de Ross",
+  "en": "Ross's Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 1
+ },
+ "Anser serrirostris": {
+  "fr": "Oie de la toundra",
+  "en": "Tundra Bean Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Apus affinis": {
+  "fr": "Martinet des maisons",
+  "en": "Little Swift",
+  "famille": "Apodidae",
+  "ordre": "APODIFORMES",
+  "n_enregistrements": 14
+ },
+ "Apus apus": {
+  "fr": "Martinet noir",
+  "en": "Common Swift",
+  "famille": "Apodidae",
+  "ordre": "APODIFORMES",
+  "n_enregistrements": 120
+ },
+ "Apus caffer": {
+  "fr": "Martinet cafre",
+  "en": "White-rumped Swift",
+  "famille": "Apodidae",
+  "ordre": "APODIFORMES",
+  "n_enregistrements": 37
+ },
+ "Apus pacificus": {
+  "fr": "Martinet de Sibérie",
+  "en": "Pacific Swift",
+  "famille": "Apodidae",
+  "ordre": "APODIFORMES",
+  "n_enregistrements": 3
+ },
+ "Apus pallidus": {
+  "fr": "Martinet pâle",
+  "en": "Pallid Swift",
+  "famille": "Apodidae",
+  "ordre": "APODIFORMES",
+  "n_enregistrements": 120
+ },
+ "Apus unicolor": {
+  "fr": "Martinet unicolore",
+  "en": "Plain Swift",
+  "famille": "Apodidae",
+  "ordre": "APODIFORMES",
+  "n_enregistrements": 41
+ },
+ "Aythya affinis": {
+  "fr": "Petit Fuligule",
+  "en": "Lesser Scaup",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 2
+ },
+ "Aythya collaris": {
+  "fr": "Fuligule à collier",
+  "en": "Ring-necked Duck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 8
+ },
+ "Aythya ferina": {
+  "fr": "Fuligule milouin",
+  "en": "Common Pochard",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Aythya fuligula": {
+  "fr": "Fuligule morillon",
+  "en": "Tufted Duck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Aythya marila": {
+  "fr": "Fuligule milouinan",
+  "en": "Greater Scaup",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 17
+ },
+ "Aythya nyroca": {
+  "fr": "Fuligule nyroca",
+  "en": "Ferruginous Duck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 22
+ },
+ "Branta bernicla": {
+  "fr": "Bernache cravant",
+  "en": "Brant Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Branta canadensis": {
+  "fr": "Bernache du Canada",
+  "en": "Canada Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Branta hutchinsii": {
+  "fr": "Bernache de Hutchins",
+  "en": "Cackling Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 9
+ },
+ "Branta leucopsis": {
+  "fr": "Bernache nonnette",
+  "en": "Barnacle Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Branta ruficollis": {
+  "fr": "Bernache à cou roux",
+  "en": "Red-breasted Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 26
+ },
+ "Branta sandvicensis": {
+  "fr": "Bernache néné",
+  "en": "Nene",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 1
+ },
+ "Bubo milesi": {
+  "fr": "Grand-duc d’Oman",
+  "en": "Arabian Eagle-Owl",
+  "famille": "Strigidae",
+  "ordre": "STRIGIFORMES",
+  "n_enregistrements": 2
+ },
+ "Bucephala clangula": {
+  "fr": "Garrot à œil d’or",
+  "en": "Common Goldeneye",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Bucephala islandica": {
+  "fr": "Garrot d’Islande",
+  "en": "Barrow's Goldeneye",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 19
+ },
+ "Cairina moschata": {
+  "fr": "Canard musqué",
+  "en": "Muscovy Duck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 4
+ },
+ "Callipepla californica": {
+  "fr": "Colin de Californie",
+  "en": "California Quail",
+  "famille": "Odontophoridae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 20
+ },
+ "Callonetta leucophrys": {
+  "fr": "Canard à collier noir",
+  "en": "Ringed Teal",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 5
+ },
+ "Caloenas nicobarica": {
+  "fr": "Nicobar à camail",
+  "en": "Nicobar Pigeon",
+  "famille": "Columbidae",
+  "ordre": "COLUMBIFORMES",
+  "n_enregistrements": 1
+ },
+ "Caprimulgus europaeus": {
+  "fr": "Engoulevent d’Europe",
+  "en": "European Nightjar",
+  "famille": "Caprimulgidae",
+  "ordre": "CAPRIMULGIFORMES",
+  "n_enregistrements": 120
+ },
+ "Caprimulgus ruficollis": {
+  "fr": "Engoulevent à collier roux",
+  "en": "Red-necked Nightjar",
+  "famille": "Caprimulgidae",
+  "ordre": "CAPRIMULGIFORMES",
+  "n_enregistrements": 120
+ },
+ "Chloephaga picta": {
+  "fr": "Ouette de Magellan",
+  "en": "Upland Goose",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 2
+ },
+ "Chrysolophus amherstiae": {
+  "fr": "Faisan de Lady Amherst",
+  "en": "Lady Amherst's Pheasant",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 14
+ },
+ "Chrysolophus pictus": {
+  "fr": "Faisan doré",
+  "en": "Golden Pheasant",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 6
+ },
+ "Clamator glandarius": {
+  "fr": "Coucou geai",
+  "en": "Great Spotted Cuckoo",
+  "famille": "Cuculidae",
+  "ordre": "CUCULIFORMES",
+  "n_enregistrements": 120
+ },
+ "Clangula hyemalis": {
+  "fr": "Harelde kakawi",
+  "en": "Long-tailed Duck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Colinus virginianus": {
+  "fr": "Colin de Virginie",
+  "en": "Northern Bobwhite",
+  "famille": "Odontophoridae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 9
+ },
+ "Columba bollii": {
+  "fr": "Pigeon de Bolle",
+  "en": "Bolle's Pigeon",
+  "famille": "Columbidae",
+  "ordre": "COLUMBIFORMES",
+  "n_enregistrements": 18
+ },
+ "Columba junoniae": {
+  "fr": "Pigeon des lauriers",
+  "en": "Laurel Pigeon",
+  "famille": "Columbidae",
+  "ordre": "COLUMBIFORMES",
+  "n_enregistrements": 11
+ },
+ "Columba livia": {
+  "fr": "Pigeon biset",
+  "en": "Rock Dove",
+  "famille": "Columbidae",
+  "ordre": "COLUMBIFORMES",
+  "n_enregistrements": 120
+ },
+ "Columba oenas": {
+  "fr": "Pigeon colombin",
+  "en": "Stock Dove",
+  "famille": "Columbidae",
+  "ordre": "COLUMBIFORMES",
+  "n_enregistrements": 120
+ },
+ "Columba palumbus": {
+  "fr": "Pigeon ramier",
+  "en": "Common Wood Pigeon",
+  "famille": "Columbidae",
+  "ordre": "COLUMBIFORMES",
+  "n_enregistrements": 120
+ },
+ "Columba trocaz": {
+  "fr": "Pigeon trocaz",
+  "en": "Trocaz Pigeon",
+  "famille": "Columbidae",
+  "ordre": "COLUMBIFORMES",
+  "n_enregistrements": 16
+ },
+ "Coturnix coturnix": {
+  "fr": "Caille des blés",
+  "en": "Common Quail",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 120
+ },
+ "Coturnix japonica": {
+  "fr": "Caille du Japon",
+  "en": "Japanese Quail",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 5
+ },
+ "Cuculus canorus": {
+  "fr": "Coucou gris",
+  "en": "Common Cuckoo",
+  "famille": "Cuculidae",
+  "ordre": "CUCULIFORMES",
+  "n_enregistrements": 120
+ },
+ "Cuculus optatus": {
+  "fr": "Coucou oriental",
+  "en": "Oriental Cuckoo",
+  "famille": "Cuculidae",
+  "ordre": "CUCULIFORMES",
+  "n_enregistrements": 12
+ },
+ "Cygnus atratus": {
+  "fr": "Cygne noir",
+  "en": "Black Swan",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 25
+ },
+ "Cygnus columbianus": {
+  "fr": "Cygne siffleur",
+  "en": "Tundra Swan",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Cygnus cygnus": {
+  "fr": "Cygne chanteur",
+  "en": "Whooper Swan",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Cygnus olor": {
+  "fr": "Cygne tuberculé",
+  "en": "Mute Swan",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Dendrocygna autumnalis": {
+  "fr": "Dendrocygne à ventre noir",
+  "en": "Black-bellied Whistling Duck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 3
+ },
+ "Dendrocygna bicolor": {
+  "fr": "Dendrocygne fauve",
+  "en": "Fulvous Whistling Duck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 2
+ },
+ "Dendrocygna viduata": {
+  "fr": "Dendrocygne veuf",
+  "en": "White-faced Whistling Duck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 2
+ },
+ "Francolinus francolinus": {
+  "fr": "Francolin noir",
+  "en": "Black Francolin",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 47
+ },
+ "Gallicolumba tristigmata": {
+  "fr": "Gallicolombe tristigmate",
+  "en": "Sulawesi Ground Dove",
+  "famille": "Columbidae",
+  "ordre": "COLUMBIFORMES",
+  "n_enregistrements": 1
+ },
+ "Gallus gallus": {
+  "fr": "Coq bankiva",
+  "en": "Red Junglefowl",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 16
+ },
+ "Geopelia striata": {
+  "fr": "Géopélie zébrée",
+  "en": "Zebra Dove",
+  "famille": "Columbidae",
+  "ordre": "COLUMBIFORMES",
+  "n_enregistrements": 1
+ },
+ "Histrionicus histrionicus": {
+  "fr": "Arlequin plongeur",
+  "en": "Harlequin Duck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 20
+ },
+ "Lagopus lagopus": {
+  "fr": "Lagopède des saules",
+  "en": "Willow Ptarmigan",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 120
+ },
+ "Lagopus muta": {
+  "fr": "Lagopède alpin",
+  "en": "Rock Ptarmigan",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 96
+ },
+ "Lyrurus mlokosiewiczi": {
+  "fr": "Tétras du Caucase",
+  "en": "Caucasian Grouse",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 1
+ },
+ "Lyrurus tetrix": {
+  "fr": "Tétras lyre",
+  "en": "Black Grouse",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 120
+ },
+ "Mareca americana": {
+  "fr": "Canard d’Amérique",
+  "en": "American Wigeon",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 6
+ },
+ "Mareca penelope": {
+  "fr": "Canard siffleur",
+  "en": "Eurasian Wigeon",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Mareca strepera": {
+  "fr": "Canard chipeau",
+  "en": "Gadwall",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Marmaronetta angustirostris": {
+  "fr": "Marmaronette marbrée",
+  "en": "Marbled Duck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 9
+ },
+ "Melanitta americana": {
+  "fr": "Macreuse à bec jaune",
+  "en": "Black Scoter",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 1
+ },
+ "Melanitta fusca": {
+  "fr": "Macreuse brune",
+  "en": "Velvet Scoter",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 78
+ },
+ "Melanitta nigra": {
+  "fr": "Macreuse noire",
+  "en": "Common Scoter",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Melanitta perspicillata": {
+  "fr": "Macreuse à front blanc",
+  "en": "Surf Scoter",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 1
+ },
+ "Meleagris gallopavo": {
+  "fr": "Dindon sauvage",
+  "en": "Wild Turkey",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 8
+ },
+ "Mergellus albellus": {
+  "fr": "Harle piette",
+  "en": "Smew",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 30
+ },
+ "Mergus merganser": {
+  "fr": "Grand Harle",
+  "en": "Common Merganser",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Mergus serrator": {
+  "fr": "Harle huppé",
+  "en": "Red-breasted Merganser",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 82
+ },
+ "Netta rufina": {
+  "fr": "Nette rousse",
+  "en": "Red-crested Pochard",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 81
+ },
+ "Numida meleagris": {
+  "fr": "Pintade de Numidie",
+  "en": "Helmeted Guineafowl",
+  "famille": "Numididae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 5
+ },
+ "Oenanthe seebohmi": {
+  "fr": "Traquet de Seebohm",
+  "en": "Atlas Wheatear",
+  "famille": "Muscicapidae",
+  "ordre": "PASSERIFORMES",
+  "n_enregistrements": 1
+ },
+ "Otis tarda": {
+  "fr": "Grande Outarde",
+  "en": "Great Bustard",
+  "famille": "Otididae",
+  "ordre": "OTIDIFORMES",
+  "n_enregistrements": 12
+ },
+ "Oxyura jamaicensis": {
+  "fr": "Érismature rousse",
+  "en": "Ruddy Duck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 5
+ },
+ "Oxyura leucocephala": {
+  "fr": "Érismature à tête blanche",
+  "en": "White-headed Duck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 5
+ },
+ "Pavo cristatus": {
+  "fr": "Paon bleu",
+  "en": "Indian Peafowl",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 31
+ },
+ "Perdix perdix": {
+  "fr": "Perdrix grise",
+  "en": "Grey Partridge",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 120
+ },
+ "Phasianus colchicus": {
+  "fr": "Faisan de Colchide",
+  "en": "Common Pheasant",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 120
+ },
+ "Prinia lepida": {
+  "fr": "Prinia délicate",
+  "en": "Delicate Prinia",
+  "famille": "Cisticolidae",
+  "ordre": "PASSERIFORMES",
+  "n_enregistrements": 17
+ },
+ "Pterocles alchata": {
+  "fr": "Ganga cata",
+  "en": "Pin-tailed Sandgrouse",
+  "famille": "Pteroclidae",
+  "ordre": "PTEROCLIFORMES",
+  "n_enregistrements": 108
+ },
+ "Pterocles orientalis": {
+  "fr": "Ganga unibande",
+  "en": "Black-bellied Sandgrouse",
+  "famille": "Pteroclidae",
+  "ordre": "PTEROCLIFORMES",
+  "n_enregistrements": 54
+ },
+ "Rallus aquaticus": {
+  "fr": "Râle d’eau",
+  "en": "Water Rail",
+  "famille": "Rallidae",
+  "ordre": "GRUIFORMES",
+  "n_enregistrements": 120
+ },
+ "Rhea americana": {
+  "fr": "Nandou d’Amérique",
+  "en": "Greater Rhea",
+  "famille": "Rheidae",
+  "ordre": "RHEIFORMES",
+  "n_enregistrements": 2
+ },
+ "Somateria mollissima": {
+  "fr": "Eider à duvet",
+  "en": "Common Eider",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Somateria spectabilis": {
+  "fr": "Eider à tête grise",
+  "en": "King Eider",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 10
+ },
+ "Spatula clypeata": {
+  "fr": "Canard souchet",
+  "en": "Northern Shoveler",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Spatula querquedula": {
+  "fr": "Sarcelle d’été",
+  "en": "Garganey",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Spilopelia senegalensis": {
+  "fr": "Tourterelle maillée",
+  "en": "Laughing Dove",
+  "famille": "Columbidae",
+  "ordre": "COLUMBIFORMES",
+  "n_enregistrements": 24
+ },
+ "Streptopelia decaocto": {
+  "fr": "Tourterelle turque",
+  "en": "Eurasian Collared Dove",
+  "famille": "Columbidae",
+  "ordre": "COLUMBIFORMES",
+  "n_enregistrements": 120
+ },
+ "Streptopelia orientalis": {
+  "fr": "Tourterelle orientale",
+  "en": "Oriental Turtle Dove",
+  "famille": "Columbidae",
+  "ordre": "COLUMBIFORMES",
+  "n_enregistrements": 3
+ },
+ "Streptopelia roseogrisea": {
+  "fr": "Tourterelle rieuse",
+  "en": "African Collared Dove",
+  "famille": "Columbidae",
+  "ordre": "COLUMBIFORMES",
+  "n_enregistrements": 7
+ },
+ "Streptopelia turtur": {
+  "fr": "Tourterelle des bois",
+  "en": "European Turtle Dove",
+  "famille": "Columbidae",
+  "ordre": "COLUMBIFORMES",
+  "n_enregistrements": 120
+ },
+ "Synoicus chinensis": {
+  "fr": "Caille peinte",
+  "en": "King Quail",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 1
+ },
+ "Syrmaticus reevesii": {
+  "fr": "Faisan vénéré",
+  "en": "Reeves's Pheasant",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 8
+ },
+ "Tachymarptis melba": {
+  "fr": "Martinet à ventre blanc",
+  "en": "Alpine Swift",
+  "famille": "Apodidae",
+  "ordre": "APODIFORMES",
+  "n_enregistrements": 120
+ },
+ "Tadorna ferruginea": {
+  "fr": "Tadorne casarca",
+  "en": "Ruddy Shelduck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Tadorna tadorna": {
+  "fr": "Tadorne de Belon",
+  "en": "Common Shelduck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 120
+ },
+ "Tadorna variegata": {
+  "fr": "Tadorne de paradis",
+  "en": "Paradise Shelduck",
+  "famille": "Anatidae",
+  "ordre": "ANSERIFORMES",
+  "n_enregistrements": 1
+ },
+ "Tetrao urogallus": {
+  "fr": "Grand Tétras",
+  "en": "Western Capercaillie",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 120
+ },
+ "Tetraogallus caspius": {
+  "fr": "Tétraogalle de Perse",
+  "en": "Caspian Snowcock",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 25
+ },
+ "Tetraogallus caucasicus": {
+  "fr": "Tétraogalle du Caucase",
+  "en": "Caucasian Snowcock",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 34
+ },
+ "Tetrastes bonasia": {
+  "fr": "Gélinotte des bois",
+  "en": "Hazel Grouse",
+  "famille": "Phasianidae",
+  "ordre": "GALLIFORMES",
+  "n_enregistrements": 120
+ },
+ "Tetrax tetrax": {
+  "fr": "Outarde canepetière",
+  "en": "Little Bustard",
+  "famille": "Otididae",
+  "ordre": "OTIDIFORMES",
+  "n_enregistrements": 120
+ }
+}

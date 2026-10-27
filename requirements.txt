@@ -1,0 +1,11 @@
+# Application (reconnaissance)
+numpy
+torch
+flask
+birdnetlib            # fournit le modèle BirdNET V2.4
+ai-edge-litert; sys_platform != "win32"
+tensorflow; sys_platform == "win32"
+# Construction de la base et entraînement
+requests
+pandas
+openpyxl

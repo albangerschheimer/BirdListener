@@ -44,7 +44,10 @@ def main(maxi, zones):
     for zone in zones:
         lignes = (RACINE / "data" / "metadata" / f"xc_{zone}.jsonl").read_text(encoding="utf-8").splitlines()
         for ligne in lignes:
-            r = json.loads(ligne)
+            try:
+                r = json.loads(ligne)
+            except json.JSONDecodeError:   # dernière ligne coupée par un arrêt brutal
+                continue
             espece = f"{r['gen']} {r['sp']}"
             if r["id"] in vus or r["q"] == "E" or r["sp"] in ("", "mystery", "sp"):
                 continue

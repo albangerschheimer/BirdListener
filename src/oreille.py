@@ -6,10 +6,24 @@ l'empreinte (1024 nombres) et les scores BirdNET (6522 classes).
 from pathlib import Path
 
 import numpy as np
-from ai_edge_litert.interpreter import Interpreter, OpResolverType
+
+try:
+    from ai_edge_litert.interpreter import Interpreter, OpResolverType
+except ImportError:   # Windows : pas de paquet ai-edge-litert, on passe par TensorFlow
+    import tensorflow as tf
+    Interpreter, OpResolverType = tf.lite.Interpreter, tf.lite.experimental.OpResolverType
 
 RACINE = Path(__file__).resolve().parents[1]
-MODELE = RACINE / "data" / "models" / "BirdNET_GLOBAL_6K_V2.4_Model_FP32.tflite"
+NOM_MODELE = "BirdNET_GLOBAL_6K_V2.4_Model_FP32.tflite"
+
+
+def chemin_modele():
+    """Le modèle BirdNET : dans data/models, sinon celui livré avec le paquet birdnetlib."""
+    local = RACINE / "data" / "models" / NOM_MODELE
+    if local.exists():
+        return local
+    import birdnetlib
+    return Path(birdnetlib.__file__).parent / "models" / "analyzer" / NOM_MODELE
 FREQ = 48000
 TRANCHE = 3 * FREQ
 
@@ -18,7 +32,7 @@ class Oreille:
     def __init__(self, threads=1):
         # Sans le délégué XNNPACK, l'empreinte (couche intermédiaire) reste lisible après le calcul,
         # pour ~20 % de vitesse en moins (≈ 30x le temps réel par processeur)
-        self.it = Interpreter(model_path=str(MODELE), num_threads=threads,
+        self.it = Interpreter(model_path=str(chemin_modele()), num_threads=threads,
                               experimental_op_resolver_type=OpResolverType.BUILTIN_WITHOUT_DEFAULT_DELEGATES)
         self.it.allocate_tensors()
         self.entree = self.it.get_input_details()[0]["index"]
