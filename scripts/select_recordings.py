@@ -1,6 +1,8 @@
 """Choisit les enregistrements à écouter, espèce par espèce.
 
-Usage : python scripts/select_recordings.py <max_par_espece> <zone> [<zone> ...]
+Usage : python scripts/select_recordings.py <max_europe> <max_autres> <zone> [<zone> ...]
+Les espèces présentes en Europe (xc_europe) gardent jusqu'à <max_europe> enregistrements,
+les autres jusqu'à <max_autres> : la priorité reste la France et l'Europe.
 Sortie : data/selection.csv (id, espece, qualite, auteur, type)
 
 Règles :
@@ -38,7 +40,7 @@ def especes_ioc():
     return noms, genres
 
 
-def main(maxi, zones):
+def main(maxi_europe, maxi_autres, zones):
     noms, genres = especes_ioc()
     par_espece, vus = defaultdict(list), set()
     for zone in zones:
@@ -56,8 +58,11 @@ def main(maxi, zones):
             vus.add(r["id"])
             par_espece[espece].append(r)
 
+    europe = {f"{json.loads(l)['gen']} {json.loads(l)['sp']}"
+              for l in (RACINE / "data" / "metadata" / "xc_europe.jsonl").open(encoding="utf-8") if l.strip()}
     choisis = []
     for espece, rs in par_espece.items():
+        maxi = maxi_europe if espece in europe else maxi_autres
         rs.sort(key=lambda r: (RANG_QUALITE.get(r["q"], 3), duree(r["length"]) > 300, duree(r["length"])))
         # alternance entre auteurs : 1er enregistrement de chaque auteur, puis 2e, etc.
         par_auteur = defaultdict(list)
@@ -79,4 +84,4 @@ def main(maxi, zones):
 
 
 if __name__ == "__main__":
-    main(int(sys.argv[1]), sys.argv[2:])
+    main(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3:])
