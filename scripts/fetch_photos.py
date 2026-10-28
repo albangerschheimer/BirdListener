@@ -31,13 +31,23 @@ def appel(langue, **params):
     raise RuntimeError(f"Wikipédia ne répond pas ({r.status_code})")
 
 
+def obtenir(url):
+    """GET qui survit aux coupures réseau passagères."""
+    for attente in (5, 20, 60, 180):
+        try:
+            return SESSION.get(url, timeout=60)
+        except requests.RequestException:
+            time.sleep(attente)
+    return SESSION.get(url, timeout=60)
+
+
 def reessayer(r):
     """Wikimedia limite les requêtes depuis le cloud (429) : on attend de plus en plus longtemps."""
     for attente in (10, 30, 60, 120, 300):
         if r.status_code != 429:
             break
         time.sleep(attente)
-        r = SESSION.get(r.url, timeout=60)
+        r = obtenir(r.url)
     return r
 
 
@@ -52,8 +62,7 @@ def image_principale(nom):
     """(url miniature 400 px, nom du fichier Commons) de l'article Wikipédia de l'espèce, ou None.
     Passe par l'API REST (l'API classique limite trop les requêtes depuis le cloud)."""
     for langue in ("en", "fr"):
-        r = SESSION.get(f"https://{langue}.wikipedia.org/api/rest_v1/page/summary/{nom.replace(' ', '_')}",
-                        timeout=60)
+        r = obtenir(f"https://{langue}.wikipedia.org/api/rest_v1/page/summary/{nom.replace(' ', '_')}")
         r = reessayer(r)
         if r.status_code != 200:
             continue
@@ -105,7 +114,7 @@ def main(zone="europe"):
         trouve = image_principale(nom)
         if trouve:
             url, fichier = trouve
-            r = reessayer(SESSION.get(url, timeout=60))
+            r = reessayer(obtenir(url))
             nom_fichier = nom.replace(" ", "_") + ".jpg"
             if r.status_code == 200 and reduire(r.content, DOSSIER / nom_fichier):
                 faits[nom] = {"fichier": nom_fichier, "auteur": "", "licence": "",
