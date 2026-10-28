@@ -167,16 +167,78 @@ function majBoutonsSon() {
 }
 for (const ev of ["play", "pause", "ended"]) lecteur.addEventListener(ev, majBoutonsSon);
 
-function boutonPartager(espece, proba) {
+function boutonPartager(espece, proba, chant) {
   if (!navigator.share) return null;
   const b = el("button", "action");
   b.append(icone("partage"), el("span", "", "Partager"));
-  b.addEventListener("click", () => {
+  b.addEventListener("click", async () => {
     vibrer();
     const texte = proba ? `${espece.fr} (${pourcent(proba)} %) entendu avec BirdListener` : `${espece.fr}, avec BirdListener`;
-    navigator.share({ title: espece.fr, text: texte, url: location.origin }).catch(() => {});
+    b.classList.add("charge");
+    let fichier = null;
+    try { fichier = new File([await imagePartage(espece, proba, chant)], `${espece.fr}.png`, { type: "image/png" }); } catch (err) { fichier = null; }
+    b.classList.remove("charge");
+    const avecImage = fichier && navigator.canShare?.({ files: [fichier] });
+    navigator.share(avecImage ? { files: [fichier], title: espece.fr, text: texte } : { title: espece.fr, text: texte, url: location.origin }).catch(() => {});
   });
   return b;
+}
+
+// Image à partager (1080 × 1350) : photo, nom, certitude, date, aux couleurs de l'app
+async function imagePartage(e, proba, chant) {
+  const L = 1080, H = 1350, toile = document.createElement("canvas");
+  toile.width = L; toile.height = H;
+  const c = toile.getContext("2d");
+  await document.fonts.load('900 100px "Big Shoulders"').catch(() => {});
+  const charger = (src) => new Promise((ok) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = src; });
+  const [photo, logo] = await Promise.all([e.photo ? charger("photos/" + encodeURI(e.photo)) : null, charger("icone-192.png")]);
+  c.fillStyle = "#172D23"; c.fillRect(0, 0, L, H);
+  const hautPhoto = 640;
+  if (photo) {
+    const r = Math.max(L / photo.width, hautPhoto / photo.height), w = photo.width * r, h = photo.height * r;
+    c.save(); c.beginPath(); c.rect(0, 0, L, hautPhoto); c.clip();
+    c.drawImage(photo, (L - w) / 2, (hautPhoto - h) / 2, w, h);
+    c.restore();
+    const fondu = c.createLinearGradient(0, hautPhoto - 260, 0, hautPhoto);
+    fondu.addColorStop(0, "rgba(23,45,35,0)"); fondu.addColorStop(1, "#172D23");
+    c.fillStyle = fondu; c.fillRect(0, hautPhoto - 260, L, 260);
+  }
+  // nom : la plus grande taille qui tient en trois lignes
+  const marge = 72, largeur = L - 2 * marge, nom = e.fr.toUpperCase();
+  let taille = 140, lignes;
+  for (; taille > 60; taille -= 6) {
+    c.font = `900 ${taille}px "Big Shoulders", sans-serif`;
+    lignes = [];
+    let ligne = "";
+    for (const mot of nom.split(" ")) {
+      const essai = ligne ? `${ligne} ${mot}` : mot;
+      if (c.measureText(essai).width <= largeur || !ligne) ligne = essai; else { lignes.push(ligne); ligne = mot; }
+    }
+    lignes.push(ligne);
+    if (lignes.length <= 3 && lignes.every((l) => c.measureText(l).width <= largeur)) break;
+  }
+  let y = photo ? hautPhoto - 40 : 300;
+  c.fillStyle = "#F4EEDC"; c.textBaseline = "alphabetic";
+  for (const l of lignes) { y += taille * 0.92; c.fillText(l, marge, y); }
+  c.font = 'italic 500 40px "Big Shoulders", sans-serif'; c.fillStyle = "#9DB477";
+  y += 64; c.fillText(e.sci, marge, y);
+  if (proba) {
+    y += 130;
+    c.font = '900 120px "Big Shoulders", sans-serif'; c.fillStyle = "#F8B946";
+    const pct = `${pourcent(proba)} %`, largeurPct = c.measureText(pct).width;
+    c.fillText(pct, marge, y);
+    if (chant !== undefined) {
+      c.font = '800 44px "Big Shoulders", sans-serif';
+      c.fillText((chant > 0.65 ? "Chant" : chant < 0.35 ? "Cri" : "Chant ou cri").toUpperCase(), marge + largeurPct + 28, y);
+    }
+  }
+  // pied : logo, nom de l'app, date
+  if (logo) c.drawImage(logo, marge, H - 72 - 84, 84, 84);
+  c.fillStyle = "#F4EEDC"; c.font = '900 46px "Big Shoulders", sans-serif';
+  c.fillText("BIRDLISTENER", marge + 108, H - 72 - 30);
+  c.textAlign = "right"; c.fillStyle = "#9DB477"; c.font = '600 36px "Big Shoulders", sans-serif';
+  c.fillText(new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }), L - marge, H - 72 - 30);
+  return new Promise((ok, ko) => toile.toBlob((b) => (b ? ok(b) : ko(new Error("image"))), "image/png"));
 }
 
 // Bouton « Carte » : montre où l'espèce a été entendue par les autres
@@ -232,7 +294,7 @@ function construireFiche(e, d) {
   }
 
   const actions = el("div", "actions");
-  for (const b of [boutonSon(e), boutonCarte(e), boutonPartager(e, d && e.proba)]) if (b) actions.append(b);
+  for (const b of [boutonSon(e), boutonCarte(e), boutonPartager(e, d && e.proba, d?.chant)]) if (b) actions.append(b);
   if (actions.children.length) cible.append(actions);
 
   if (d) {
