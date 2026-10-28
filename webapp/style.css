@@ -36,7 +36,7 @@ h1, h2, h3, .marque, .nom { font-weight: 900; text-transform: uppercase; line-he
 .entete { display: flex; align-items: center; gap: 10px; }
 .logo { display: block; width: 48px; height: 48px; border-radius: 11px; }
 .marque { font-size: 24px; letter-spacing: 0.01em; }
-h1 { font-size: clamp(80px, 25.5vw, 120px); margin: 22px 0 6px; letter-spacing: -0.01em; }
+h1 { font-size: clamp(80px, 25.5vw, 120px); margin: 12px 0 6px; letter-spacing: -0.01em; }
 
 /* ---------- Bouton d'écoute : le viseur du logo autour d'un disque jaune-or ---------- */
 .ecoute { display: flex; flex-direction: column; align-items: center; padding-top: 18px; }
