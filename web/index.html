@@ -27,6 +27,9 @@
   button.principal { background: var(--accent); color: var(--accent-texte); border-color: var(--accent); }
   button.enregistre { background: var(--alerte); border-color: var(--alerte); color: #fff; }
   input[type=file] { display: none; }
+  .options { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; color: var(--doux); }
+  select { font: inherit; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--trait);
+           background: var(--carte); color: var(--texte); max-width: 200px; }
   .zone { border: 2px dashed var(--trait); border-radius: 12px; padding: 20px; text-align: center;
           color: var(--doux); margin-bottom: 24px; }
   .zone.survol { border-color: var(--accent); color: var(--texte); }
@@ -57,6 +60,10 @@
     <label class="bouton" for="fichier">📁 Choisir un fichier</label>
     <input id="fichier" type="file" accept="audio/*,video/*">
   </div>
+  <div class="options">
+    <label>Pays : <select id="pays"><option value="">Partout</option></select></label>
+    <label><input id="saison" type="checkbox" checked> Tenir compte de la saison</label>
+  </div>
   <div id="zone" class="zone">… ou glisse un fichier audio ici (mp3, wav, m4a, ogg…)</div>
 
   <div id="etat" class="etat"></div>
@@ -71,6 +78,18 @@
 const FREQ = 48000;
 const etat = document.getElementById("etat");
 const resultat = document.getElementById("resultat");
+const choixPays = document.getElementById("pays");
+
+// Liste des pays (les plus enregistrés d'abord), France choisie par défaut et mémorisée
+fetch("/pays").then((r) => r.json()).then((liste) => {
+  for (const p of liste) choixPays.add(new Option(p, p));
+  let memo = "France";
+  try { memo = localStorage.getItem("pays") ?? "France"; } catch (e) { /* stockage indisponible */ }
+  choixPays.value = liste.includes(memo) || memo === "" ? memo : "";
+});
+choixPays.addEventListener("change", () => {
+  try { localStorage.setItem("pays", choixPays.value); } catch (e) { /* stockage indisponible */ }
+});
 
 // Décode n'importe quel son lisible par le navigateur et le rééchantillonne en mono 48 kHz
 async function versSignal(tampon) {
@@ -88,7 +107,10 @@ async function analyser(tampon) {
   etat.textContent = "J'écoute…";
   try {
     const signal = await versSignal(tampon);
-    const r = await fetch("/predire", { method: "POST", body: signal.buffer });
+    const params = new URLSearchParams();
+    if (choixPays.value) params.set("pays", choixPays.value);
+    if (document.getElementById("saison").checked) params.set("mois", new Date().getMonth() + 1);
+    const r = await fetch("/predire?" + params, { method: "POST", body: signal.buffer });
     const d = await r.json();
     if (!r.ok) throw new Error(d.erreur);
     afficher(d);

@@ -181,7 +181,8 @@ def main(nom="birdlistener", epoques=40):
     (RACINE / "models").mkdir(exist_ok=True)
     torch.save({"etat": etat, "especes": especes}, RACINE / "models" / f"{nom}.pt")
     json.dump({"test": test, "especes": len(especes), "repartition": {k: len(v) for k, v in part.items()},
-               "test_ids": [lignes[i]["id"] for i in part["test"]]},
+               "test_ids": [lignes[i]["id"] for i in part["test"]],
+               "test_especes": [lignes[i]["espece"] for i in part["test"]]},
               open(RACINE / "models" / f"{nom}_eval.json", "w"), ensure_ascii=False, indent=1)
     reprise.unlink()
 

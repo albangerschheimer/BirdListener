@@ -28,7 +28,13 @@ def predire():
     son = np.frombuffer(request.get_data(), dtype=np.float32)[:DUREE_MAX]
     if len(son) < 24000:
         return jsonify({"erreur": "Son trop court (au moins une demi-seconde)."}), 400
-    return jsonify(predicteur.predire(son))
+    mois = request.args.get("mois", type=int)
+    return jsonify(predicteur.predire(son, pays=request.args.get("pays") or None, mois=mois))
+
+
+@app.get("/pays")
+def pays():
+    return jsonify(predicteur.contexte.liste_pays())
 
 
 if __name__ == "__main__":

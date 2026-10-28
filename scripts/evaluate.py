@@ -5,7 +5,6 @@ Compare BirdListener, BirdNET seul (limité aux mêmes espèces) et leur combina
 sur toutes les espèces puis sur les seules espèces connues de BirdNET.
 Sortie : models/<nom>_evaluation.json (dont le poids de combinaison retenu et les scores par espèce).
 """
-import csv
 import json
 import sys
 from collections import defaultdict
@@ -32,6 +31,39 @@ def scores_birdnet(d, colonne, n):
     return s
 
 
+def evaluer_contexte(test_ids, especes, P, vrais):
+    """Effet du filtre pays + mois : P × a_priori^β. L'enregistrement testé est retiré des
+    fréquences (sinon il s'aiderait lui-même)."""
+    from contexte import Contexte
+    ctx = Contexte(especes)
+    meta = {}
+    cibles = set(test_ids)
+    for fichier in (RACINE / "data" / "metadata").glob("xc_*.jsonl"):
+        for ligne in fichier.open(encoding="utf-8"):
+            if '"id": "' in ligne and ligne[8:ligne.index('"', 8)] in cibles:
+                r = json.loads(ligne)
+                meta[r["id"]] = (r.get("cnt"), int((r.get("date") or "0000-00")[5:7] or 0))
+    res = {}
+    for beta in (0.0, 0.3, 0.5, 0.7, 1.0):
+        ok = []
+        for k, xc_id in enumerate(test_ids):
+            pays, mois = meta.get(xc_id, (None, 0))
+            v = vrais[k]
+            if pays in ctx.pays:            # retrait de l'enregistrement testé
+                ctx.pays[pays][especes[v]] = ctx.pays[pays].get(especes[v], 1) - 1
+            if 1 <= mois <= 12:
+                ctx.mois[v, mois - 1] -= 1
+            a = ctx.a_priori(pays, mois)
+            if pays in ctx.pays:
+                ctx.pays[pays][especes[v]] += 1
+            if 1 <= mois <= 12:
+                ctx.mois[v, mois - 1] += 1
+            ok.append((P[k] * a ** beta).argmax() == v)
+        res[f"beta={beta}"] = float(np.mean(ok))
+        print(f"filtre lieu + saison, β={beta} : {np.mean(ok):.1%}", flush=True)
+    return res
+
+
 def main(nom):
     sauv = torch.load(RACINE / "models" / f"{nom}.pt", map_location="cpu")
     especes = sauv["especes"]
@@ -40,7 +72,7 @@ def main(nom):
     modele.load_state_dict(sauv["etat"])
     modele.eval()
     ev = json.load(open(RACINE / "models" / f"{nom}_eval.json", encoding="utf-8"))
-    espece_de = {l["id"]: l["espece"] for l in csv.DictReader(open(RACINE / "data" / "selection.csv", encoding="utf-8"))}
+    espece_de = dict(zip(ev["test_ids"], ev["test_especes"]))
     etiquettes = (RACINE / "data" / "models" / "BirdNET_GLOBAL_6K_V2.4_Labels.txt").read_text().splitlines()
     sci_bn = [e.split("_")[0] for e in etiquettes]
     colonne = np.array([num.get(s, -1) for s in sci_bn])
@@ -80,6 +112,7 @@ def main(nom):
     sortie = {"poids_birdnet": w, "n": len(vrais), "n_especes_inconnues_birdnet": int((~connue).sum()),
               "resultats": resultats,
               "par_espece": {especes[k]: {"precision": float(np.mean(v)), "n": len(v)} for k, v in par_esp.items()}}
+    sortie["filtre_lieu_saison"] = evaluer_contexte(ev["test_ids"], especes, (1 - w) * P_bl + w * P_bn_norm, vrais)
     json.dump(sortie, open(RACINE / "models" / f"{nom}_evaluation.json", "w"), ensure_ascii=False, indent=1)
     print(f"{len(vrais)} enregistrements de test, dont {(~connue).sum()} d'espèces inconnues de BirdNET")
     print(f"{'':22s} {'tout':>8s} {'par espèce':>11s} {'connues BirdNET':>16s}")

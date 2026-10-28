@@ -9,11 +9,13 @@ from pathlib import Path
 import numpy as np
 import torch
 
+from contexte import Contexte
 from modele import Classifieur
 from oreille import FREQ, Oreille, chemin_modele
 
 RACINE = Path(__file__).resolve().parents[1]
 SEUIL_OISEAU = 0.25     # en dessous, BirdNET n'entend aucune de nos espèces clairement
+BETA_CONTEXTE = 0.3     # force du filtre pays + mois (choisie sur le test Europe)
 SEUIL_INCERTAIN = 0.4   # en dessous, la meilleure réponse est présentée comme incertaine
 
 
@@ -32,14 +34,16 @@ class Predicteur:
         etiquettes = (chemin_modele().parent / "BirdNET_GLOBAL_6K_V2.4_Labels.txt").read_text().splitlines()
         num = {e: k for k, e in enumerate(self.especes)}
         self.colonne = np.array([num.get(e.split("_")[0], -1) for e in etiquettes])
+        self.contexte = Contexte(self.especes)
 
     def fiche(self, espece, proba):
         i = self.infos.get(espece, {})
         return {"scientifique": espece, "fr": i.get("fr") or i.get("en") or espece, "en": i.get("en", ""),
                 "famille": i.get("famille", ""), "proba": round(float(proba), 4)}
 
-    def predire(self, son, top=5):
-        """son : signal mono 48 kHz (float32). Renvoie les espèces probables, chant/cri et la frise."""
+    def predire(self, son, top=5, pays=None, mois=None):
+        """son : signal mono 48 kHz (float32). pays (nom anglais xeno-canto, ex. « France ») et
+        mois (1-12) sont facultatifs. Renvoie les espèces probables, chant/cri et la frise."""
         son = np.asarray(son, dtype=np.float32)
         tranches = self.oreille.tranches(son)
         emb, bn = [], []
@@ -60,6 +64,9 @@ class Predicteur:
         p_bn /= max(p_bn.sum(), 1e-6)
         w = self.poids_birdnet
         p = (1 - w) * p_bl + w * p_bn if p_bn.sum() > 0 else p_bl
+        if pays or mois:
+            p = p * self.contexte.a_priori(pays, mois) ** BETA_CONTEXTE
+            p /= p.sum()
 
         oiseaux = bn[:, garde].max(1)                   # meilleure espèce connue, par tranche
         meilleurs = np.argsort(-p)[:top]
