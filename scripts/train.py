@@ -117,6 +117,13 @@ def evaluer(modele, X, y, idx, especes):
 def main(nom="birdlistener", epoques=40):
     lignes = list(csv.DictReader(open(RACINE / "data" / "selection.csv", encoding="utf-8")))
     lignes = separer(lignes)
+    # Reprise après une interruption (les tâches de la session cloud sont limitées à 2 h) :
+    # on garde exactement les mêmes enregistrements, même si d'autres ont été écoutés depuis
+    reprise = RACINE / "models" / f"{nom}_reprise.pt"
+    r = torch.load(reprise, weights_only=False) if reprise.exists() else None
+    if r is not None and "ids" in r:
+        garder = set(r["ids"])
+        lignes = [l for l in lignes if l["id"] in garder]
     X, lignes = charger(lignes)
     especes = sorted({l["espece"] for l in lignes})
     num = {e: k for k, e in enumerate(especes)}
@@ -138,10 +145,7 @@ def main(nom="birdlistener", epoques=40):
     pas_par_epoque = len(part["train"]) // 128 + 1
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, 1e-3, total_steps=epoques * pas_par_epoque)
     meilleur, etat, debut = -1, None, 0
-    # Reprise après une interruption (les tâches de la session cloud sont limitées à 2 h)
-    reprise = RACINE / "models" / f"{nom}_reprise.pt"
-    if reprise.exists():
-        r = torch.load(reprise, weights_only=False)
+    if r is not None:
         modele.load_state_dict(r["modele"])
         opt.load_state_dict(r["opt"])
         sched.load_state_dict(r["sched"])
@@ -172,7 +176,8 @@ def main(nom="birdlistener", epoques=40):
             meilleur, etat = ev["top1_moyen_par_espece"], {k: v.clone() for k, v in modele.state_dict().items()}
         (RACINE / "models").mkdir(exist_ok=True)
         torch.save({"modele": modele.state_dict(), "opt": opt.state_dict(), "sched": sched.state_dict(),
-                    "meilleur": meilleur, "etat": etat, "epoque": ep + 1}, reprise)
+                    "meilleur": meilleur, "etat": etat, "epoque": ep + 1,
+                    "ids": [l["id"] for l in lignes]}, reprise)
 
     modele.load_state_dict(etat)
     test = evaluer(modele, X, y, part["test"], especes)
