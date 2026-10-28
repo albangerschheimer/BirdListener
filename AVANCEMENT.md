@@ -9,7 +9,7 @@ Démarré le 27/10/2026. Budget : 98 $, 7 jours maximum. Estimation : 2 à 3 jou
 | 2-3. 50 674 enregistrements xeno-canto écoutés par BirdNET (jusqu'à 120 par espèce) | ✅ fait |
 | 4. Modèle Europe `europe_v1` | ✅ fait |
 | 5. Évaluation et comparaison avec BirdNET | ✅ fait |
-| 6. Application web (micro / fichier, noms français, chant ou cri, « pas d'oiseau entendu ») | ✅ fait |
+| 6. Application web en ligne, sans serveur (https://birdlistener.vercel.app), identité « Huppe » | ✅ fait |
 | 7. Monde entier (10 587 espèces sur xeno-canto) | 🔄 métadonnées en cours |
 | 8. Améliorations : filtre par pays et saison, plus d'enregistrements, version ESP32 | ⏳ |
 
@@ -57,3 +57,11 @@ python -m venv .venv
 - **28/10, 3 h** : 50 674 enregistrements écoutés, modèle `europe_v1` entraîné en 35 min.
   BirdListener bat BirdNET seul (74,4 % contre 69,6 %), la combinaison des deux atteint 76 %.
   Application testée dans un navigateur : Merle noir reconnu en 1er. Détection « pas d'oiseau entendu ».
+- **28/10, après-midi** : application web autonome en ligne sur https://birdlistener.vercel.app
+  (BirdNET exécuté dans le navigateur avec LiteRT.js, hors ligne, installable sur iPhone).
+  Photos d'espèces depuis Wikimedia Commons (en cours). Écoute du monde entier en cours
+  (10 458 espèces sélectionnées ; xeno-canto lent par moments).
+- **28/10, soir** : identité définitive « Huppe » : logo huppe à crête en éventail, couleurs de terrain
+  (olive, orange rubalise, aluminium, lichen), police Big Shoulders, anneau d'écoute zébré,
+  ouverture animée (huppe en vol qui se pose et ouvre sa crête), libellés en phrases simples,
+  carnet des dernières écoutes. Pistes explorées dans Figma : pages V2 et V3.
