@@ -6,12 +6,13 @@
 }
 
 :root {
-  --olive: #26301C;
-  --profond: #1A2113;
-  --alu: #C9CCC6;
-  --rubalise: #FF5A1F;
-  --lichen: #A7B07E;
-  --raies: repeating-linear-gradient(-62deg, var(--rubalise) 0 7px, var(--profond) 7px 12px);
+  /* couleurs du logo : forêt, gorge jaune-or, ventre crème, feuillage, ardoise du plumage */
+  --foret: #172D23;
+  --sous-bois: #10231B;
+  --creme: #F4EEDC;
+  --or: #F8B946;
+  --feuille: #9DB477;
+  --ardoise: #314145;
   color-scheme: dark;
 }
 
@@ -19,8 +20,8 @@
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
-  background: var(--olive);
-  color: var(--alu);
+  background: var(--foret);
+  color: var(--creme);
   font: 500 19px/1.35 "Big Shoulders", "Arial Narrow", sans-serif;
   font-optical-sizing: auto;
 }
@@ -29,85 +30,88 @@ main {
   margin: 0 auto;
   padding: calc(env(safe-area-inset-top) + 18px) 20px calc(env(safe-area-inset-bottom) + 40px);
 }
-h1, h2, h3, .marque, .anneau-texte, .nom { font-weight: 900; text-transform: uppercase; line-height: 0.92; }
+h1, h2, h3, .marque, .nom { font-weight: 900; text-transform: uppercase; line-height: 0.92; }
 
 /* ---------- En-tête ---------- */
 .entete { display: flex; align-items: center; gap: 10px; }
-.logo svg { display: block; width: 52px; height: 52px; margin: -6px 0 -6px -6px; }
+.logo { display: block; width: 48px; height: 48px; border-radius: 11px; }
 .marque { font-size: 24px; letter-spacing: 0.01em; }
 h1 { font-size: clamp(80px, 25.5vw, 120px); margin: 22px 0 6px; letter-spacing: -0.01em; }
 
-/* ---------- Anneau d'écoute (zébrures des ailes de huppe) ---------- */
+/* ---------- Bouton d'écoute : le viseur du logo autour d'un disque jaune-or ---------- */
 .ecoute { display: flex; flex-direction: column; align-items: center; padding-top: 18px; }
-.anneau {
-  position: relative; width: 250px; height: 250px; border: 0; padding: 0; border-radius: 50%;
-  background: none; color: var(--profond); cursor: pointer; font: inherit;
-  -webkit-tap-highlight-color: transparent;
+.ecouter {
+  position: relative; width: 260px; height: 260px; border: 0; padding: 0; background: none;
+  color: var(--ardoise); cursor: pointer; font: inherit; -webkit-tap-highlight-color: transparent;
 }
-.anneau:disabled { cursor: wait; opacity: 0.55; }
-.anneau:focus-visible { outline: 3px solid var(--alu); outline-offset: 6px; }
-.zebre { position: absolute; inset: 0; width: 100%; height: 100%; }
-.zebre-fond { stroke: var(--alu); }
-.zebre-raies { stroke: var(--profond); }
-.zebre-coeur { fill: var(--rubalise); transition: fill 0.2s; }
-.anneau:active .zebre-coeur { fill: #ff7a47; }
-.anneau-texte { position: relative; font-size: 46px; }
-.anneau-chrono { position: absolute; left: 0; right: 0; top: 152px; font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.anneau.en-cours .zebre { animation: tourne 6s linear infinite; }
-.anneau.en-cours .zebre-coeur { fill: var(--alu); }
-@keyframes tourne { to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .anneau.en-cours .zebre { animation: none; } }
+.ecouter:disabled { cursor: wait; opacity: 0.55; }
+.ecouter:focus-visible { outline: 3px solid var(--creme); outline-offset: 6px; border-radius: 28px; }
+.viseur { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: var(--creme); stroke-width: 9; stroke-linecap: round; }
+.disque {
+  position: absolute; inset: 44px; border-radius: 50%; background: var(--or);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.15s;
+}
+.ecouter:active .disque { transform: scale(0.97); }
+.disque-texte { font-size: 44px; font-weight: 900; text-transform: uppercase; line-height: 0.9; }
+.niveaux { display: none; align-items: center; gap: 5px; height: 64px; margin-top: 6px; }
+.niveaux i { display: block; width: 7px; border-radius: 4px; background: var(--ardoise); height: 8px; transition: height 0.08s; }
+.chrono { font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; min-height: 0; }
+.ecouter.en-cours .niveaux { display: flex; }
+.ecouter.en-cours .disque-texte { font-size: 30px; }
+.ecouter.en-cours .viseur { animation: respire 1.6s ease-in-out infinite; }
+@keyframes respire { 50% { transform: scale(0.96); } }
+.viseur { transform-origin: 50% 50%; }
+@media (prefers-reduced-motion: reduce) { .ecouter.en-cours .viseur { animation: none; } }
 
-.aide { color: var(--lichen); text-align: center; margin: 18px 0 6px; min-height: 26px; max-width: 320px; }
-.lien-fichier { color: var(--alu); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; padding: 6px; }
+.aide { color: var(--feuille); text-align: center; margin: 18px 0 6px; min-height: 26px; max-width: 320px; }
+.lien-fichier { color: var(--creme); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; padding: 6px; }
 .lien-fichier input { display: none; }
 
 /* ---------- Fiche résultat ---------- */
 .resultat { margin-top: 36px; }
-.fiche-photo { display: block; width: calc(100% + 40px); margin: 0 -20px 20px; aspect-ratio: 4 / 3; object-fit: cover; background: var(--profond); }
+.fiche-photo { display: block; width: calc(100% + 40px); margin: 0 -20px 20px; aspect-ratio: 4 / 3; object-fit: cover; background: var(--sous-bois); }
 .nom { font-size: clamp(56px, 17vw, 76px); margin: 0; overflow-wrap: break-word; }
-.latin { color: var(--lichen); margin: 8px 0 18px; font-size: 20px; }
+.latin { color: var(--feuille); margin: 8px 0 18px; font-size: 20px; }
 .verdict { font-size: 22px; margin: 0 0 12px; }
-.verdict strong { color: var(--rubalise); font-size: 64px; font-weight: 900; line-height: 0.9; display: block; }
-.jauge { height: 14px; background: var(--profond); margin-bottom: 18px; }
-.jauge div { height: 100%; background: var(--raies); }
-.avis { border-left: 4px solid var(--rubalise); padding: 4px 0 4px 12px; margin: 0 0 18px; }
+.verdict strong { color: var(--or); font-size: 64px; font-weight: 900; line-height: 0.9; display: block; }
+.jauge { height: 14px; background: var(--sous-bois); border-radius: 7px; overflow: hidden; margin-bottom: 18px; }
+.jauge div { height: 100%; background: var(--or); border-radius: 0 7px 7px 0; }
+.avis { border-left: 4px solid var(--or); padding: 4px 0 4px 12px; margin: 0 0 18px; }
 .resultat h3 { font-size: 30px; margin: 30px 0 10px; }
 .autres { list-style: none; margin: 0; padding: 0; }
-.autres li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1.5px solid rgba(201, 204, 198, 0.25); font-size: 21px; font-weight: 700; }
-.autres span:last-child { color: var(--lichen); font-weight: 500; }
+.autres li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1.5px solid rgba(244, 238, 220, 0.25); font-size: 21px; font-weight: 700; }
+.autres span:last-child { color: var(--feuille); font-weight: 500; }
 .moments { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.moments li { display: flex; align-items: center; gap: 8px; background: var(--profond); padding: 4px 14px 4px 4px; border-radius: 999px; }
-.rond { width: 34px; height: 34px; border-radius: 50%; background: var(--profond) center / cover no-repeat; flex: none; }
+.moments li { display: flex; align-items: center; gap: 8px; background: var(--sous-bois); padding: 4px 14px 4px 4px; border-radius: 999px; }
+.rond { width: 34px; height: 34px; border-radius: 50%; background: var(--sous-bois) center / cover no-repeat; flex: none; }
 .saison { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; align-items: end; height: 92px; }
-.saison div { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; gap: 4px; color: var(--lichen); font-size: 15px; }
-.saison i { display: block; width: 100%; background: var(--alu); min-height: 3px; }
-.saison .maintenant i { background: var(--rubalise); }
-.saison .maintenant { color: var(--rubalise); font-weight: 800; }
-.credit { color: var(--lichen); font-size: 16px; margin-top: 18px; }
+.saison div { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; gap: 4px; color: var(--feuille); font-size: 15px; }
+.saison i { display: block; width: 100%; background: var(--creme); min-height: 3px; }
+.saison .maintenant i { background: var(--or); }
+.saison .maintenant { color: var(--or); font-weight: 800; }
+.credit { color: var(--feuille); font-size: 16px; margin-top: 18px; }
 .credit a { color: inherit; }
-.encore { margin-top: 28px; width: 100%; padding: 16px; border: 0; background: var(--rubalise); color: var(--profond); font: 900 26px/1 "Big Shoulders", sans-serif; text-transform: uppercase; cursor: pointer; }
+.encore { margin-top: 28px; width: 100%; padding: 16px; border: 0; border-radius: 14px; background: var(--or); color: var(--sous-bois); font: 900 26px/1 "Big Shoulders", sans-serif; text-transform: uppercase; cursor: pointer; }
 
 /* ---------- Carnet ---------- */
 .carnet { margin-top: 48px; }
 .carnet h2 { font-size: 40px; line-height: 1; margin: 0 0 12px; }
 .carnet ol { list-style: none; margin: 0; padding: 0; }
-.carnet li { display: grid; grid-template-columns: 48px 1fr; gap: 12px; align-items: center; padding: 10px 0; border-top: 1.5px solid rgba(201, 204, 198, 0.25); }
+.carnet li { display: grid; grid-template-columns: 48px 1fr; gap: 12px; align-items: center; padding: 10px 0; border-top: 1.5px solid rgba(244, 238, 220, 0.25); }
 .carnet li .rond { width: 48px; height: 48px; }
 .carnet strong { display: block; font-size: 24px; font-weight: 800; text-transform: uppercase; line-height: 1; }
-.carnet span { color: var(--lichen); font-size: 17px; }
+.carnet span { color: var(--feuille); font-size: 17px; }
 
 /* ---------- Réglages et pied ---------- */
-.reglages { margin-top: 40px; border-top: 1.5px solid rgba(201, 204, 198, 0.25); padding-top: 12px; }
+.reglages { margin-top: 40px; border-top: 1.5px solid rgba(244, 238, 220, 0.25); padding-top: 12px; }
 .reglages summary { cursor: pointer; font-weight: 800; font-size: 22px; }
 .reglages label { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; }
-.reglages select { font: inherit; font-size: 18px; color: var(--alu); background: var(--profond); border: 1.5px solid rgba(201, 204, 198, 0.35); border-radius: 4px; padding: 6px 8px; max-width: 200px; }
+.reglages select { font: inherit; font-size: 18px; color: var(--creme); background: var(--sous-bois); border: 1.5px solid rgba(244, 238, 220, 0.35); border-radius: 4px; padding: 6px 8px; max-width: 200px; }
 .reglages .case { justify-content: flex-start; }
-.reglages input[type=checkbox] { accent-color: var(--rubalise); width: 20px; height: 20px; }
-footer { color: var(--lichen); font-size: 16px; margin-top: 36px; }
+.reglages input[type=checkbox] { accent-color: var(--or); width: 20px; height: 20px; }
+footer { color: var(--feuille); font-size: 16px; margin-top: 36px; }
 
 /* ---------- Ouverture ---------- */
-#ouverture { position: fixed; inset: 0; z-index: 10; background: var(--olive); transition: opacity 0.5s ease; }
+#ouverture { position: fixed; inset: 0; z-index: 10; background: var(--foret); transition: opacity 0.5s ease; }
 #ouverture.fini { opacity: 0; pointer-events: none; }
-#ouverture svg { width: 100%; height: 100%; display: block; }
-#ouverture #nom { font: 900 58px "Big Shoulders", sans-serif; fill: var(--alu); }
+#ouverture canvas { width: 100%; height: 100%; display: block; }

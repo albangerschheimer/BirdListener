@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>BirdListener</title>
 <meta name="description" content="Reconnaître les oiseaux à leur chant, directement sur le téléphone.">
-<meta name="theme-color" content="#26301C">
+<meta name="theme-color" content="#172D23">
 <meta name="color-scheme" content="dark">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -13,27 +13,30 @@
 <link rel="apple-touch-icon" href="icone-180.png">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="polices/big-shoulders.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="ouverture/oiseau.webp" as="image">
+<link rel="preload" href="ouverture/logo.webp" as="image">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div id="ouverture" aria-hidden="true"></div>
 <main>
   <header class="entete">
-    <span id="logo" class="logo"></span>
+    <img class="logo" src="logo-112.webp" alt="" width="48" height="48">
     <span class="marque">BirdListener</span>
   </header>
 
   <h1>Qui chante&nbsp;?</h1>
 
   <section class="ecoute">
-    <button id="micro" class="anneau" disabled>
-      <svg class="zebre" viewBox="0 0 250 250" aria-hidden="true">
-        <circle cx="125" cy="125" r="112" fill="none" class="zebre-fond" stroke-width="22"/>
-        <circle cx="125" cy="125" r="112" fill="none" class="zebre-raies" stroke-width="22" stroke-dasharray="29.32 29.32"/>
-        <circle cx="125" cy="125" r="92" class="zebre-coeur"/>
+    <button id="micro" class="ecouter" disabled>
+      <svg class="viseur" viewBox="0 0 260 260" aria-hidden="true">
+        <path d="M14 70 V40 A26 26 0 0 1 40 14 H70 M190 14 H220 A26 26 0 0 1 246 40 V70 M246 190 V220 A26 26 0 0 1 220 246 H190 M70 246 H40 A26 26 0 0 1 14 220 V190"/>
       </svg>
-      <span class="anneau-texte" id="micro-texte">Écouter</span>
-      <span class="anneau-chrono" id="chrono"></span>
+      <span class="disque">
+        <span class="disque-texte" id="micro-texte">Écouter</span>
+        <span class="niveaux" id="niveaux" aria-hidden="true"></span>
+        <span class="chrono" id="chrono"></span>
+      </span>
     </button>
     <p class="aide" id="etat">Préparation de l'oreille…</p>
     <label class="lien-fichier">ou choisir un fichier audio<input id="fichier" type="file" accept="audio/*,video/*"></label>

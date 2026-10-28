@@ -1,11 +1,9 @@
-import { logo } from "./dessins.js";
 import { charger, predire, versSignal } from "./reconnaissance.js";
 
 const $ = (id) => document.getElementById(id);
 const etat = $("etat"), resultat = $("resultat"), micro = $("micro"), choixPays = $("pays");
-let modele = null, enregistreur = null, minuteur = null;
+let modele = null, enregistreur = null, minuteur = null, mesure = null;
 
-$("logo").innerHTML = logo(44);
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
 
 // Petit utilitaire : crée un élément avec une classe et un texte (jamais de HTML injecté)
@@ -191,6 +189,30 @@ $("fichier").addEventListener("change", async (ev) => {
 // ---------- Micro ----------
 const DUREE_MAX = 60;
 
+// Barres de niveau pendant l'écoute : l'énergie réelle du micro dans 9 bandes, de 1 à 9 kHz
+const barres = Array.from({ length: 9 }, () => document.createElement("i"));
+$("niveaux").append(...barres);
+function suivreNiveaux(flux) {
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const analyse = ctx.createAnalyser();
+  analyse.fftSize = 1024;
+  ctx.createMediaStreamSource(flux).connect(analyse);
+  const spectre = new Uint8Array(analyse.frequencyBinCount), hz = ctx.sampleRate / analyse.fftSize;
+  let actif = true;
+  (function tracer() {
+    if (!actif) return;
+    analyse.getByteFrequencyData(spectre);
+    barres.forEach((b, k) => {
+      const de = Math.round((1000 + k * 900) / hz), a = Math.round((1900 + k * 900) / hz);
+      let max = 0;
+      for (let i = de; i < a; i++) max = Math.max(max, spectre[i]);
+      b.style.height = `${8 + Math.round(max / 255 * 56)}px`;
+    });
+    requestAnimationFrame(tracer);
+  })();
+  return () => { actif = false; ctx.close(); barres.forEach((b) => { b.style.height = "8px"; }); };
+}
+
 function arreter() { if (enregistreur && enregistreur.state !== "inactive") enregistreur.stop(); }
 
 micro.addEventListener("click", async () => {
@@ -204,6 +226,7 @@ micro.addEventListener("click", async () => {
     enregistreur.ondataavailable = (e) => morceaux.push(e.data);
     enregistreur.onstop = async () => {
       clearInterval(minuteur);
+      if (mesure) { mesure(); mesure = null; }
       flux.getTracks().forEach((t) => t.stop());
       enregistreur = null;
       micro.classList.remove("en-cours");
@@ -212,6 +235,7 @@ micro.addEventListener("click", async () => {
       analyser(await new Blob(morceaux).arrayBuffer());
     };
     enregistreur.start();
+    try { mesure = suivreNiveaux(flux); } catch (err) { mesure = null; }
     const debut = Date.now();
     micro.classList.add("en-cours");
     $("micro-texte").textContent = "Arrêter";
