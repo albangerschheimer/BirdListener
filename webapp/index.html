@@ -67,6 +67,19 @@
   </details>
 </section>
 
+<section id="vue-especes" class="vue" hidden>
+  <h1 class="titre-carte">Espèces</h1>
+  <div class="recherche">
+    <input id="cherche" type="search" placeholder="Rechercher" autocomplete="off" aria-label="Rechercher une espèce">
+  </div>
+  <div class="puces" role="group" aria-label="Tri">
+    <button class="puce actif" data-tri="mois">Ce mois-ci</button>
+    <button class="puce" data-tri="az">De A à Z</button>
+  </div>
+  <ol id="liste-especes" class="liste-especes"></ol>
+  <div id="fin-especes" aria-hidden="true"></div>
+</section>
+
 <section id="vue-carte" class="vue" hidden>
   <h1 class="titre-carte">Carte</h1>
   <div class="recherche">
@@ -90,8 +103,13 @@
 
 <nav class="onglets" aria-label="Sections">
   <button class="onglet actif" data-vue="vue-ecoute">Écouter</button>
+  <button class="onglet" data-vue="vue-especes">Espèces</button>
   <button class="onglet" data-vue="vue-carte">Carte</button>
 </nav>
+<div id="panneau" class="panneau" role="dialog" aria-modal="true" aria-label="Fiche" hidden>
+  <button id="fermer-panneau" class="fermer" aria-label="Fermer">×</button>
+  <section id="fiche-panneau" class="resultat"></section>
+</div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <audio id="lecteur" preload="none"></audio>
 <script type="module" src="ouverture.js"></script>

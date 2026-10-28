@@ -109,6 +109,14 @@ def main(zone="europe"):
     fichier_credits = DOSSIER / "credits.json"
     faits = json.load(open(fichier_credits, encoding="utf-8")) if fichier_credits.exists() else {}
     restants = [n for n in noms if n not in faits]
+    # les espèces les plus enregistrées en France d'abord, puis dans le reste du monde : les plus entendues
+    frequences = json.load(open(RACINE / "data" / "frequences.json", encoding="utf-8"))["pays"]
+    france = frequences.get("France", {})
+    partout = {}
+    for comptes in frequences.values():
+        for nom, n in comptes.items():
+            partout[nom] = partout.get(nom, 0) + n
+    restants.sort(key=lambda n: (-france.get(n, 0), -partout.get(n, 0)))
     print(f"{len(noms)} espèces, {len(restants)} photos à chercher", flush=True)
 
     for k, nom in enumerate(restants):

@@ -3,6 +3,7 @@ import { charger, predire, predireTranche, versSignal, FREQUENCE } from "./recon
 
 const $ = (id) => document.getElementById(id);
 const resultat = $("resultat"), micro = $("micro"), choixPays = $("pays"), lecteur = $("lecteur");
+const panneau = $("panneau"), fichePanneau = $("fiche-panneau");
 const calme = matchMedia("(prefers-reduced-motion: reduce)").matches;
 let modele = null, minuteur = null, veille = null;
 
@@ -112,42 +113,52 @@ function rond(espece) {
   return r;
 }
 
-// Bouton « Son de référence » : lit un enregistrement xeno-canto de l'espèce
+// Chant de référence (xeno-canto) : téléchargé en entier puis lu depuis la mémoire, ce qui marche aussi sur Safari
+async function jouerSon(id, bouton) {
+  if (lecteur.dataset.id === id) {                         // même son : pause / reprise
+    if (lecteur.paused) lecteur.play().catch(() => {}); else lecteur.pause();
+    return;
+  }
+  bouton.classList.add("charge");
+  try {
+    const r = await fetch(`api/son?id=${id}`);
+    if (!r.ok) throw new Error(r.status);
+    const url = URL.createObjectURL(await r.blob());
+    if (lecteur.src.startsWith("blob:")) URL.revokeObjectURL(lecteur.src);
+    lecteur.src = url; lecteur.dataset.id = id;
+    await lecteur.play();
+  } catch (err) {
+    toast("Son indisponible");
+  } finally {
+    bouton.classList.remove("charge");
+  }
+}
+
 function boutonSon(espece) {
   if (!espece.son) return null;
   const [id, auteur, licence] = espece.son;
   const b = el("button", "action");
-  const libelle = el("span", "", "Son");
-  b.append(icone("lecture"), libelle);
-  b.addEventListener("click", async () => {
-    vibrer();
-    if (lecteur.dataset.id === id) {                         // même son : pause / reprise
-      if (lecteur.paused) lecteur.play().catch(() => {}); else lecteur.pause();
-      return;
-    }
-    // téléchargé en entier puis lu depuis la mémoire : fonctionne aussi sur Safari
-    b.classList.add("charge");
-    try {
-      const r = await fetch(`api/son?id=${id}`);
-      if (!r.ok) throw new Error(r.status);
-      const url = URL.createObjectURL(await r.blob());
-      if (lecteur.src.startsWith("blob:")) URL.revokeObjectURL(lecteur.src);
-      lecteur.src = url; lecteur.dataset.id = id;
-      await lecteur.play();
-    } catch (err) {
-      toast("Son indisponible");
-    } finally {
-      b.classList.remove("charge");
-    }
-  });
+  b.append(icone("lecture"), el("span", "", "Son"));
+  b.addEventListener("click", () => { vibrer(); jouerSon(id, b); });
   b.dataset.son = id;
   b.title = `${auteur}, xeno-canto (${licence})`;
   return b;
 }
 
+// petit bouton rond de lecture, pour les listes
+function miniSon(espece) {
+  if (!espece.son) return null;
+  const b = el("button", "mini-son");
+  b.append(icone("lecture"));
+  b.dataset.son = espece.son[0];
+  b.setAttribute("aria-label", `Écouter : ${espece.fr}`);
+  b.addEventListener("click", (ev) => { ev.stopPropagation(); vibrer(); jouerSon(espece.son[0], b); });
+  return b;
+}
+
 // une seule écoute des événements du lecteur pour mettre à jour tous les boutons « Son »
 function majBoutonsSon() {
-  for (const b of document.querySelectorAll(".action[data-son]")) {
+  for (const b of document.querySelectorAll("[data-son]")) {
     const joue = lecteur.dataset.id === b.dataset.son && !lecteur.paused;
     b.replaceChild(icone(joue ? "pause" : "lecture"), b.firstChild);
     b.classList.toggle("joue", joue);
@@ -194,14 +205,15 @@ function saison(i) {
 
 // Fiche d'une espèce : après une écoute (d) ou depuis le carnet (sans d)
 function construireFiche(e, d) {
-  resultat.replaceChildren();
+  const cible = d ? resultat : fichePanneau;   // une écoute s'affiche dans la page, le reste dans le panneau
+  cible.replaceChildren();
   if (e.photo) {
     const img = el("img", "fiche-photo");
     img.src = "photos/" + e.photo;
     img.alt = e.fr;
-    resultat.append(img);
+    cible.append(img);
   }
-  resultat.append(el("h2", "nom", e.fr), el("p", "latin", e.sci));
+  cible.append(el("h2", "nom", e.fr), el("p", "latin", e.sci));
 
   if (d) {
     const verdict = el("p", "verdict");
@@ -213,14 +225,14 @@ function construireFiche(e, d) {
     rempli.style.width = "0%";
     requestAnimationFrame(() => requestAnimationFrame(() => { rempli.style.width = `${pourcent(e.proba)}%`; }));
     jauge.append(rempli);
-    resultat.append(verdict, jauge);
-    if (!d.oiseau_entendu) resultat.append(el("p", "avis", "Son faible"));
-    else if (d.incertain) resultat.append(el("p", "avis", "Incertain"));
+    cible.append(verdict, jauge);
+    if (!d.oiseau_entendu) cible.append(el("p", "avis", "Son faible"));
+    else if (d.incertain) cible.append(el("p", "avis", "Incertain"));
   }
 
   const actions = el("div", "actions");
   for (const b of [boutonSon(e), boutonCarte(e), boutonPartager(e, d && e.proba)]) if (b) actions.append(b);
-  if (actions.children.length) resultat.append(actions);
+  if (actions.children.length) cible.append(actions);
 
   if (d) {
     const autres = d.especes.slice(1).filter((x) => x.proba >= 0.01);
@@ -232,7 +244,7 @@ function construireFiche(e, d) {
         li.addEventListener("click", () => { vibrer(); construireFiche({ ...x }, null); });
         ul.append(li);
       }
-      resultat.append(el("h3", "", "Aussi possible"), ul);
+      cible.append(el("h3", "", "Aussi possible"), ul);
     }
     const moments = [];
     for (const t of d.frise) {
@@ -248,12 +260,12 @@ function construireFiche(e, d) {
         li.append(rond(m.espece), el("strong", "", m.espece.fr), el("span", "", `${m.debut}–${m.fin} s`));
         ul.append(li);
       }
-      resultat.append(el("h3", "", "Moments"), ul);
+      cible.append(el("h3", "", "Moments"), ul);
     }
   }
 
   const graphe = saison(e.i);
-  if (graphe) resultat.append(el("h3", "", "Saison"), graphe);
+  if (graphe) cible.append(el("h3", "", "Saison"), graphe);
 
   if (e.photo || e.son) {
     const credit = el("p", "credit");
@@ -263,20 +275,50 @@ function construireFiche(e, d) {
       credit.append(lien);
     }
     if (e.son) credit.append(el("span", "", `Son ${e.son[1]}, xeno-canto (${e.son[2]})`));
-    resultat.append(credit);
+    cible.append(credit);
   }
-  const encore = el("button", "encore", "Écouter encore");
-  encore.addEventListener("click", () => { vibrer(); window.scrollTo({ top: 0, behavior: "smooth" }); });
-  resultat.append(encore);
+  if (d) {
+    const encore = el("button", "encore", "Écouter encore");
+    encore.addEventListener("click", () => { vibrer(); window.scrollTo({ top: 0, behavior: "smooth" }); });
+    cible.append(encore);
+  }
 
   // apparition échelonnée des éléments de la fiche
-  [...resultat.children].forEach((c, i) => c.style.setProperty("--i", i));
-  resultat.classList.remove("apparait");
-  resultat.hidden = false;
-  void resultat.offsetWidth;
-  resultat.classList.add("apparait");
-  resultat.scrollIntoView({ behavior: calme ? "auto" : "smooth", block: "start" });
+  [...cible.children].forEach((c, i) => c.style.setProperty("--i", i));
+  cible.classList.remove("apparait");
+  cible.hidden = false;
+  void cible.offsetWidth;
+  cible.classList.add("apparait");
+  if (d) resultat.scrollIntoView({ behavior: calme ? "auto" : "smooth", block: "start" });
+  else ouvrirPanneau();
 }
+
+// ---------- Panneau des fiches (glisse du bas, se ferme par ×, Échap ou en tirant vers le bas) ----------
+function ouvrirPanneau() {
+  panneau.scrollTop = 0;
+  if (!panneau.hidden) return;
+  panneau.hidden = false;
+  panneau.classList.remove("ferme");
+  panneau.classList.add("ouvert");
+  document.body.classList.add("bloque");
+}
+function fermerPanneau() {
+  if (panneau.hidden) return;
+  panneau.classList.replace("ouvert", "ferme");
+  document.body.classList.remove("bloque");
+  setTimeout(() => { panneau.hidden = true; panneau.classList.remove("ferme"); }, calme ? 0 : 230);
+}
+$("fermer-panneau").addEventListener("click", () => { vibrer(); fermerPanneau(); });
+addEventListener("keydown", (ev) => { if (ev.key === "Escape") fermerPanneau(); });
+{
+  let depart = null;
+  panneau.addEventListener("touchstart", (ev) => { depart = panneau.scrollTop <= 0 ? ev.touches[0].clientY : null; }, { passive: true });
+  panneau.addEventListener("touchend", (ev) => {
+    if (depart !== null && ev.changedTouches[0].clientY - depart > 110) fermerPanneau();
+    depart = null;
+  });
+}
+
 
 function afficher(d) { construireFiche(d.especes[0], d); }
 
@@ -615,6 +657,7 @@ micro.addEventListener("click", async () => {
 
 // ---------- Onglets Écouter / Carte ----------
 async function allerA(vue, espece) {
+  fermerPanneau();
   for (const b of document.querySelectorAll(".onglet")) b.classList.toggle("actif", b.dataset.vue === vue);
   for (const v of document.querySelectorAll(".vue")) v.hidden = v.id !== vue;
   window.scrollTo({ top: 0 });
@@ -622,6 +665,78 @@ async function allerA(vue, espece) {
     await pret;
     ouvrirCarte(nomFr, toast, espece).catch(() => toast("Carte indisponible"));
   }
+  if (vue === "vue-especes") {
+    await pret;
+    if (!$("liste-especes").children.length || paysListe !== choixPays.value) montrerEspeces();
+  }
+}
+
+// ---------- Espèces : le guide, des plus probables ici ce mois-ci, ou de A à Z ----------
+let tri = memoire("tri_especes", "mois"), ordre = [], affichees = 0, paysListe = null;
+const sansAccents = (t) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+function ordreEspeces() {
+  const especes = modele.meta.especes;
+  const q = sansAccents($("cherche").value.trim());
+  let idx = [...especes.keys()];
+  if (q) idx = idx.filter((i) => sansAccents(especes[i].fr).includes(q) || especes[i].sci.toLowerCase().includes(q) || sansAccents(especes[i].en || "").includes(q));
+  // une recherche fait passer devant les noms qui commencent par le texte tapé
+  const devant = (liste) => (q ? liste.sort((a, b) => sansAccents(especes[b].fr).startsWith(q) - sansAccents(especes[a].fr).startsWith(q)) : liste);
+  if (tri === "az") return devant(idx.sort((a, b) => especes[a].fr.localeCompare(especes[b].fr, "fr")));
+  // fréquence dans le pays choisi, réduite pour les espèces rarement enregistrées ce mois-ci
+  // (présence plutôt que pic : un migrant de passage ne doit pas passer devant le merle)
+  const c = modele.frequences.pays[choixPays.value], mois = new Date().getMonth();
+  const score = idx.map((i) => {
+    const prof = modele.frequences.mois[i] || [];
+    const total = prof.reduce((a, b) => a + b, 0);
+    return (c ? c[i] || 0 : 1) * Math.min(1, 24 * (prof[mois] + 1) / (total + 12));
+  });
+  const rang = new Map(idx.map((i, k) => [i, score[k]]));
+  return devant(idx.sort((a, b) => rang.get(b) - rang.get(a)));
+}
+
+function ligneEspece(i, dejaEntendues) {
+  const e = { ...modele.meta.especes[i], i };
+  const li = el("li", dejaEntendues[e.sci] ? "vue" : ""), texte = el("div");
+  texte.append(el("strong", "", e.fr), el("span", "", e.sci));
+  li.append(rond(e), texte);
+  const b = miniSon(e);
+  if (b) li.append(b);
+  li.addEventListener("click", () => { vibrer(); construireFiche(e, null); });
+  return li;
+}
+
+function plusEspeces() {
+  const dejaEntendues = collection();
+  $("liste-especes").append(...ordre.slice(affichees, affichees + 40).map((i) => ligneEspece(i, dejaEntendues)));
+  affichees = Math.min(ordre.length, affichees + 40);
+  majBoutonsSon();
+}
+
+function montrerEspeces() {
+  paysListe = choixPays.value;
+  ordre = ordreEspeces();
+  affichees = 0;
+  $("liste-especes").replaceChildren();
+  plusEspeces();
+}
+
+// la liste s'allonge quand on approche du bas
+new IntersectionObserver((vus) => {
+  if (vus.some((x) => x.isIntersecting) && modele && affichees < ordre.length) plusEspeces();
+}, { rootMargin: "800px" }).observe($("fin-especes"));
+
+let attenteRecherche = null;
+$("cherche").addEventListener("input", () => { clearTimeout(attenteRecherche); attenteRecherche = setTimeout(() => modele && montrerEspeces(), 120); });
+for (const p of document.querySelectorAll(".puce[data-tri]")) {
+  p.classList.toggle("actif", p.dataset.tri === tri);
+  p.addEventListener("click", () => {
+    vibrer();
+    tri = p.dataset.tri;
+    memoriser("tri_especes", tri);
+    for (const q of document.querySelectorAll(".puce[data-tri]")) q.classList.toggle("actif", q === p);
+    if (modele) montrerEspeces();
+  });
 }
 for (const bouton of document.querySelectorAll(".onglet")) {
   bouton.addEventListener("click", () => { vibrer(); allerA(bouton.dataset.vue); });
