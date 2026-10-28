@@ -1330,5 +1330,899 @@
   "auteur": "",
   "licence": "",
   "source": "https://commons.wikimedia.org/wiki/File:Corvus_albus_-Etosha_National_Park,_Namibia-8.jpg"
+ },
+ "Corvus corax": {
+  "fichier": "Corvus_corax.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Corvus_corax_clarionensis,_Point_Reyes_National_Seashore.jpg"
+ },
+ "Corvus cornix": {
+  "fichier": "Corvus_cornix.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Hooded_crow_(Corvus_cornix_cornix)_Kemeri.jpg"
+ },
+ "Corvus corone": {
+  "fichier": "Corvus_corone.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Carrion_crow_2022_04_05_05_02.jpg"
+ },
+ "Corvus frugilegus": {
+  "fichier": "Corvus_frugilegus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Rook_(Corvus_frugilegus)_Heligan.jpg"
+ },
+ "Corvus splendens": {
+  "fichier": "Corvus_splendens.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Corvus_splendens.jpg"
+ },
+ "Coturnix coturnix": {
+  "fichier": "Coturnix_coturnix.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Coturnix_coturnix,_Fraunberg,_Bayern,_Deutschland_1,_Ausschnitt.jpg"
+ },
+ "Coturnix japonica": {
+  "fichier": "Coturnix_japonica.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Japanese_Quail.jpg"
+ },
+ "Crex crex": {
+  "fichier": "Crex_crex.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Ruisrääkkä.JPG"
+ },
+ "Crithagra flaviventris": {
+  "fichier": "Crithagra_flaviventris.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Serinus_flaviventris_-Great_Karoo,_Northern_Cape,_South_Africa_-adult_male-8.jpg"
+ },
+ "Cuculus canorus": {
+  "fichier": "Cuculus_canorus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Cuckoo_(51169010335).jpg"
+ },
+ "Cuculus optatus": {
+  "fichier": "Cuculus_optatus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Oriental_Cuckoo_Maiala.JPG"
+ },
+ "Curruca balearica": {
+  "fichier": "Curruca_balearica.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Balearic_Warbler.jpg"
+ },
+ "Curruca cantillans": {
+  "fichier": "Curruca_cantillans.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Κοκκινοτσιροβάκος.jpg"
+ },
+ "Curruca communis": {
+  "fichier": "Curruca_communis.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Common_Whitethroat.jpg"
+ },
+ "Curruca conspicillata": {
+  "fichier": "Curruca_conspicillata.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Fauvette_à_lunettes_Aqueduc_de_Zaghouan.jpg"
+ },
+ "Curruca crassirostris": {
+  "fichier": "Curruca_crassirostris.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Curruca_crassirostris_91619419_(cropped).jpg"
+ },
+ "Curruca curruca": {
+  "fichier": "Curruca_curruca.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Славка-завирушка_(Sylvia_curruca).jpg"
+ },
+ "Curruca deserticola": {
+  "fichier": "Curruca_deserticola.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Fauvette_de_l'Atlas_Femelle_Jebil_NP.jpg"
+ },
+ "Curruca hortensis": {
+  "fichier": "Curruca_hortensis.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Western_Orphean_Warbler.jpg"
+ },
+ "Curruca iberiae": {
+  "fichier": "Curruca_iberiae.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Subalpine_Warbler_-_Monfrague_-_Spain_2669_(19110069408).jpg"
+ },
+ "Curruca melanocephala": {
+  "fichier": "Curruca_melanocephala.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Sardinian_Warbler.jpg"
+ },
+ "Curruca melanothorax": {
+  "fichier": "Curruca_melanothorax.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Cyprus_Warbler_(Sylvia_melanothorax).jpg"
+ },
+ "Curruca mystacea": {
+  "fichier": "Curruca_mystacea.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Sylvia_mystacea.jpg"
+ },
+ "Curruca nana": {
+  "fichier": "Curruca_nana.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Asian_Desert_Warbler_(Sylvia_nana)_(53678154976)_(cropped).jpg"
+ },
+ "Curruca nisoria": {
+  "fichier": "Curruca_nisoria.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Curruca_nisoria_378155893_(cropped).jpg"
+ },
+ "Curruca ruppeli": {
+  "fichier": "Curruca_ruppeli.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Ruppell's_warbler.jpg"
+ },
+ "Curruca sarda": {
+  "fichier": "Curruca_sarda.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Marmora's_Warbler_-_Sardinia_-_Italy_S4E1036.jpg"
+ },
+ "Curruca subalpina": {
+  "fichier": "Curruca_subalpina.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Curruca_subalpina_74746110.png"
+ },
+ "Curruca undata": {
+  "fichier": "Curruca_undata.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Fauvette_pitchou_Ichkeul_NP.jpg"
+ },
+ "Cursorius cursor": {
+  "fichier": "Cursorius_cursor.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Courvite_Isabelle_Jbil_NP.jpg"
+ },
+ "Cyanistes caeruleus": {
+  "fichier": "Cyanistes_caeruleus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Eurasian_blue_tit_Lancashire.jpg"
+ },
+ "Cyanistes cyanus": {
+  "fichier": "Cyanistes_cyanus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Azure_Tit,_Almaty,_Kazakhstan_S4E1902.jpg"
+ },
+ "Cyanistes teneriffae": {
+  "fichier": "Cyanistes_teneriffae.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Cyanistes_teneriffae_hedwigae_-Gran_Canaria,_Canary_Islands,_Spain-8.jpg"
+ },
+ "Cyanoliseus patagonus": {
+  "fichier": "Cyanoliseus_patagonus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Cyanoliseus_patagonus.jpg"
+ },
+ "Cyanopica cooki": {
+  "fichier": "Cyanopica_cooki.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Iberian_magpie_(Cyanopica_cooki)_2_(cropped).jpg"
+ },
+ "Cygnus atratus": {
+  "fichier": "Cygnus_atratus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Black_swan_(Cygnus_atratus)_Scottsdale.jpg"
+ },
+ "Cygnus columbianus": {
+  "fichier": "Cygnus_columbianus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Cygnus_bewickii_01.jpg"
+ },
+ "Cygnus cygnus": {
+  "fichier": "Cygnus_cygnus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Cygnus_cygnus_Singschwan.jpg"
+ },
+ "Cygnus olor": {
+  "fichier": "Cygnus_olor.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:CygneVaires.jpg"
+ },
+ "Delichon urbicum": {
+  "fichier": "Delichon_urbicum.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Mehlschwalbe_Delichon_urbicum.jpg"
+ },
+ "Dendrocopos leucotos": {
+  "fichier": "Dendrocopos_leucotos.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Dendrocopos_leucotos_2.jpg"
+ },
+ "Dendrocopos major": {
+  "fichier": "Dendrocopos_major.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Great_spotted_woodpecker_(Dendrocopos_major)_male_Drenthe.jpg"
+ },
+ "Dendrocopos syriacus": {
+  "fichier": "Dendrocopos_syriacus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Dendrocopos_syriacus.jpg"
+ },
+ "Dendrocoptes medius": {
+  "fichier": "Dendrocoptes_medius.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Средний_пёстрый_дятел_(Dendrocoptes_medius),_Битцевский_лес.jpg"
+ },
+ "Dendrocygna autumnalis": {
+  "fichier": "Dendrocygna_autumnalis.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Whistling_duck_flight02_-_natures_pics-edit1.jpg"
+ },
+ "Dendrocygna bicolor": {
+  "fichier": "Dendrocygna_bicolor.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Fulvous_Whistling_Duck_JG.jpg"
+ },
+ "Dendrocygna viduata": {
+  "fichier": "Dendrocygna_viduata.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Dendrocygna_viduata_upright.jpg"
+ },
+ "Dolichonyx oryzivorus": {
+  "fichier": "Dolichonyx_oryzivorus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:20250702_adult_male_bobolink_glastonbury_meadows_squre_PD206841.jpg"
+ },
+ "Dryobates minor": {
+  "fichier": "Dryobates_minor.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Male_lesser_spotted_woodpecker_(Dryobates_minor).png"
+ },
+ "Dryocopus martius": {
+  "fichier": "Dryocopus_martius.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Желна_(Dryocopus_martius,_fem),_«Городская_шумашешая».jpg"
+ },
+ "Egretta garzetta": {
+  "fichier": "Egretta_garzetta.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Little_egret_(Egretta_garzetta)_Photograph_by_Shantanu_Kuveskar.jpg"
+ },
+ "Elanus caeruleus": {
+  "fichier": "Elanus_caeruleus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Black-winged_Kite_in_Tal_Chhapar_Sanctuary_November_2025_by_Tisha_Mukherjee_03.jpg"
+ },
+ "Emberiza aureola": {
+  "fichier": "Emberiza_aureola.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Yellow-breasted_bunting_in_Nepal_02_-Cropped.jpg"
+ },
+ "Emberiza bruniceps": {
+  "fichier": "Emberiza_bruniceps.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Red-headed_bunting_(Emberiza_bruniceps)_male_non-breeding_plumage.jpg"
+ },
+ "Emberiza buchanani": {
+  "fichier": "Emberiza_buchanani.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Grey-necked_Bunting_(Emberiza_buchanani)_(31793472228).jpg"
+ },
+ "Emberiza caesia": {
+  "fichier": "Emberiza_caesia.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Emberiza_caesia.jpg"
+ },
+ "Emberiza calandra": {
+  "fichier": "Emberiza_calandra.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Bruant_proyer_Ichkeul018.jpg"
+ },
+ "Emberiza chrysophrys": {
+  "fichier": "Emberiza_chrysophrys.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Yellow-browed_bunting_(Emberiza_chrysophrys)_Eocheong_Island_Korea_2012.jpg"
+ },
+ "Emberiza cia": {
+  "fichier": "Emberiza_cia.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Rock_Bunting_(Cochem).jpg"
+ },
+ "Emberiza cineracea": {
+  "fichier": "Emberiza_cineracea.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Cinereous_Bunting_(Emberiza_cineracea),_Lesvos,_Greece,_17.04.2015_(17284201896)_(cropped).jpg"
+ },
+ "Emberiza cirlus": {
+  "fichier": "Emberiza_cirlus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Cirl_bunting_cropped.jpg"
+ },
+ "Emberiza citrinella": {
+  "fichier": "Emberiza_citrinella.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Goldammer_Emberiza_citrinella.jpg"
+ },
+ "Emberiza hortulana": {
+  "fichier": "Emberiza_hortulana.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Ortolan_bunting_in_Sierra_de_Guara,_Aragon,_Spain.jpg"
+ },
+ "Emberiza leucocephalos": {
+  "fichier": "Emberiza_leucocephalos.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Pine_Bunting_(Emberiza_leucocephalos)_-_Цагааншанаат_хөмрөг_(15617685422).jpg"
+ },
+ "Emberiza melanocephala": {
+  "fichier": "Emberiza_melanocephala.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:28-090504-black-headed-bunting-at-first-layby.jpg"
+ },
+ "Emberiza pallasi": {
+  "fichier": "Emberiza_pallasi.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Emberiza_pallasi_(10).jpg"
+ },
+ "Emberiza pusilla": {
+  "fichier": "Emberiza_pusilla.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Zwergammer.jpg"
+ },
+ "Emberiza rustica": {
+  "fichier": "Emberiza_rustica.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Kashiradaka-01.jpg"
+ },
+ "Emberiza sahari": {
+  "fichier": "Emberiza_sahari.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Bruant_du_sahara_Gabes.jpg"
+ },
+ "Emberiza schoeniclus": {
+  "fichier": "Emberiza_schoeniclus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Reed_Bunting_-_Emberiza_schoeniclus_(52015951301).jpg"
+ },
+ "Emberiza spodocephala": {
+  "fichier": "Emberiza_spodocephala.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Black-faced_bunting_(Emberiza_spodocephala),_Hangzhou,_China.jpg"
+ },
+ "Eremophila alpestris": {
+  "fichier": "Eremophila_alpestris.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Horned_lark_(eremophila_alpestris)_01.jpg"
+ },
+ "Erithacus rubecula": {
+  "fichier": "Erithacus_rubecula.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Erithacus_rubecula_with_cocked_head.jpg"
+ },
+ "Estrilda astrild": {
+  "fichier": "Estrilda_astrild.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Common_waxbill_(Estrilda_astrild_jagoensis).jpg"
+ },
+ "Estrilda melpoda": {
+  "fichier": "Estrilda_melpoda.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Orange-Cheeked_Waxbill_zackandzill.jpg"
+ },
+ "Eudyptes chrysocome": {
+  "fichier": "Eudyptes_chrysocome.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Rockhopper_Penguin_on_Saunders_Island_(5586446214).jpg"
+ },
+ "Euodice malabarica": {
+  "fichier": "Euodice_malabarica.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Indian_Silverbill3.jpg"
+ },
+ "Euplectes afer": {
+  "fichier": "Euplectes_afer.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Euplectes_afer_-Lake_Baringo,_Kenya_-male-8_CROP.jpg"
+ },
+ "Euplectes franciscanus": {
+  "fichier": "Euplectes_franciscanus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Euplectes_orix_5_Luc_Viatour.jpg"
+ },
+ "Falco biarmicus": {
+  "fichier": "Falco_biarmicus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Lanner_Falcon_800.jpg"
+ },
+ "Falco cherrug": {
+  "fichier": "Falco_cherrug.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Falco_cherrug_(Marek_Szczepanek).jpg"
+ },
+ "Falco columbarius": {
+  "fichier": "Falco_columbarius.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Merlin_in_Prospect_Park_(63386).jpg"
+ },
+ "Falco eleonorae": {
+  "fichier": "Falco_eleonorae.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Eleonora's_falcon_(Falco_eleonorae)_in_flight_3.jpg"
+ },
+ "Falco naumanni": {
+  "fichier": "Falco_naumanni.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Lesser_Kestrel_(Male).jpg"
+ },
+ "Falco peregrinus": {
+  "fichier": "Falco_peregrinus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Falco_peregrinus_m_Humber_Bay_Park_Toronto.jpg"
+ },
+ "Falco rusticolus": {
+  "fichier": "Falco_rusticolus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Falco_rusticolus_white_cropped.jpg"
+ },
+ "Falco subbuteo": {
+  "fichier": "Falco_subbuteo.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Eurasian_hobby_(Falco_subbuteo)_by_Shantanu_Kuveskar.jpg"
+ },
+ "Falco tinnunculus": {
+  "fichier": "Falco_tinnunculus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Common_kestrel_falco_tinnunculus.jpg"
+ },
+ "Falco vespertinus": {
+  "fichier": "Falco_vespertinus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Falco_vespertinus_2_(Martin_Mecnarowski).jpg"
+ },
+ "Ficedula albicilla": {
+  "fichier": "Ficedula_albicilla.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Taiga_Flycatcher.jpg"
+ },
+ "Ficedula albicollis": {
+  "fichier": "Ficedula_albicollis.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Collared_flycatcher_(Ficedula_albicollis).jpg"
+ },
+ "Ficedula hypoleuca": {
+  "fichier": "Ficedula_hypoleuca.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Ficedula_hypoleuca_-Wood_of_Cree_Nature_Reserve,_Scotland_-male-8a.jpg"
+ },
+ "Ficedula parva": {
+  "fichier": "Ficedula_parva.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Ficedula_parva_мухоловка_мала.jpg"
+ },
+ "Ficedula semitorquata": {
+  "fichier": "Ficedula_semitorquata.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:SemicollaredFlycatcher.jpg"
+ },
+ "Ficedula speculigera": {
+  "fichier": "Ficedula_speculigera.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Atlas_Flycatcher_(Ficedula_speculigera).jpg"
+ },
+ "Foudia madagascariensis": {
+  "fichier": "Foudia_madagascariensis.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Madagascar_fody_(Foudia_madagascariensis).jpg"
+ },
+ "Francolinus francolinus": {
+  "fichier": "Francolinus_francolinus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Black_Francolin_in_Tal_Chhapar_Sanctuary_November_2025_by_Tisha_Mukherjee_01.jpg"
+ },
+ "Fratercula arctica": {
+  "fichier": "Fratercula_arctica.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Puffin_(Fratercula_arctica).jpg"
+ },
+ "Fregata aquila": {
+  "fichier": "Fregata_aquila.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Male_Frigatebird_with_chick_Fregata_aquila.jpg"
+ },
+ "Fringilla coelebs": {
+  "fichier": "Fringilla_coelebs.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Male_Chaffinch_-_Fringilla_coelebs.jpg"
+ },
+ "Fringilla montifringilla": {
+  "fichier": "Fringilla_montifringilla.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Pinson_du_nord.jpg"
+ },
+ "Fringilla polatzeki": {
+  "fichier": "Fringilla_polatzeki.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Pinzón_azul_de_Gran_Canaria_(macho),_M._A._Peña.jpg"
+ },
+ "Fringilla teydea": {
+  "fichier": "Fringilla_teydea.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Teidefink.jpg"
+ },
+ "Fulica americana": {
+  "fichier": "Fulica_americana.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:American_coot_in_Prospect_Park_(06152).jpg"
+ },
+ "Fulica atra": {
+  "fichier": "Fulica_atra.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Eurasian_Coot_2023_11_25_03.jpg"
+ },
+ "Fulica cristata": {
+  "fichier": "Fulica_cristata.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Fulica_cristata_-Cape_Town,_South_Africa_-adult-8.jpg"
+ },
+ "Fulmarus glacialis": {
+  "fichier": "Fulmarus_glacialis.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Fulmar_(Fulmarus_glacialis)_in_flight_Moher.jpg"
+ },
+ "Galerida cristata": {
+  "fichier": "Galerida_cristata.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Cochevis_huppé_Gbollat.jpg"
+ },
+ "Galerida theklae": {
+  "fichier": "Galerida_theklae.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Cochevis_de_Thékla_Ichkeul.jpg"
+ },
+ "Gallicolumba tristigmata": {
+  "fichier": "Gallicolumba_tristigmata.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Sulawesi_Ground_Dove.jpg"
+ },
+ "Gallinago delicata": {
+  "fichier": "Gallinago_delicata.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Gallinago-delicata-002-cropped.jpg"
+ },
+ "Gallinago gallinago": {
+  "fichier": "Gallinago_gallinago.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Common_snipe_(Gallinago_gallinago)_2022.jpg"
+ },
+ "Gallinago media": {
+  "fichier": "Gallinago_media.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Great_Snipe_(Gallinago_media),_Åre,_Jämtland,_Sweden_15.jpg"
+ },
+ "Gallinago megala": {
+  "fichier": "Gallinago_megala.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Gallinago_megala.jpg"
+ },
+ "Gallinula chloropus": {
+  "fichier": "Gallinula_chloropus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Common_moorhen_(Gallinula_chloropus)_France.jpg"
+ },
+ "Gallus gallus": {
+  "fichier": "Gallus_gallus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Red_jungle_fowl.png"
+ },
+ "Garrulus glandarius": {
+  "fichier": "Garrulus_glandarius.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Garrulus_glandarius_1_Luc_Viatour.jpg"
+ },
+ "Gavia adamsii": {
+  "fichier": "Gavia_adamsii.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Yellow-billed_Loon_Chipp_South_8-12-13_Ryan_Askren.jpg"
+ },
+ "Gavia arctica": {
+  "fichier": "Gavia_arctica.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Black-throated_Diver,_Oulu,_Finland_02_(15195370798).jpg"
+ },
+ "Gavia immer": {
+  "fichier": "Gavia_immer.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Gavia_immer_-Minocqua,_Wisconsin,_USA_-swimming-8.jpg"
+ },
+ "Gavia stellata": {
+  "fichier": "Gavia_stellata.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Red-throated_diver_(Gavia_stellata)_breeding_Rif.jpg"
+ },
+ "Gelochelidon nilotica": {
+  "fichier": "Gelochelidon_nilotica.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Gelochelidon_nilotica_vanrossemi.jpg"
+ },
+ "Geokichla sibirica": {
+  "fichier": "Geokichla_sibirica.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Siberian_Thrush_0A2A2890.jpg"
+ },
+ "Geopelia striata": {
+  "fichier": "Geopelia_striata.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Geopelia_striata_1_crop_-_Chinese_Garden.jpg"
+ },
+ "Geothlypis philadelphia": {
+  "fichier": "Geothlypis_philadelphia.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Geothlypis_philadelphia_289725142_(cropped).jpg"
+ },
+ "Geothlypis trichas": {
+  "fichier": "Geothlypis_trichas.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Common_yellowthroat_in_PP_(14155).jpg"
+ },
+ "Geronticus eremita": {
+  "fichier": "Geronticus_eremita.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Northern_Bald_Ibis_Geronticus_eremita_(8470600428).jpg"
+ },
+ "Glareola nordmanni": {
+  "fichier": "Glareola_nordmanni.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Tyrkyshka.jpg"
+ },
+ "Glareola pratincola": {
+  "fichier": "Glareola_pratincola.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Glareola_pratincola_on_ground.jpg"
+ },
+ "Glaucestrilda caerulescens": {
+  "fichier": "Glaucestrilda_caerulescens.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Lavender_waxbill_(Estrilda_caerulescens).jpg"
+ },
+ "Glaucidium passerinum": {
+  "fichier": "Glaucidium_passerinum.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Eurasian_pygmy_owl_(Glaucidium_passerinum)_Białowieza.jpg"
+ },
+ "Gracula religiosa": {
+  "fichier": "Gracula_religiosa.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Common_Hill_Myna,_Satchari_NP,_Bangladesh_1.jpg"
+ },
+ "Grus grus": {
+  "fichier": "Grus_grus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Common_crane_grus_grus.jpg"
+ },
+ "Grus japonensis": {
+  "fichier": "Grus_japonensis.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Grus_japonensis_-Hokkaido,_Japan_-several-8_(1).jpg"
+ },
+ "Grus nigricollis": {
+  "fichier": "Grus_nigricollis.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Black_necked_crane_at_Hanle.jpg"
+ },
+ "Grus virgo": {
+  "fichier": "Grus_virgo.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Demoiselle_Cranes_at_Tal_Chappar.jpg"
+ },
+ "Gubernatrix cristata": {
+  "fichier": "Gubernatrix_cristata.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Gubernatrix_cristata_-_Yellow_cardinal_(male);_Iberá_marshes,_Corrientes,_Argentina.jpg"
+ },
+ "Gulosus aristotelis": {
+  "fichier": "Gulosus_aristotelis.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Shag_Phalacrocorax_aristotelis.jpg"
+ },
+ "Gygis alba": {
+  "fichier": "Gygis_alba.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Gygis_alba_Ascension_Island_1.jpg"
+ },
+ "Gymnoris xanthocollis": {
+  "fichier": "Gymnoris_xanthocollis.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Petronia_xanthocollis_-Haryana,_India_-male-8.jpg"
+ },
+ "Gypaetus barbatus": {
+  "fichier": "Gypaetus_barbatus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:010e_Wild_Bearded_Vulture_in_flight_at_Pfyn-Finges_(Switzerland)_Photo_by_Giles_Laurent.jpg"
+ },
+ "Gyps fulvus": {
+  "fichier": "Gyps_fulvus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Gyps_fulvus_in_flight_-_Spain.jpg"
+ },
+ "Haematopus ostralegus": {
+  "fichier": "Haematopus_ostralegus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Haematopus_ostralegus_He.jpg"
+ },
+ "Haemorhous mexicanus": {
+  "fichier": "Haemorhous_mexicanus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:House_finch_(33688)2.jpg"
+ },
+ "Halcyon smyrnensis": {
+  "fichier": "Halcyon_smyrnensis.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:White-throated_kingfisher_(Halcyon_smyrnensis)_Galle.jpg"
+ },
+ "Haliaeetus albicilla": {
+  "fichier": "Haliaeetus_albicilla.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:NZ7_5265_(52812350718).jpg"
+ },
+ "Haliaeetus pelagicus": {
+  "fichier": "Haliaeetus_pelagicus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Haliaeetus_pelagicus_(Rausu,_Japan).jpg"
+ },
+ "Hieraaetus pennatus": {
+  "fichier": "Hieraaetus_pennatus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Booted_eagle_(India,_2012).jpg"
+ },
+ "Himantopus himantopus": {
+  "fichier": "Himantopus_himantopus.jpg",
+  "auteur": "",
+  "licence": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Black-winged_stilt_(Himantopus_himantopus)_Pearaing.jpg"
  }
 }
