@@ -1,6 +1,6 @@
 // Hors ligne : les gros fichiers (modèle, bibliothèques, photos) viennent du cache ;
 // la page et les scripts sont redemandés au réseau quand il est là, pour suivre les mises à jour.
-const CACHE = "birdlistener-v4";
+const CACHE = "birdlistener-v5";
 const GROS = /\/(modele|vendor|photos|ouverture)\//;
 
 self.addEventListener("install", () => self.skipWaiting());

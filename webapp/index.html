@@ -20,6 +20,7 @@
 <body>
 <div id="ouverture" aria-hidden="true"></div>
 <main>
+<section id="vue-ecoute" class="vue">
   <h1>Qui chante&nbsp;?</h1>
 
   <section class="ecoute">
@@ -48,6 +49,10 @@
     <summary>Réglages</summary>
     <label>Pays où tu écoutes <select id="pays"><option value="">Partout</option></select></label>
     <label class="case"><input id="saison" type="checkbox" checked> Tenir compte de la saison</label>
+    <label class="case"><input id="partage" type="checkbox"> Partager mes observations sur la carte</label>
+    <p class="explication">Quand un oiseau est reconnu avec au moins 50 % de certitude, l'app envoie
+    l'espèce, l'heure et ta position arrondie à environ 1 km, sans ton nom ni aucun identifiant.
+    Tout le monde peut voir ces points sur la carte.</p>
   </details>
 
   <footer>
@@ -55,7 +60,28 @@
     TU Chemnitz, CC BY-NC-SA 4.0), entraînée ici sur les enregistrements de xeno-canto. Photos de
     Wikimedia Commons.
   </footer>
+</section>
+
+<section id="vue-carte" class="vue" hidden>
+  <h1 class="titre-carte">Où on les entend</h1>
+  <label class="recherche">
+    <span>Espèce</span>
+    <input id="filtre-espece" list="especes-carte" placeholder="Toutes les espèces" autocomplete="off">
+    <datalist id="especes-carte"></datalist>
+  </label>
+  <div id="carte" class="carte"></div>
+  <p id="carte-vide" class="aide" hidden>Personne n'a encore partagé d'observation. Active le partage
+  dans les réglages pour ajouter les tiennes.</p>
+  <h2 id="classement-titre" class="classement-titre" hidden>Les plus entendues ici</h2>
+  <ol id="classement" class="classement"></ol>
+</section>
 </main>
+
+<nav class="onglets" aria-label="Sections">
+  <button class="onglet actif" data-vue="vue-ecoute">Écouter</button>
+  <button class="onglet" data-vue="vue-carte">Carte</button>
+</nav>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script type="module" src="ouverture.js"></script>
 <script type="module" src="app.js"></script>
 </body>

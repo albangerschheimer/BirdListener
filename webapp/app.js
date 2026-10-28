@@ -1,3 +1,4 @@
+import { mesPartages, ouvrirCarte } from "./carte.js";
 import { charger, predire, versSignal } from "./reconnaissance.js";
 
 const $ = (id) => document.getElementById(id);
@@ -47,12 +48,36 @@ async function analyser(tampon) {
     etat.textContent = "";
     afficher(d);
     noter(d);
+    partager(d);
   } catch (e) {
     etat.textContent = "Je n'arrive pas à lire ce son : " + e.message;
   }
 }
 
 function pourcent(p) { return Math.max(1, Math.round(p * 100)); }
+
+const calme = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Fait défiler un nombre de 0 à sa valeur
+function compter(noeud, cible) {
+  if (calme) { noeud.textContent = `${cible} %`; return; }
+  const debut = performance.now();
+  (function pas(t) {
+    const u = Math.min(1, (t - debut) / 700);
+    noeud.textContent = `${Math.round(cible * (1 - (1 - u) ** 3))} %`;
+    if (u < 1) requestAnimationFrame(pas);
+  })(debut);
+}
+
+// Petit message en bas de l'écran
+let minuteurToast = null;
+function toast(texte) {
+  const t = $("toast");
+  t.textContent = texte;
+  t.classList.add("visible");
+  clearTimeout(minuteurToast);
+  minuteurToast = setTimeout(() => t.classList.remove("visible"), 3200);
+}
 
 function rond(espece) {
   const r = el("span", "rond");
@@ -73,9 +98,12 @@ function afficher(d) {
 
   const verdict = el("p", "verdict");
   const type = d.chant > 0.65 ? "C'est plutôt un chant." : d.chant < 0.35 ? "C'est plutôt un cri." : "Chant ou cri, difficile à dire.";
-  verdict.append(el("strong", "", `${pourcent(e.proba)} %`), `de certitude. ${type}`);
+  const chiffre = el("strong", "", "0 %");
+  verdict.append(chiffre, `de certitude. ${type}`);
+  compter(chiffre, pourcent(e.proba));
   const jauge = el("div", "jauge"), rempli = el("div");
-  rempli.style.width = `${pourcent(e.proba)}%`;
+  rempli.style.width = "0%";
+  requestAnimationFrame(() => requestAnimationFrame(() => { rempli.style.width = `${pourcent(e.proba)}%`; }));
   jauge.append(rempli);
   resultat.append(verdict, jauge);
 
@@ -120,7 +148,8 @@ function afficher(d) {
     "JFMAMJJASOND".split("").forEach((lettre, k) => {
       const col = el("div", k === actuel ? "maintenant" : "");
       const barre = el("i");
-      barre.style.height = `${Math.round(mois[k] / max * 70)}px`;
+      barre.style.setProperty("--h", `${Math.round(mois[k] / max * 70)}px`);
+      barre.style.setProperty("--k", k);
       col.append(barre, lettre);
       grille.append(col);
     });
@@ -138,7 +167,12 @@ function afficher(d) {
   encore.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   resultat.append(encore);
 
+  // apparition échelonnée des éléments de la fiche
+  [...resultat.children].forEach((c, i) => c.style.setProperty("--i", i));
+  resultat.classList.remove("apparait");
   resultat.hidden = false;
+  void resultat.offsetWidth;
+  resultat.classList.add("apparait");
   resultat.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -249,3 +283,65 @@ micro.addEventListener("click", async () => {
     etat.textContent = "Je n'ai pas accès au micro : " + e.message;
   }
 });
+
+// ---------- Onglets Écouter / Carte ----------
+const nomFr = (sci) => modele?.meta.especes.find((x) => x.sci === sci)?.fr || sci;
+for (const bouton of document.querySelectorAll(".onglet")) {
+  bouton.addEventListener("click", async () => {
+    for (const b of document.querySelectorAll(".onglet")) b.classList.toggle("actif", b === bouton);
+    for (const v of document.querySelectorAll(".vue")) v.hidden = v.id !== bouton.dataset.vue;
+    window.scrollTo({ top: 0 });
+    if (bouton.dataset.vue === "vue-carte") {
+      await pret;
+      ouvrirCarte(nomFr).catch(() => toast("La carte n'a pas pu se charger."));
+    }
+  });
+}
+
+// ---------- Partage des observations sur la carte commune ----------
+const casePartage = $("partage");
+try { casePartage.checked = localStorage.getItem("partage") === "1"; } catch (e) { /* stockage indisponible */ }
+casePartage.addEventListener("change", () => {
+  try { localStorage.setItem("partage", casePartage.checked ? "1" : "0"); } catch (e) { /* stockage indisponible */ }
+  if (casePartage.checked) navigator.geolocation?.getCurrentPosition(() => {}, () => toast("Sans accès à ta position, rien ne sera partagé."));
+});
+
+function position() {
+  return new Promise((ok, ko) => {
+    if (!navigator.geolocation) return ko(new Error("pas de géolocalisation"));
+    navigator.geolocation.getCurrentPosition(ok, ko, { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 });
+  });
+}
+
+async function envoyer(o) {
+  const r = await fetch("api/observations", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(o) });
+  if (!r.ok) throw new Error(`serveur ${r.status}`);
+}
+
+function enAttente() { try { return JSON.parse(localStorage.getItem("a_envoyer") || "[]"); } catch (e) { return []; } }
+function memoriser(cle, liste) { try { localStorage.setItem(cle, JSON.stringify(liste)); } catch (e) { /* stockage indisponible */ } }
+
+async function partager(d) {
+  const e = d.especes[0];
+  if (!casePartage.checked || !d.oiseau_entendu || e.proba < 0.5) return;
+  let pos;
+  try { pos = await position(); } catch (err) { toast("Position indisponible : gardé seulement dans ton carnet."); return; }
+  // arrondi à 0,01° (environ 1 km) avant tout envoi
+  const o = { sci: e.sci, certitude: Math.round(e.proba * 100) / 100,
+              lat: Math.round(pos.coords.latitude * 100) / 100, lon: Math.round(pos.coords.longitude * 100) / 100 };
+  const heure = new Date().toISOString().slice(0, 13).replace(/[-T]/g, "");
+  memoriser("mes_partages", [{ ...o, heure }, ...mesPartages()].slice(0, 200));
+  try { await envoyer(o); toast(`${e.fr} ajouté à la carte.`); }
+  catch (err) { memoriser("a_envoyer", [...enAttente(), o]); toast("Hors ligne : ce sera envoyé plus tard."); }
+}
+
+// renvoie ce qui n'a pas pu partir (hors ligne)
+async function viderAttente() {
+  const liste = enAttente();
+  if (!liste.length || !navigator.onLine) return;
+  const restants = [];
+  for (const o of liste) { try { await envoyer(o); } catch (err) { restants.push(o); } }
+  memoriser("a_envoyer", restants);
+}
+window.addEventListener("online", viderAttente);
+viderAttente();
