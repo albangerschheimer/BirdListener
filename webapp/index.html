@@ -5,51 +5,60 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>BirdListener</title>
 <meta name="description" content="Reconnaître les oiseaux à leur chant, directement sur le téléphone.">
-<meta name="theme-color" content="#F2EEE4">
+<meta name="theme-color" content="#26301C">
+<meta name="color-scheme" content="dark">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="BirdListener">
 <link rel="apple-touch-icon" href="icone-180.png">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="preload" href="polices/big-shoulders.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="ouverture" aria-hidden="true">
-  <svg viewBox="0 0 393 852" preserveAspectRatio="xMidYMid slice">
-    <path id="trajectoire" d="M-10 700 C120 640 220 520 410 230" fill="none" stroke="#B9B19F" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="0.5 8"/>
-    <g id="martinet" transform="translate(-200 -200)" fill="#1D1C1A">
-      <path d="M100 30 C103.2 30 105.4 33.6 105.4 39 C105.4 51 103.6 61 102.6 67 L107.5 85 L100 77.5 L92.5 85 L97.4 67 C96.4 61 94.6 51 94.6 39 C94.6 33.6 96.8 30 100 30 Z"/><path id="aile-g"/><path id="aile-d"/>
-    </g>
-    <g id="marque" text-anchor="middle">
-      <text x="196.5" y="452" class="nom">BirdListener</text>
-      <text x="196.5" y="486" class="devise">Le carnet sonore des oiseaux</text>
-    </g>
-  </svg>
-</div>
-<script src="ouverture.js"></script>
+<div id="ouverture" aria-hidden="true"></div>
 <main>
-  <h1>BirdListener</h1>
-  <p class="sous-titre">Quel oiseau chante ? Enregistre-le ou choisis un fichier audio.</p>
+  <header class="entete">
+    <span id="logo" class="logo"></span>
+    <span class="marque">BirdListener</span>
+  </header>
 
-  <div class="actions">
-    <button id="micro" class="principal" disabled>🎙️ Enregistrer</button>
-    <label class="bouton" for="fichier">📁 Choisir un fichier</label>
-    <input id="fichier" type="file" accept="audio/*,video/*">
-  </div>
-  <p id="chargement" class="chargement">Préparation…</p>
-  <div class="options">
-    <label>Pays : <select id="pays"><option value="">Partout</option></select></label>
-    <label><input id="saison" type="checkbox" checked> Tenir compte de la saison</label>
-  </div>
+  <h1>Qui chante&nbsp;?</h1>
 
-  <div id="etat" class="etat"></div>
-  <div id="resultat"></div>
+  <section class="ecoute">
+    <button id="micro" class="anneau" disabled>
+      <svg class="zebre" viewBox="0 0 250 250" aria-hidden="true">
+        <circle cx="125" cy="125" r="112" fill="none" class="zebre-fond" stroke-width="22"/>
+        <circle cx="125" cy="125" r="112" fill="none" class="zebre-raies" stroke-width="22" stroke-dasharray="29.32 29.32"/>
+        <circle cx="125" cy="125" r="92" class="zebre-coeur"/>
+      </svg>
+      <span class="anneau-texte" id="micro-texte">Écouter</span>
+      <span class="anneau-chrono" id="chrono"></span>
+    </button>
+    <p class="aide" id="etat">Préparation de l'oreille…</p>
+    <label class="lien-fichier">ou choisir un fichier audio<input id="fichier" type="file" accept="audio/*,video/*"></label>
+  </section>
+
+  <section id="resultat" class="resultat" hidden></section>
+
+  <section id="carnet" class="carnet" hidden>
+    <h2>Tes dernières écoutes</h2>
+    <ol id="historique"></ol>
+  </section>
+
+  <details class="reglages">
+    <summary>Réglages</summary>
+    <label>Pays où tu écoutes <select id="pays"><option value="">Partout</option></select></label>
+    <label class="case"><input id="saison" type="checkbox" checked> Tenir compte de la saison</label>
+  </details>
 
   <footer>
-    Tout se passe sur ton appareil : aucun son n'est envoyé. Oreille : BirdNET V2.4 (Cornell Lab /
-    TU Chemnitz, CC BY-NC-SA 4.0). Classifieur BirdListener entraîné sur les enregistrements de
-    xeno-canto. Photos : Wikimedia Commons (auteur au survol, lien vers la source).
+    Tout se passe sur ton téléphone : aucun son n'est envoyé. L'oreille est BirdNET (Cornell Lab et
+    TU Chemnitz, CC BY-NC-SA 4.0), entraînée ici sur les enregistrements de xeno-canto. Photos de
+    Wikimedia Commons.
   </footer>
 </main>
+<script type="module" src="ouverture.js"></script>
 <script type="module" src="app.js"></script>
 </body>
 </html>

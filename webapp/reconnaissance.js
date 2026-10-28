@@ -185,7 +185,7 @@ export async function predire(m, signal, { pays = null, mois = null, top = 5, pr
   }
 
   const ordre = Array.from(p.keys()).sort((a, b) => p[b] - p[a]).slice(0, top);
-  const fiche = (i, proba) => ({ ...m.meta.especes[i], proba });
+  const fiche = (i, proba) => ({ ...m.meta.especes[i], i, proba });
   const frise = scoresTranches.map((s, k) => {
     const q = softmax(s);
     let best = 0;

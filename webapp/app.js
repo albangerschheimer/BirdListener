@@ -1,19 +1,25 @@
+import { logo } from "./dessins.js";
 import { charger, predire, versSignal } from "./reconnaissance.js";
 
-const etat = document.getElementById("etat");
-const resultat = document.getElementById("resultat");
-const chargement = document.getElementById("chargement");
-const micro = document.getElementById("micro");
-const choixPays = document.getElementById("pays");
-let modele = null;
+const $ = (id) => document.getElementById(id);
+const etat = $("etat"), resultat = $("resultat"), micro = $("micro"), choixPays = $("pays");
+let modele = null, enregistreur = null, minuteur = null;
 
+$("logo").innerHTML = logo(44);
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
 
-const pret = charger((t) => { chargement.textContent = t; }).then((m) => {
+// Petit utilitaire : crée un élément avec une classe et un texte (jamais de HTML injecté)
+function el(balise, classe, texte) {
+  const e = document.createElement(balise);
+  if (classe) e.className = classe;
+  if (texte !== undefined) e.textContent = texte;
+  return e;
+}
+
+// ---------- Chargement du modèle (l'enregistrement peut commencer avant) ----------
+const pret = charger((t) => { if (!enregistreur) etat.textContent = t; }).then((m) => {
   modele = m;
-  chargement.textContent = `Prêt : ${m.n} espèces. Fonctionne aussi hors ligne.`;
-  micro.disabled = false;
-  // Pays les plus enregistrés d'abord ; France par défaut, choix mémorisé
+  if (!enregistreur) etat.textContent = `Prête : ${m.n} espèces, même sans réseau.`;
   const total = (p) => Object.values(m.frequences.pays[p]).reduce((a, b) => a + b, 0);
   const liste = Object.keys(m.frequences.pays).sort((a, b) => total(b) - total(a));
   for (const p of liste) choixPays.add(new Option(p, p));
@@ -21,50 +27,75 @@ const pret = charger((t) => { chargement.textContent = t; }).then((m) => {
   try { memo = localStorage.getItem("pays") ?? "France"; } catch (e) { /* stockage indisponible */ }
   choixPays.value = memo === "" || liste.includes(memo) ? memo : "";
   return m;
-}).catch((e) => { chargement.textContent = "Impossible de charger le modèle : " + e.message; });
+}).catch((e) => { etat.textContent = "Impossible de charger l'oreille : " + e.message; });
+micro.disabled = false;
 
 choixPays.addEventListener("change", () => {
   try { localStorage.setItem("pays", choixPays.value); } catch (e) { /* stockage indisponible */ }
 });
 
+// ---------- Analyse ----------
 async function analyser(tampon) {
-  resultat.innerHTML = "";
+  resultat.hidden = true;
   etat.textContent = "J'écoute…";
   try {
-    await pret;
     const signal = await versSignal(tampon);
+    await pret;
     const d = await predire(modele, signal, {
       pays: choixPays.value || null,
-      mois: document.getElementById("saison").checked ? new Date().getMonth() + 1 : null,
+      mois: $("saison").checked ? new Date().getMonth() + 1 : null,
       progression: (t) => { etat.textContent = t; },
     });
+    etat.textContent = "";
     afficher(d);
+    noter(d);
   } catch (e) {
-    etat.textContent = "Impossible d'analyser ce son : " + e.message;
+    etat.textContent = "Je n'arrive pas à lire ce son : " + e.message;
   }
 }
 
+function pourcent(p) { return Math.max(1, Math.round(p * 100)); }
+
+function rond(espece) {
+  const r = el("span", "rond");
+  if (espece.photo) r.style.backgroundImage = `url("photos/${encodeURI(espece.photo)}")`;
+  return r;
+}
+
 function afficher(d) {
-  const c = d.chant;
-  const type = c > 0.65 ? "plutôt un chant" : c < 0.35 ? "plutôt un cri" : "chant ou cri, difficile à dire";
-  etat.textContent = `${d.duree} s analysées`;
-  let avis = "";
-  if (!d.oiseau_entendu) avis = `<p class="avertissement">Je n'entends pas d'oiseau clairement : rapproche-toi ou enregistre plus longtemps. Voici quand même mes meilleures pistes.</p>`;
-  else if (d.incertain) avis = `<p class="avertissement">Je ne suis pas sûr : plusieurs espèces se ressemblent ici.</p>`;
-  resultat.innerHTML = `${avis}<p class="type">Type de son : <strong>${type}</strong></p><div class="resultat"></div>`;
-  const liste = resultat.querySelector(".resultat");
-  for (const e of d.especes) {
-    const div = document.createElement("div");
-    div.className = "espece";
-    const pct = Math.round(e.proba * 100);
-    div.innerHTML = `<div class="vide"></div><div><div class="nom"></div><div class="sci"></div>
-      <div class="jauge"><div style="width:${pct}%"></div></div><div class="pct">${pct} %</div></div>`;
-    div.querySelector(".nom").textContent = e.fr;
-    div.querySelector(".sci").textContent = e.famille ? `${e.sci} · ${e.famille}` : e.sci;
-    liste.appendChild(div);
-    photo(e, div.querySelector(".vide"));
+  const e = d.especes[0];
+  resultat.replaceChildren();
+  if (e.photo) {
+    const img = el("img", "fiche-photo");
+    img.src = "photos/" + e.photo;
+    img.alt = e.fr;
+    resultat.append(img);
   }
-  // Frise : les moments où un oiseau est entendu, regroupés par espèce, avec sa photo
+  resultat.append(el("h2", "nom", e.fr), el("p", "latin", e.sci));
+
+  const verdict = el("p", "verdict");
+  const type = d.chant > 0.65 ? "C'est plutôt un chant." : d.chant < 0.35 ? "C'est plutôt un cri." : "Chant ou cri, difficile à dire.";
+  verdict.append(el("strong", "", `${pourcent(e.proba)} %`), `de certitude. ${type}`);
+  const jauge = el("div", "jauge"), rempli = el("div");
+  rempli.style.width = `${pourcent(e.proba)}%`;
+  jauge.append(rempli);
+  resultat.append(verdict, jauge);
+
+  if (!d.oiseau_entendu) resultat.append(el("p", "avis", "Je n'entends pas bien d'oiseau. Rapproche-toi ou enregistre un peu plus longtemps."));
+  else if (d.incertain) resultat.append(el("p", "avis", "Je ne suis pas sûr : plusieurs espèces se ressemblent sur cet enregistrement."));
+
+  const autres = d.especes.slice(1).filter((x) => x.proba >= 0.01);
+  if (autres.length) {
+    const ul = el("ul", "autres");
+    for (const x of autres) {
+      const li = el("li");
+      li.append(el("span", "", x.fr), el("span", "", `${pourcent(x.proba)} %`));
+      ul.append(li);
+    }
+    resultat.append(el("h3", "", "Ça pourrait aussi être"), ul);
+  }
+
+  // Les moments où un oiseau est entendu, regroupés par espèce
   const moments = [];
   for (const t of d.frise) {
     if (!t.oiseau) continue;
@@ -72,46 +103,98 @@ function afficher(d) {
     if (dernier && dernier.espece.sci === t.espece.sci && dernier.fin === t.debut) dernier.fin = t.debut + 3;
     else moments.push({ debut: t.debut, fin: t.debut + 3, espece: t.espece });
   }
-  if (moments.length) {
-    const titre = document.createElement("h2");
-    titre.textContent = "Ce que j'entends, moment par moment";
-    const f = document.createElement("div");
-    f.className = "frise";
+  if (moments.length > 1) {
+    const ul = el("ul", "moments");
     for (const m of moments) {
-      const puce = document.createElement("div");
-      puce.className = "moment";
-      const place = document.createElement("div");
-      place.className = "vide";
-      const texte = document.createElement("span");
-      texte.textContent = `${m.debut}–${m.fin} s · ${m.espece.fr}`;
-      puce.append(place, texte);
-      f.appendChild(puce);
-      photo(m.espece, place);
+      const li = el("li");
+      li.append(rond(m.espece), `De ${m.debut} à ${m.fin} s : ${m.espece.fr}`);
+      ul.append(li);
     }
-    resultat.append(titre, f);
+    resultat.append(el("h3", "", "Au fil de l'enregistrement"), ul);
+  }
+
+  // Quand l'entendre : nombre d'enregistrements xeno-canto par mois
+  const mois = modele.frequences.mois[e.i] || [];
+  const max = Math.max(...mois);
+  if (max > 0) {
+    const grille = el("div", "saison");
+    const actuel = new Date().getMonth();
+    "JFMAMJJASOND".split("").forEach((lettre, k) => {
+      const col = el("div", k === actuel ? "maintenant" : "");
+      const barre = el("i");
+      barre.style.height = `${Math.round(mois[k] / max * 70)}px`;
+      col.append(barre, lettre);
+      grille.append(col);
+    });
+    resultat.append(el("h3", "", "Quand l'entendre"), grille);
+  }
+
+  if (e.photo) {
+    const credit = el("p", "credit", "Photo : ");
+    const lien = el("a", "", e.credit || "Wikimedia Commons");
+    if (e.source) { lien.href = e.source; lien.target = "_blank"; lien.rel = "noopener"; }
+    credit.append(lien);
+    resultat.append(credit);
+  }
+  const encore = el("button", "encore", "Écouter encore");
+  encore.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  resultat.append(encore);
+
+  resultat.hidden = false;
+  resultat.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// ---------- Carnet des dernières écoutes (gardé sur le téléphone) ----------
+function lireCarnet() {
+  try { return JSON.parse(localStorage.getItem("carnet") || "[]"); } catch (e) { return []; }
+}
+
+function noter(d) {
+  if (!d.oiseau_entendu) return;
+  const e = d.especes[0];
+  const carnet = [{ sci: e.sci, fr: e.fr, photo: e.photo, proba: e.proba, date: new Date().toISOString() }, ...lireCarnet()].slice(0, 30);
+  try { localStorage.setItem("carnet", JSON.stringify(carnet)); } catch (err) { /* stockage indisponible */ }
+  montrerCarnet();
+}
+
+function quand(iso) {
+  const d = new Date(iso), maintenant = new Date();
+  const heure = `${d.getHours()} h ${String(d.getMinutes()).padStart(2, "0")}`;
+  const jour = (x) => new Date(x.getFullYear(), x.getMonth(), x.getDate()).getTime();
+  const ecart = Math.round((jour(maintenant) - jour(d)) / 86400000);
+  if (ecart === 0) return `aujourd'hui à ${heure}`;
+  if (ecart === 1) return `hier à ${heure}`;
+  return `le ${d.toLocaleDateString("fr-FR", { day: "numeric", month: "long" })} à ${heure}`;
+}
+
+function montrerCarnet() {
+  const carnet = lireCarnet();
+  $("carnet").hidden = carnet.length === 0;
+  const ol = $("historique");
+  ol.replaceChildren();
+  for (const x of carnet.slice(0, 8)) {
+    const li = el("li"), texte = el("div");
+    texte.append(el("strong", "", x.fr), el("span", "", `${quand(x.date)}, sûr à ${pourcent(x.proba)} %`));
+    li.append(rond(x), texte);
+    ol.append(li);
   }
 }
+montrerCarnet();
 
-function photo(e, place) {
-  if (!e.photo) return;
-  const img = document.createElement("img");
-  img.src = "photos/" + e.photo; img.alt = e.fr; img.loading = "lazy";
-  img.title = "Photo : " + (e.credit || "Wikimedia Commons");
-  if (e.source) {
-    const a = document.createElement("a");
-    a.href = e.source; a.target = "_blank"; a.rel = "noopener"; a.className = "lien-photo";
-    a.appendChild(img); place.replaceWith(a);
-  } else place.replaceWith(img);
-}
-
-document.getElementById("fichier").addEventListener("change", async (ev) => {
+// ---------- Fichier audio ----------
+$("fichier").addEventListener("change", async (ev) => {
   const f = ev.target.files[0];
   if (f) analyser(await f.arrayBuffer());
+  ev.target.value = "";
 });
 
-let enregistreur = null;
+// ---------- Micro ----------
+const DUREE_MAX = 60;
+
+function arreter() { if (enregistreur && enregistreur.state !== "inactive") enregistreur.stop(); }
+
 micro.addEventListener("click", async () => {
-  if (enregistreur) { enregistreur.stop(); return; }
+  if (enregistreur) { arreter(); return; }
   try {
     const flux = await navigator.mediaDevices.getUserMedia({
       audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
@@ -120,15 +203,25 @@ micro.addEventListener("click", async () => {
     enregistreur = new MediaRecorder(flux);
     enregistreur.ondataavailable = (e) => morceaux.push(e.data);
     enregistreur.onstop = async () => {
+      clearInterval(minuteur);
       flux.getTracks().forEach((t) => t.stop());
       enregistreur = null;
-      micro.textContent = "🎙️ Enregistrer"; micro.className = "principal";
+      micro.classList.remove("en-cours");
+      $("micro-texte").textContent = "Écouter";
+      $("chrono").textContent = "";
       analyser(await new Blob(morceaux).arrayBuffer());
     };
     enregistreur.start();
-    micro.textContent = "⏹️ Arrêter et analyser"; micro.className = "enregistre";
-    etat.textContent = "Enregistrement… approche-toi de l'oiseau, 5 à 30 s suffisent.";
+    const debut = Date.now();
+    micro.classList.add("en-cours");
+    $("micro-texte").textContent = "Arrêter";
+    etat.textContent = "Tends le téléphone vers le chant. Quelques secondes suffisent.";
+    minuteur = setInterval(() => {
+      const s = Math.floor((Date.now() - debut) / 1000);
+      $("chrono").textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+      if (s >= DUREE_MAX) arreter();
+    }, 250);
   } catch (e) {
-    etat.textContent = "Micro inaccessible : " + e.message;
+    etat.textContent = "Je n'ai pas accès au micro : " + e.message;
   }
 });

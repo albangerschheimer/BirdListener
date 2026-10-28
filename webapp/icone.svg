@@ -1,8 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
-  <rect width="180" height="180" fill="#C8552B"/>
-  <g fill="#F2EEE4" transform="translate(90 92) rotate(-14) scale(0.82) translate(-100 -58)">
-    <path d="M100 30 C103.2 30 105.4 33.6 105.4 39 C105.4 51 103.6 61 102.6 67 L107.5 85 L100 77.5 L92.5 85 L97.4 67 C96.4 61 94.6 51 94.6 39 C94.6 33.6 96.8 30 100 30 Z"/>
-    <path d="M96.5 43 C86 36.5 66 31 40 35 C26 37.5 15 45 5 59 C21 50.5 42 49 66 52 C80 53.8 89 56 96 59.5 Z"/>
-    <path d="M103.5 43 C114 36.5 134 31 160 35 C174 37.5 185 45 195 59 C179 50.5 158 49 134 52 C120 53.8 111 56 104 59.5 Z"/>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#26301C"/><g transform="translate(14 4) scale(0.86)">
+    <g class="crete"><g class="plume" data-angle="-168" transform="translate(78 118) rotate(-78)">
+    <path d="M-3.2 0 L-4.2 -45 A4.2 4.2 0 0 1 4.2 -45 L3.2 0 Z" fill="#FF5A1F"/>
+    <rect x="-4.1" y="-37" width="8.2" height="5" fill="#1A2113"/>
+    <path d="M-4.2 -37 L-4.2 -45 A4.2 4.2 0 0 1 4.2 -45 L4.2 -37 Z" fill="#C9CCC6"/></g><g class="plume" data-angle="-146" transform="translate(78 118) rotate(-56)">
+    <path d="M-3.2 0 L-4.2 -59 A4.2 4.2 0 0 1 4.2 -59 L3.2 0 Z" fill="#FF5A1F"/>
+    <rect x="-4.1" y="-51" width="8.2" height="5" fill="#1A2113"/>
+    <path d="M-4.2 -51 L-4.2 -59 A4.2 4.2 0 0 1 4.2 -59 L4.2 -51 Z" fill="#C9CCC6"/></g><g class="plume" data-angle="-124" transform="translate(78 118) rotate(-34)">
+    <path d="M-3.2 0 L-4.2 -69 A4.2 4.2 0 0 1 4.2 -69 L3.2 0 Z" fill="#FF5A1F"/>
+    <rect x="-4.1" y="-61" width="8.2" height="5" fill="#1A2113"/>
+    <path d="M-4.2 -61 L-4.2 -69 A4.2 4.2 0 0 1 4.2 -69 L4.2 -61 Z" fill="#C9CCC6"/></g><g class="plume" data-angle="-102" transform="translate(78 118) rotate(-12)">
+    <path d="M-3.2 0 L-4.2 -75 A4.2 4.2 0 0 1 4.2 -75 L3.2 0 Z" fill="#FF5A1F"/>
+    <rect x="-4.1" y="-67" width="8.2" height="5" fill="#1A2113"/>
+    <path d="M-4.2 -67 L-4.2 -75 A4.2 4.2 0 0 1 4.2 -75 L4.2 -67 Z" fill="#C9CCC6"/></g><g class="plume" data-angle="-80" transform="translate(78 118) rotate(10)">
+    <path d="M-3.2 0 L-4.2 -71 A4.2 4.2 0 0 1 4.2 -71 L3.2 0 Z" fill="#FF5A1F"/>
+    <rect x="-4.1" y="-63" width="8.2" height="5" fill="#1A2113"/>
+    <path d="M-4.2 -63 L-4.2 -71 A4.2 4.2 0 0 1 4.2 -71 L4.2 -63 Z" fill="#C9CCC6"/></g><g class="plume" data-angle="-58" transform="translate(78 118) rotate(32)">
+    <path d="M-3.2 0 L-4.2 -59 A4.2 4.2 0 0 1 4.2 -59 L3.2 0 Z" fill="#FF5A1F"/>
+    <rect x="-4.1" y="-51" width="8.2" height="5" fill="#1A2113"/>
+    <path d="M-4.2 -51 L-4.2 -59 A4.2 4.2 0 0 1 4.2 -59 L4.2 -51 Z" fill="#C9CCC6"/></g><g class="plume" data-angle="-36" transform="translate(78 118) rotate(54)">
+    <path d="M-3.2 0 L-4.2 -45 A4.2 4.2 0 0 1 4.2 -45 L3.2 0 Z" fill="#FF5A1F"/>
+    <rect x="-4.1" y="-37" width="8.2" height="5" fill="#1A2113"/>
+    <path d="M-4.2 -37 L-4.2 -45 A4.2 4.2 0 0 1 4.2 -45 L4.2 -37 Z" fill="#C9CCC6"/></g></g>
+    <circle cx="88" cy="132" r="22" fill="#FF5A1F"/>
+    <path d="M106 126 C136 130 162 144 184 166 C158 150 134 142 107 141 Z" fill="#C9CCC6"/>
+    <circle cx="97" cy="127" r="3.6" fill="#1A2113"/></g></svg>
