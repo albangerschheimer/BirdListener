@@ -1,6 +1,6 @@
 """Télécharge chaque enregistrement choisi, le fait écouter par l'oreille, puis efface le son.
 
-Usage : python scripts/build_embeddings.py data/selection.csv [nb_processus] [secondes_max]
+Usage : python scripts/build_embeddings.py data/selection.csv [nb_processus] [secondes_max] [connexions]
 Pour chaque enregistrement XC<id> : data/emb/<id>.npz avec
   emb    : empreintes float16 [n_tranches, 1024]
   top_i / top_s : les 10 meilleures classes BirdNET et leurs scores, par tranche
@@ -34,7 +34,7 @@ def telecharger(xc_id):
         try:
             with requests.get(url, timeout=120, stream=True) as r:
                 if r.status_code == 404:
-                    return None
+                    return b""          # enregistrement supprimé : définitif
                 if r.status_code == 200:
                     contenu = bytearray()
                     for morceau in r.iter_content(65536):
@@ -46,7 +46,7 @@ def telecharger(xc_id):
         except requests.RequestException:
             pass
         time.sleep(2 ** essai)
-    return None
+    return None                         # échec réseau : on réessaiera au prochain passage
 
 
 def decoder(contenu):
@@ -58,6 +58,8 @@ def decoder(contenu):
 
 def traiter(xc_id):
     contenu = telecharger(xc_id)
+    if contenu is None:
+        return xc_id, 0
     global _oreille
     if _oreille is None:
         _oreille = Oreille(threads=1)
@@ -86,7 +88,7 @@ def main(selection, nb=4):
     debut, n = time.time(), 0
     # Chaque processus télécharge puis écoute. xeno-canto envoie lentement chaque fichier
     # (~16 s pour 2 Mo) : on en télécharge 4 fois plus que de processeurs en même temps
-    with Pool(nb * 4) as calcul:
+    with Pool(int(sys.argv[4]) if len(sys.argv) > 4 else nb * 4) as calcul:
         for xc_id, nt in calcul.imap_unordered(traiter, ids, chunksize=1):
             n += 1
             if n % 100 == 0:
