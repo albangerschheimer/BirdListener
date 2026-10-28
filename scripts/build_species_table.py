@@ -35,20 +35,20 @@ def main():
                 r = json.loads(ligne)
             except json.JSONDecodeError:
                 continue
-            anglais.setdefault(f"{r['gen']} {r['sp']}", (r.get("en") or "").lower())
+            anglais.setdefault(f"{r['gen']} {r['sp']}", r.get("en") or "")
 
     compte = Counter(r["espece"] for r in csv.DictReader(open(RACINE / "data" / "selection.csv", encoding="utf-8")))
     table, sans_nom = {}, []
     for espece, n in sorted(compte.items()):
         r = infos.get(espece)
         if r is None:
-            r = par_anglais.get(anglais.get(espece, ""))
+            r = par_anglais.get(anglais.get(espece, "").lower())
         if r is None and espece in SYNONYMES:
             r = infos.get(SYNONYMES[espece])
         if r is None:
             sans_nom.append(espece)
         texte = lambda c: str(r[c]) if r is not None and pd.notna(r[c]) else ""  # noqa: E731
-        table[espece] = {"fr": texte("French"), "en": texte("English"), "famille": texte("Family"),
+        table[espece] = {"fr": texte("French"), "en": texte("English") or anglais.get(espece, ""), "famille": texte("Family"),
                          "ordre": texte("Order"), "n_enregistrements": n}
     json.dump(table, open(RACINE / "data" / "especes.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print(f"{len(table)} espèces, {len(sans_nom)} sans nom IOC : {sans_nom[:10]}")
