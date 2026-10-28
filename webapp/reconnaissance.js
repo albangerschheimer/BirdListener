@@ -127,38 +127,34 @@ function aPriori(m, pays, mois, fond = 0.002) {
 
 // ---------- Prédiction ----------
 
-export async function predire(m, signal, { pays = null, mois = null, top = 5, progression = () => {} } = {}) {
-  const T = tranches(signal);
-  const scoresTranches = [], birdnet = [];
-  let chant = 0;
-  for (let k = 0; k < T.length; k++) {
-    progression(k / T.length);   // avancement, de 0 à 1
-    // Sorties : 0 = scores BirdNET (6522), 1 = empreinte (1024)
-    const entree = new Tensor(T[k], [1, TRANCHE]);
-    const sorties = await m.birdnet.run(entree);
-    const lues = [];
-    for (const t of sorties) {
-      const l = await t.moveTo("wasm");
-      lues.push(l.toTypedArray().slice());
-      l.delete();
-    }
-    entree.delete();
-    const [bn, emb] = lues;
-    const c = classifieur(m, emb);
-    scoresTranches.push(c.especes);
-    chant += c.chant;
-    birdnet.push(bn.map((v) => 1 / (1 + Math.exp(-v))));
-    await new Promise((r) => setTimeout(r));   // laisse respirer l'affichage
+// Une tranche de 3 s : scores du classifieur, chant ou cri, et avis de BirdNET
+async function ecouterTranche(m, t) {
+  // Sorties : 0 = scores BirdNET (6522), 1 = empreinte (1024)
+  const entree = new Tensor(t, [1, TRANCHE]);
+  const sorties = await m.birdnet.run(entree);
+  const lues = [];
+  for (const x of sorties) {
+    const l = await x.moveTo("wasm");
+    lues.push(l.toTypedArray().slice());
+    l.delete();
   }
-  const n = m.n, nT = T.length, col = m.meta.colonne_birdnet;
+  entree.delete();
+  const [bn, emb] = lues;
+  const c = classifieur(m, emb);
+  return { scores: c.especes, chant: c.chant, birdnet: bn.map((v) => 1 / (1 + Math.exp(-v))) };
+}
+
+// Probabilités finales à partir des tranches : classifieur + BirdNET + filtre « où et quand »
+function fusionner(m, tranchesEcoutees, pays, mois) {
+  const n = m.n, nT = tranchesEcoutees.length, col = m.meta.colonne_birdnet;
 
   // Score de l'enregistrement : log-sum-exp des tranches, moins log(nombre de tranches)
   const enr = new Float32Array(n);
   for (let i = 0; i < n; i++) {
     let max = -Infinity;
-    for (const s of scoresTranches) max = Math.max(max, s[i]);
+    for (const t of tranchesEcoutees) max = Math.max(max, t.scores[i]);
     let somme = 0;
-    for (const s of scoresTranches) somme += Math.exp(s[i] - max);
+    for (const t of tranchesEcoutees) somme += Math.exp(t.scores[i] - max);
     enr[i] = max + Math.log(somme) - Math.log(nT);
   }
   const pBl = softmax(enr);
@@ -166,14 +162,14 @@ export async function predire(m, signal, { pays = null, mois = null, top = 5, pr
   // Avis de BirdNET sur les mêmes espèces (meilleure tranche), et présence d'un oiseau
   const pBn = new Float32Array(n);
   const oiseaux = new Float32Array(nT);
-  for (let k = 0; k < nT; k++) {
+  tranchesEcoutees.forEach((t, k) => {
     for (let j = 0; j < col.length; j++) {
       if (col[j] < 0) continue;
-      const v = birdnet[k][j];
+      const v = t.birdnet[j];
       if (v > pBn[col[j]]) pBn[col[j]] = v;
       if (v > oiseaux[k]) oiseaux[k] = v;
     }
-  }
+  });
   const sBn = pBn.reduce((a, b) => a + b, 0);
   const w = sBn > 0 ? m.meta.poids_birdnet : 0;
   let p = pBl.map((v, i) => (1 - w) * v + (sBn > 0 ? w * pBn[i] / sBn : 0));
@@ -183,17 +179,31 @@ export async function predire(m, signal, { pays = null, mois = null, top = 5, pr
     const s = p.reduce((x, y) => x + y, 0);
     p = p.map((v) => v / s);
   }
+  return { p, oiseaux };
+}
 
-  const ordre = Array.from(p.keys()).sort((a, b) => p[b] - p[a]).slice(0, top);
-  const fiche = (i, proba) => ({ ...m.meta.especes[i], i, proba });
-  const frise = scoresTranches.map((s, k) => {
-    const q = softmax(s);
+const fiche = (m, i, proba) => ({ ...m.meta.especes[i], i, proba });
+const meilleures = (p, top) => Array.from(p.keys()).sort((a, b) => p[b] - p[a]).slice(0, top);
+
+export async function predire(m, signal, { pays = null, mois = null, top = 5, progression = () => {} } = {}) {
+  const T = tranches(signal);
+  const ecoutees = [];
+  for (let k = 0; k < T.length; k++) {
+    progression(k / T.length);   // avancement, de 0 à 1
+    ecoutees.push(await ecouterTranche(m, T[k]));
+    await new Promise((r) => setTimeout(r));   // laisse respirer l'affichage
+  }
+  const { p, oiseaux } = fusionner(m, ecoutees, pays, mois);
+  const nT = T.length, chant = ecoutees.reduce((a, t) => a + t.chant, 0);
+  const ordre = meilleures(p, top);
+  const frise = ecoutees.map((t, k) => {
+    const q = softmax(t.scores);
     let best = 0;
-    for (let i = 1; i < n; i++) if (q[i] > q[best]) best = i;
-    return { debut: 3 * k, espece: fiche(best, q[best]), oiseau: oiseaux[k] >= m.meta.seuil_oiseau };
+    for (let i = 1; i < m.n; i++) if (q[i] > q[best]) best = i;
+    return { debut: 3 * k, espece: fiche(m, best, q[best]), oiseau: oiseaux[k] >= m.meta.seuil_oiseau };
   });
   return {
-    especes: ordre.map((i) => fiche(i, p[i])),
+    especes: ordre.map((i) => fiche(m, i, p[i])),
     oiseau_entendu: Math.max(...oiseaux) >= m.meta.seuil_oiseau,
     incertain: p[ordre[0]] < m.meta.seuil_incertain,
     chant: 1 / (1 + Math.exp(-chant / nT)),
@@ -201,3 +211,13 @@ export async function predire(m, signal, { pays = null, mois = null, top = 5, pr
     frise,
   };
 }
+
+// Écoute continue : une tranche de 3 s (mono, 48 kHz) analysée seule
+export async function predireTranche(m, t, { pays = null, mois = null } = {}) {
+  const ecoutee = await ecouterTranche(m, t);
+  const { p, oiseaux } = fusionner(m, [ecoutee], pays, mois);
+  const [i] = meilleures(p, 1);
+  return { espece: fiche(m, i, p[i]), oiseau: oiseaux[0] >= m.meta.seuil_oiseau, chant: 1 / (1 + Math.exp(-ecoutee.chant)) };
+}
+
+export const FREQUENCE = FREQ;

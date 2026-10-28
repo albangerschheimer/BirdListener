@@ -53,7 +53,7 @@ h1 { font-size: clamp(80px, 25.5vw, 120px); margin: 12px 0 6px; letter-spacing: 
 }
 .ecouter:active .disque { transform: scale(0.97); }
 .disque-texte { font-size: 44px; font-weight: 900; text-transform: uppercase; line-height: 0.9; }
-.niveaux { display: none; align-items: center; gap: 5px; height: 64px; margin-top: 6px; }
+.niveaux { display: none; align-items: center; gap: 5px; height: 52px; margin: 8px 0 2px; }
 .niveaux i { display: block; width: 7px; border-radius: 4px; background: var(--ardoise); height: 8px; transition: height 0.08s; }
 .chrono { font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; min-height: 0; }
 .ecouter.en-cours .niveaux { display: flex; }
@@ -212,7 +212,7 @@ main { padding-bottom: calc(env(safe-area-inset-bottom) + 96px); }
 .ecouter.analyse .disque-texte { font-size: 40px; font-variant-numeric: tabular-nums; }
 .ecouter.analyse .disque { animation: battement 1s ease-in-out infinite; }
 @keyframes battement { 50% { transform: scale(0.96); } }
-.lien-fichier { margin-top: 18px; }
+.lien-fichier { margin-top: 0; }
 
 /* ---------- Fiche ---------- */
 .verdict { display: flex; align-items: baseline; gap: 14px; }
@@ -282,3 +282,23 @@ main { padding-bottom: calc(env(safe-area-inset-bottom) + 96px); }
 .collection li:active { transform: scale(0.94); }
 .collection .rond { width: 72px; height: 72px; display: grid; place-items: center; font-size: 30px; font-weight: 800; color: var(--feuille); }
 .collection li.nouvelle .rond { box-shadow: 0 0 0 3px var(--or); animation: apparait 0.5s cubic-bezier(0.3, 1.5, 0.5, 1) both; }
+
+/* Sous le bouton : mode continu, fichier, spectrogramme pendant l'écoute */
+.sous-bouton { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 18px; }
+.sous-bouton .puce { margin: 0; }
+.spectre { display: none; width: 100%; max-width: 440px; height: 88px; margin-top: 18px; border-radius: 14px; background: var(--sous-bois); }
+.ecoute.en-cours .spectre { display: block; animation: monte 0.35s ease both; }
+.ecoute.en-cours .sous-bouton { display: none; }
+
+/* Espèces entendues en direct (écoute continue) */
+.direct { margin-top: 26px; }
+.direct ol { list-style: none; margin: 0; padding: 0; }
+.direct li { display: grid; grid-template-columns: 52px 1fr auto; gap: 12px; align-items: center; padding: 10px 8px; margin: 0 -8px; border-top: 1.5px solid rgba(244, 238, 220, 0.25); border-radius: 10px; cursor: pointer; }
+.direct li .rond { width: 52px; height: 52px; }
+.direct strong { display: block; font-size: 26px; font-weight: 800; text-transform: uppercase; line-height: 1; }
+.direct span { color: var(--feuille); font-size: 17px; }
+.direct b { color: var(--or); font-size: 28px; font-weight: 900; font-variant-numeric: tabular-nums; }
+.direct li.nouveau { animation: arrivee 0.7s cubic-bezier(0.3, 1.4, 0.5, 1) both; }
+.direct li.revu { animation: eclair 0.9s ease-out; }
+@keyframes arrivee { from { opacity: 0; transform: translateY(-12px) scale(0.96); background: rgba(248, 185, 70, 0.3); } to { opacity: 1; transform: none; background: transparent; } }
+@keyframes eclair { from { background: rgba(248, 185, 70, 0.28); } to { background: transparent; } }

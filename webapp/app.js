@@ -1,10 +1,10 @@
 import { mesPartages, ouvrirCarte } from "./carte.js";
-import { charger, predire, versSignal } from "./reconnaissance.js";
+import { charger, predire, predireTranche, versSignal, FREQUENCE } from "./reconnaissance.js";
 
 const $ = (id) => document.getElementById(id);
 const resultat = $("resultat"), micro = $("micro"), choixPays = $("pays"), lecteur = $("lecteur");
 const calme = matchMedia("(prefers-reduced-motion: reduce)").matches;
-let modele = null, enregistreur = null, minuteur = null, mesure = null, veille = null;
+let modele = null, minuteur = null, veille = null;
 
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
 
@@ -282,13 +282,16 @@ function afficher(d) { construireFiche(d.especes[0], d); }
 
 // ---------- Carnet des dernières écoutes (gardé sur le téléphone) ----------
 function noter(d) {
-  if (!d.oiseau_entendu) return;
-  const e = d.especes[0];
+  if (d.oiseau_entendu && noterEspece(d.especes[0])) toast("Nouvelle espèce");
+}
+
+// ajoute au carnet et à la collection ; vrai si l'espèce est nouvelle
+function noterEspece(e) {
   const nouvelle = collectionner(e);           // avant le carnet, dont la collection peut partir
   memoriser("carnet", [{ sci: e.sci, fr: e.fr, photo: e.photo, proba: e.proba, date: new Date().toISOString() }, ...memoire("carnet", [])].slice(0, 30));
   montrerCarnet();
   montrerCollection(nouvelle && e.sci);
-  if (nouvelle) toast("Nouvelle espèce");
+  return nouvelle;
 }
 
 function quand(iso) {
@@ -370,67 +373,244 @@ $("fichier").addEventListener("change", async (ev) => {
 });
 
 // ---------- Micro ----------
-const DUREE_MAX = 60;
+const DUREE_MAX = 60;                 // une écoute simple
+const DUREE_MAX_CONTINU = 2 * 3600;   // une balade en écoute continue
+const SEUIL_DIRECT = 0.55;            // certitude minimale d'une espèce sur une tranche de 3 s
 
-// Barres de niveau pendant l'écoute : l'énergie réelle du micro dans 9 bandes, de 1 à 9 kHz
+let continu = memoire("continu", false);
+const boutonContinu = $("continu");
+function montrerMode() {
+  boutonContinu.classList.toggle("actif", continu);
+  boutonContinu.setAttribute("aria-pressed", String(continu));
+}
+montrerMode();
+boutonContinu.addEventListener("click", () => { vibrer(); continu = !continu; memoriser("continu", continu); montrerMode(); });
+
+// Barres de niveau (9 bandes de 1 à 9 kHz) et spectrogramme défilant, tirés du vrai son du micro
 const barres = Array.from({ length: 9 }, () => document.createElement("i"));
 $("niveaux").append(...barres);
-function suivreNiveaux(flux) {
-  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+const toile = $("spectre"), pinceau = toile.getContext("2d");
+const COULEURS = (() => {
+  const reperes = [[0, 0x10, 0x23, 0x1b], [0.35, 0x31, 0x41, 0x45], [0.62, 0x9d, 0xb4, 0x77], [0.85, 0xf8, 0xb9, 0x46], [1, 0xf4, 0xee, 0xdc]];
+  const c = new Uint8ClampedArray(256 * 3);
+  for (let v = 0; v < 256; v++) {
+    const x = v / 255;
+    let k = 0;
+    while (k < reperes.length - 2 && x > reperes[k + 1][0]) k++;
+    const [x0, ...a] = reperes[k], [x1, ...b] = reperes[k + 1];
+    const t = Math.min(1, Math.max(0, (x - x0) / (x1 - x0)));
+    for (let j = 0; j < 3; j++) c[v * 3 + j] = a[j] + (b[j] - a[j]) * t;
+  }
+  return c;
+})();
+
+function creerContexte() {
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  try { return new Ctx({ sampleRate: FREQUENCE }); } catch (e) { return new Ctx(); }
+}
+
+function suivreSon(ctx, source) {
   const analyse = ctx.createAnalyser();
   analyse.fftSize = 1024;
-  ctx.createMediaStreamSource(flux).connect(analyse);
-  const spectre = new Uint8Array(analyse.frequencyBinCount), hz = ctx.sampleRate / analyse.fftSize;
+  analyse.smoothingTimeConstant = 0.2;
+  source.connect(analyse);
+  const db = new Float32Array(analyse.frequencyBinCount), hz = ctx.sampleRate / analyse.fftSize;
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  toile.width = Math.round(toile.clientWidth * dpr) || 600; toile.height = Math.round(88 * dpr);
+  const L = toile.width, H = toile.height, pas = Math.max(1, Math.round(dpr));
+  pinceau.fillStyle = "#10231B"; pinceau.fillRect(0, 0, L, H);
+  const colonne = pinceau.createImageData(pas, H);
+  // de 400 Hz à 11 kHz sur une échelle logarithmique : les chants occupent la hauteur, le grondement est coupé
+  const F_MIN = 400, F_MAX = 11000, ECART = 48, BAS = Math.round(F_MIN / hz), HAUT = Math.round(F_MAX / hz);
+  const lignes = Array.from({ length: H }, (_, y) => Math.min(db.length - 1, Math.round(F_MIN * (F_MAX / F_MIN) ** (1 - y / H) / hz)));
+  // gain automatique : l'échelle suit le son le plus fort entendu récemment, pour voir aussi les chants lointains
+  let plafond = -60;
+  const niveau = (v) => Math.min(1, Math.max(0, (v - plafond + ECART) / ECART));
   let actif = true;
   (function tracer() {
     if (!actif) return;
-    analyse.getByteFrequencyData(spectre);
+    analyse.getFloatFrequencyData(db);
+    let fort = -Infinity;
+    for (let i = BAS; i < HAUT; i++) if (db[i] > fort) fort = db[i];
+    plafond = Math.max(fort, plafond - 0.12, -80);
     barres.forEach((b, k) => {
       const de = Math.round((1000 + k * 900) / hz), a = Math.round((1900 + k * 900) / hz);
-      let max = 0;
-      for (let i = de; i < a; i++) max = Math.max(max, spectre[i]);
-      b.style.height = `${8 + Math.round(max / 255 * 56)}px`;
+      let max = -Infinity;
+      for (let i = de; i < a; i++) max = Math.max(max, db[i]);
+      b.style.height = `${8 + Math.round(niveau(max) ** 1.5 * 36)}px`;
     });
+    // le spectrogramme glisse vers la gauche ; la nouvelle colonne s'ajoute à droite (aigus en haut)
+    pinceau.drawImage(toile, -pas, 0);
+    for (let y = 0; y < H; y++) {
+      const v = Math.round(255 * niveau(db[lignes[y]]) ** 1.6) * 3;
+      for (let x = 0; x < pas; x++) {
+        const o = (y * pas + x) * 4;
+        colonne.data[o] = COULEURS[v]; colonne.data[o + 1] = COULEURS[v + 1]; colonne.data[o + 2] = COULEURS[v + 2]; colonne.data[o + 3] = 255;
+      }
+    }
+    pinceau.putImageData(colonne, L - pas, 0);
     requestAnimationFrame(tracer);
   })();
-  return () => { actif = false; ctx.close(); barres.forEach((b) => { b.style.height = "8px"; }); };
+  return () => { actif = false; barres.forEach((b) => { b.style.height = "8px"; }); };
 }
 
-function arreter() { if (enregistreur && enregistreur.state !== "inactive") enregistreur.stop(); }
+// ---------- Écoute continue : chaque tranche de 3 s est analysée pendant que l'on marche ----------
+function reechantillonner(x, de) {
+  if (de === FREQUENCE) return x;
+  const n = Math.round(x.length * FREQUENCE / de), y = new Float32Array(n), r = de / FREQUENCE;
+  for (let i = 0; i < n; i++) {
+    const t = i * r, k = Math.floor(t), f = t - k;
+    y[i] = (x[k] || 0) * (1 - f) + (x[k + 1] || 0) * f;
+  }
+  return y;
+}
+
+async function capter(ctx, source, surTranche) {
+  const taille = Math.round(3 * ctx.sampleRate);
+  let tranche = new Float32Array(taille), n = 0;
+  const recevoir = (paquet) => {
+    let i = 0;
+    while (i < paquet.length) {
+      const k = Math.min(paquet.length - i, taille - n);
+      tranche.set(paquet.subarray(i, i + k), n);
+      n += k; i += k;
+      if (n === taille) { surTranche(reechantillonner(tranche, ctx.sampleRate)); tranche = new Float32Array(taille); n = 0; }
+    }
+  };
+  let noeud;
+  if (ctx.audioWorklet && window.AudioWorkletNode) {
+    await ctx.audioWorklet.addModule("capteur.js");
+    noeud = new AudioWorkletNode(ctx, "capteur");
+    noeud.port.onmessage = (e) => recevoir(e.data);
+  } else {
+    noeud = ctx.createScriptProcessor(4096, 1, 1);
+    noeud.onaudioprocess = (e) => recevoir(new Float32Array(e.inputBuffer.getChannelData(0)));
+  }
+  // relié à une sortie muette : certains navigateurs n'activent un nœud que s'il mène aux haut-parleurs
+  const muet = ctx.createGain();
+  muet.gain.value = 0;
+  source.connect(noeud); noeud.connect(muet); muet.connect(ctx.destination);
+}
+
+const direct = $("direct"), listeDirect = $("direct-liste");
+let vus = new Map();
+
+function entendu(e) {
+  let x = vus.get(e.sci);
+  if (!x) {
+    x = { espece: e, fois: 0, li: el("li", "nouveau"), heure: el("span"), compte: el("b") };
+    vus.set(e.sci, x);
+    const texte = el("div");
+    texte.append(el("strong", "", e.fr), x.heure);
+    x.li.append(rond(e), texte, x.compte);
+    x.li.addEventListener("click", () => { vibrer(); construireFiche(x.espece, null); });
+    listeDirect.prepend(x.li);
+    direct.hidden = false;
+    navigator.vibrate?.([20, 60, 20]);
+  } else {
+    x.li.classList.remove("revu"); void x.li.offsetWidth; x.li.classList.add("revu");
+    listeDirect.prepend(x.li);
+  }
+  x.fois += 1;
+  if (e.proba > x.espece.proba) x.espece = e;
+  x.heure.textContent = quand(new Date().toISOString());
+  x.compte.textContent = String(x.fois);
+}
+
+function ecouteContinue(ctx, source) {
+  vus = new Map();
+  listeDirect.replaceChildren();
+  direct.hidden = true;
+  resultat.hidden = true;
+  const file = [];
+  let occupe = false, fini = false;
+  async function suivante() {
+    if (occupe || !file.length) return;
+    occupe = true;
+    const t = file.shift();
+    try {
+      await pret;
+      const r = await predireTranche(modele, t, {
+        pays: choixPays.value || null,
+        mois: $("saison").checked ? new Date().getMonth() + 1 : null,
+      });
+      if (!fini && r.oiseau && r.espece.proba >= SEUIL_DIRECT) entendu(r.espece);
+    } catch (err) { /* tranche illisible : on passe à la suivante */ }
+    occupe = false;
+    suivante();
+  }
+  capter(ctx, source, (t) => {
+    file.push(t);
+    if (file.length > 2) file.shift();       // téléphone lent : on garde le direct
+    suivante();
+  }).catch(() => toast("Écoute continue indisponible"));
+  return () => { fini = true; };
+}
+
+async function terminerContinue() {
+  const especes = [...vus.values()].map((x) => x.espece);
+  if (!especes.length) { toast("Aucun oiseau"); return; }
+  let nouvelles = 0;
+  for (const e of especes.reverse()) if (noterEspece(e)) nouvelles += 1;
+  if (nouvelles) toast(nouvelles === 1 ? "Nouvelle espèce" : `${nouvelles} nouvelles espèces`);
+  for (const e of especes) await partagerEspece(e, { silencieux: true });
+}
+
+// ---------- Une écoute (simple ou continue) ----------
+let fermerEcoute = null;
+function arreter() { fermerEcoute?.(); }
 
 micro.addEventListener("click", async () => {
   vibrer();
   if (micro.classList.contains("analyse")) return;
-  if (enregistreur) { arreter(); return; }
+  if (fermerEcoute) { arreter(); return; }
+  const ctx = creerContexte();               // créé pendant le toucher : exigé par Safari
+  ctx.resume?.().catch(() => {});
+  let flux;
   try {
-    const flux = await navigator.mediaDevices.getUserMedia({
+    flux = await navigator.mediaDevices.getUserMedia({
       audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
     });
-    const morceaux = [];
+  } catch (e) {
+    ctx.close();
+    toast("Micro inaccessible");
+    return;
+  }
+  const source = ctx.createMediaStreamSource(flux);
+  const enContinu = continu;
+  let enregistreur = null, finContinue = null;
+  const morceaux = [];
+  if (enContinu) finContinue = ecouteContinue(ctx, source);
+  else {
     enregistreur = new MediaRecorder(flux);
     enregistreur.ondataavailable = (e) => morceaux.push(e.data);
-    enregistreur.onstop = async () => {
-      clearInterval(minuteur);
-      if (mesure) { mesure(); mesure = null; }
-      veille?.release().catch(() => {}); veille = null;
-      flux.getTracks().forEach((t) => t.stop());
-      enregistreur = null;
-      analyser(await new Blob(morceaux).arrayBuffer());
-    };
+    enregistreur.onstop = async () => analyser(await new Blob(morceaux).arrayBuffer());
     enregistreur.start();
-    lecteur.pause();
-    try { mesure = suivreNiveaux(flux); } catch (err) { mesure = null; }
-    try { veille = await navigator.wakeLock?.request("screen"); } catch (err) { veille = null; }   // écran allumé
-    const debut = Date.now();
-    etatBouton("ecoute");
-    minuteur = setInterval(() => {
-      const s = Math.floor((Date.now() - debut) / 1000);
-      $("chrono").textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
-      if (s >= DUREE_MAX) arreter();
-    }, 250);
-  } catch (e) {
-    toast("Micro inaccessible");
   }
+  lecteur.pause();
+  let arretSon = null;
+  try { arretSon = suivreSon(ctx, source); } catch (err) { arretSon = null; }
+  try { veille = await navigator.wakeLock?.request("screen"); } catch (err) { veille = null; }   // écran allumé
+  const debut = Date.now();
+  etatBouton("ecoute");
+  $("zone-ecoute").classList.add("en-cours");
+  const limite = enContinu ? DUREE_MAX_CONTINU : DUREE_MAX;
+  minuteur = setInterval(() => {
+    const s = Math.floor((Date.now() - debut) / 1000);
+    $("chrono").textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+    if (s >= limite) arreter();
+  }, 250);
+  fermerEcoute = () => {
+    fermerEcoute = null;
+    clearInterval(minuteur);
+    arretSon?.();
+    veille?.release().catch(() => {}); veille = null;
+    $("zone-ecoute").classList.remove("en-cours");
+    if (enregistreur && enregistreur.state !== "inactive") enregistreur.stop();
+    flux.getTracks().forEach((t) => t.stop());
+    setTimeout(() => ctx.close().catch(() => {}), 300);
+    if (enContinu) { finContinue(); etatBouton("repos"); terminerContinue(); }
+  };
 });
 
 // ---------- Onglets Écouter / Carte ----------
@@ -468,17 +648,20 @@ async function envoyer(o) {
 }
 
 async function partager(d) {
-  const e = d.especes[0];
-  if (!casePartage.checked || !d.oiseau_entendu || e.proba < 0.5) return;
+  if (d.oiseau_entendu) await partagerEspece(d.especes[0]);
+}
+
+async function partagerEspece(e, { silencieux = false } = {}) {
+  if (!casePartage.checked || e.proba < 0.5) return;
   let pos;
-  try { pos = await position(); } catch (err) { toast("Position indisponible"); return; }
+  try { pos = await position(); } catch (err) { if (!silencieux) toast("Position indisponible"); return; }
   // arrondi à 0,01° (environ 1 km) avant tout envoi
   const o = { sci: e.sci, certitude: Math.round(e.proba * 100) / 100,
               lat: Math.round(pos.coords.latitude * 100) / 100, lon: Math.round(pos.coords.longitude * 100) / 100 };
   const heure = new Date().toISOString().slice(0, 13).replace(/[-T]/g, "");
   memoriser("mes_partages", [{ ...o, heure }, ...mesPartages()].slice(0, 200));
-  try { await envoyer(o); toast("Ajouté à la carte"); }
-  catch (err) { memoriser("a_envoyer", [...memoire("a_envoyer", []), o]); toast("Envoi en attente"); }
+  try { await envoyer(o); if (!silencieux) toast("Ajouté à la carte"); }
+  catch (err) { memoriser("a_envoyer", [...memoire("a_envoyer", []), o]); if (!silencieux) toast("Envoi en attente"); }
 }
 
 // renvoie ce qui n'a pas pu partir (hors ligne)

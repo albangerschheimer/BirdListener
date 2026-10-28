@@ -23,7 +23,7 @@
 <section id="vue-ecoute" class="vue">
   <h1>Qui chante&nbsp;?</h1>
 
-  <section class="ecoute">
+  <section class="ecoute" id="zone-ecoute">
     <button id="micro" class="ecouter" aria-label="Écouter">
       <svg class="viseur" viewBox="0 0 260 260" aria-hidden="true">
         <path d="M14 70 V40 A26 26 0 0 1 40 14 H70 M190 14 H220 A26 26 0 0 1 246 40 V70 M246 190 V220 A26 26 0 0 1 220 246 H190 M70 246 H40 A26 26 0 0 1 14 220 V190"/>
@@ -35,7 +35,15 @@
         <span class="chrono" id="chrono"></span>
       </span>
     </button>
-    <label class="lien-fichier">Importer un son<input id="fichier" type="file" accept="audio/*,video/*"></label>
+    <canvas id="spectre" class="spectre" aria-hidden="true"></canvas>
+    <div class="sous-bouton">
+      <button id="continu" class="puce" aria-pressed="false">En continu</button>
+      <label class="lien-fichier">Importer un son<input id="fichier" type="file" accept="audio/*,video/*"></label>
+    </div>
+  </section>
+
+  <section id="direct" class="direct" hidden>
+    <ol id="direct-liste"></ol>
   </section>
 
   <section id="resultat" class="resultat" hidden></section>
