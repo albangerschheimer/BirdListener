@@ -10,8 +10,8 @@ Démarré le 27/10/2026. Budget : 98 $, 7 jours maximum. Estimation : 2 à 3 jou
 | 4. Modèle Europe `europe_v1` | ✅ fait |
 | 5. Évaluation et comparaison avec BirdNET | ✅ fait |
 | 6. Application web en ligne, sans serveur (https://birdlistener.vercel.app), identité « Huppe » | ✅ fait |
-| 7. Monde entier (10 587 espèces sur xeno-canto) | 🔄 métadonnées en cours |
-| 8. Améliorations : filtre par pays et saison, plus d'enregistrements, version ESP32 | ⏳ |
+| 7. Monde entier (10 458 espèces, 269 815 enregistrements) | 🔄 écoute par BirdNET aux deux tiers |
+| 8. Filtre pays et saison, photos, carte partagée, écoute continue, guide, jeu | ✅ fait (photos en cours) |
 
 ## Résultats `europe_v1` (746 espèces)
 
@@ -65,3 +65,12 @@ python -m venv .venv
   (olive, orange rubalise, aluminium, lichen), police Big Shoulders, anneau d'écoute zébré,
   ouverture animée (huppe en vol qui se pose et ouvre sa crête), libellés en phrases simples,
   carnet des dernières écoutes. Pistes explorées dans Figma : pages V2 et V3.
+- **28/10, nuit** : logo et couleurs fournis (forêt, gorge or, crème, feuillage, ardoise), ouverture
+  avec l'oiseau du logo qui s'envole, passable d'un toucher. Nouveautés de l'app :
+  - **Carte partagée** (Vercel Blob) : position arrondie à ~1 km, sans identifiant, me localiser,
+    espèces autour de moi (10 km), filtres 30 jours / 7 jours / les miennes, zoom sur un groupe.
+  - **Écoute continue** : analyse toutes les 3 s pendant une balade, espèces ajoutées en direct ;
+    **spectrogramme** défilant pendant toute écoute.
+  - **Onglet Espèces** : guide des 746 espèces (présentes ce mois-ci ou A à Z, recherche), chant de
+    référence xeno-canto pour 743 espèces, fiches dans un panneau, jeu **« Quel est ce chant ? »**.
+  - **Mes espèces** (collection), carnet, partage d'une **image** de l'observation.
