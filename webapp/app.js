@@ -20,6 +20,7 @@ function icone(nom) {
     lecture: '<path d="M8 5.5v13l11-6.5z"/>',
     pause: '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>',
     partage: '<path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 13v6h14v-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>',
+    carte: '<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4" fill="var(--creme)"/>',
   };
   const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("aria-hidden", "true"); s.classList.add("icone");
@@ -166,6 +167,14 @@ function boutonPartager(espece, proba) {
   return b;
 }
 
+// Bouton « Carte » : montre où l'espèce a été entendue par les autres
+function boutonCarte(espece) {
+  const b = el("button", "action");
+  b.append(icone("carte"), el("span", "", "Carte"));
+  b.addEventListener("click", () => { vibrer(); allerA("vue-carte", espece.fr); });
+  return b;
+}
+
 function saison(i) {
   const mois = modele.frequences.mois[i] || [];
   const max = Math.max(...mois);
@@ -210,7 +219,7 @@ function construireFiche(e, d) {
   }
 
   const actions = el("div", "actions");
-  for (const b of [boutonSon(e), boutonPartager(e, d && e.proba)]) if (b) actions.append(b);
+  for (const b of [boutonSon(e), boutonCarte(e), boutonPartager(e, d && e.proba)]) if (b) actions.append(b);
   if (actions.children.length) resultat.append(actions);
 
   if (d) {
@@ -381,17 +390,17 @@ micro.addEventListener("click", async () => {
 });
 
 // ---------- Onglets Écouter / Carte ----------
+async function allerA(vue, espece) {
+  for (const b of document.querySelectorAll(".onglet")) b.classList.toggle("actif", b.dataset.vue === vue);
+  for (const v of document.querySelectorAll(".vue")) v.hidden = v.id !== vue;
+  window.scrollTo({ top: 0 });
+  if (vue === "vue-carte") {
+    await pret;
+    ouvrirCarte(nomFr, toast, espece).catch(() => toast("Carte indisponible"));
+  }
+}
 for (const bouton of document.querySelectorAll(".onglet")) {
-  bouton.addEventListener("click", async () => {
-    vibrer();
-    for (const b of document.querySelectorAll(".onglet")) b.classList.toggle("actif", b === bouton);
-    for (const v of document.querySelectorAll(".vue")) v.hidden = v.id !== bouton.dataset.vue;
-    window.scrollTo({ top: 0 });
-    if (bouton.dataset.vue === "vue-carte") {
-      await pret;
-      ouvrirCarte(nomFr, toast).catch(() => toast("Carte indisponible"));
-    }
-  });
+  bouton.addEventListener("click", () => { vibrer(); allerA(bouton.dataset.vue); });
 }
 
 // ---------- Partage des observations sur la carte commune ----------

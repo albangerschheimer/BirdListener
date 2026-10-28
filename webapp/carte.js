@@ -113,8 +113,8 @@ function autourDeMoi(obs) {
   classer($("autour"), $("autour-titre"), obs.filter((o) => ici.distanceTo([o[1], o[2]]) <= RAYON_AUTOUR * 1000));
 }
 
-// Me localiser : recentre la carte et affiche ma position
-function localiser(silencieux = false) {
+// Me localiser : recentre la carte et affiche ma position (sans bouger la vue si garderVue)
+function localiser(silencieux = false, garderVue = false) {
   if (!navigator.geolocation) { if (!silencieux) toast("Position indisponible"); return; }
   $("bouton-moi")?.classList.add("cherche");
   navigator.geolocation.getCurrentPosition((p) => {
@@ -123,7 +123,7 @@ function localiser(silencieux = false) {
     if (!moi) {
       moi = L.marker(maPosition, { icon: L.divIcon({ className: "moi", html: "<i></i>", iconSize: [22, 22] }), interactive: false, zIndexOffset: 1000 }).addTo(carte);
     } else moi.setLatLng(maPosition);
-    carte.flyTo(maPosition, Math.max(carte.getZoom(), 12), { duration: silencieux ? 0 : 0.8 });
+    if (!garderVue) carte.flyTo(maPosition, Math.max(carte.getZoom(), 12), { duration: silencieux ? 0 : 0.8 });
     dessiner();
   }, () => {
     $("bouton-moi")?.classList.remove("cherche");
@@ -177,8 +177,9 @@ function brancherFiltres() {
   });
 }
 
-export async function ouvrirCarte(traduire, afficherMessage) {
+export async function ouvrirCarte(traduire, afficherMessage, espece) {
   nomFr = traduire;
+  if (espece !== undefined) $("filtre-espece").value = espece;
   toast = afficherMessage || toast;
   await chargerLeaflet();
   if (!carte) {
@@ -195,11 +196,14 @@ export async function ouvrirCarte(traduire, afficherMessage) {
     carte.on("moveend", () => classer($("classement"), $("classement-titre"), filtre().filter((o) => carte.getBounds().contains([o[1], o[2]]))));
     brancherFiltres();
     // si la position est déjà autorisée, on centre directement sur moi
-    navigator.permissions?.query({ name: "geolocation" }).then((p) => { if (p.state === "granted") localiser(true); }).catch(() => {});
+    navigator.permissions?.query({ name: "geolocation" }).then((p) => { if (p.state === "granted") localiser(true, Boolean(espece)); }).catch(() => {});
   }
   setTimeout(() => carte.invalidateSize(), 50);
   observations = await chargerObservations();
   const liste = $("especes-carte");
   liste.replaceChildren(...[...new Set(observations.map((o) => nomFr(o[0])))].sort().map((n) => new Option(n)));
   dessiner();
+  // venu d'une fiche : on cadre sur les endroits où l'espèce a été entendue
+  const vues = espece ? filtre() : [];
+  if (vues.length) carte.fitBounds(L.latLngBounds(vues.map((o) => [o[1], o[2]])).pad(0.3), { maxZoom: 11 });
 }
