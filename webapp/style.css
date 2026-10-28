@@ -341,3 +341,49 @@ input[type="search"]::-webkit-search-cancel-button { filter: invert(0.9); }
 body.bloque { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .panneau.ouvert, .panneau.ferme { animation: none; } }
 .panneau > .resultat > .nom:first-child { margin-top: calc(env(safe-area-inset-top) + 72px); }
+
+/* Jeu : quel est ce chant ? */
+.carte-jeu {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; margin: 14px 0 4px;
+  padding: 18px 18px 18px 20px; border: 0; border-radius: 18px; background: var(--or); color: var(--ardoise); cursor: pointer;
+  font: 900 30px/0.95 "Big Shoulders", sans-serif; text-transform: uppercase; text-align: left;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.carte-jeu:active { transform: scale(0.97); }
+.carte-jeu i { flex: none; width: 52px; height: 52px; border-radius: 50%; background: var(--ardoise) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6.5v11l9-5.5z' fill='%23F8B946'/%3E%3C/svg%3E") center / 26px no-repeat; }
+.titre-jeu { font-size: clamp(48px, 14vw, 64px); margin-top: calc(env(safe-area-inset-top) + 72px) !important; }
+.score-jeu { display: flex; gap: 28px; margin: 14px 0 6px; }
+.score-jeu p { margin: 0; display: flex; align-items: baseline; gap: 8px; }
+.score-jeu b { font-size: 40px; font-weight: 900; color: var(--or); font-variant-numeric: tabular-nums; }
+.score-jeu span { color: var(--feuille); font-size: 18px; }
+.ecoute-jeu {
+  display: grid; place-items: center; width: 120px; height: 120px; margin: 22px auto; border-radius: 50%; border: 0; cursor: pointer;
+  background: var(--or); color: var(--ardoise); box-shadow: 0 0 0 0 rgba(248, 185, 70, 0.5);
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.ecoute-jeu .icone { width: 54px; height: 54px; }
+.ecoute-jeu:active { transform: scale(0.92); }
+.ecoute-jeu.joue { animation: ondes-jeu 1.4s ease-out infinite; }
+.ecoute-jeu.charge { opacity: 0.7; }
+@keyframes ondes-jeu { to { box-shadow: 0 0 0 26px rgba(248, 185, 70, 0); } }
+.choix-jeu { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.choix-jeu button {
+  display: flex; align-items: center; gap: 14px; width: 100%; padding: 8px 14px 8px 8px; border-radius: 16px; cursor: pointer;
+  border: 1.5px solid rgba(244, 238, 220, 0.25); background: var(--sous-bois); color: var(--creme);
+  font: 800 24px/1 "Big Shoulders", sans-serif; text-transform: uppercase; text-align: left;
+  transition: transform 0.15s, background 0.25s, border-color 0.25s, opacity 0.25s;
+}
+.choix-jeu button:active { transform: scale(0.97); }
+.choix-jeu .rond { width: 56px; height: 56px; }
+.choix-jeu.repondu button:not(.juste):not(.faux) { opacity: 0.45; }
+.choix-jeu button.juste { background: var(--feuille); color: var(--sous-bois); border-color: var(--feuille); animation: apparait 0.4s cubic-bezier(0.3, 1.5, 0.5, 1); }
+.choix-jeu button.faux { background: var(--ardoise); border-color: #d9826a; animation: secoue 0.35s; }
+@keyframes secoue { 25% { transform: translateX(-6px); } 50% { transform: translateX(6px); } 75% { transform: translateX(-3px); } }
+.suite-jeu { display: flex; gap: 10px; align-items: stretch; margin-top: 18px; }
+.suite-jeu .encore { margin: 0; flex: 1; }
+.suite-jeu .action { padding: 0 20px; }
+
+/* rond sans photo : l'initiale du nom */
+.rond.initiale { display: grid; place-items: center; color: var(--feuille); font-weight: 800; font-size: 18px; line-height: 1; }
+.carnet .rond.initiale, .liste-especes .rond.initiale, .direct .rond.initiale, .choix-jeu .rond.initiale { font-size: 26px; }
+.collection .rond.initiale { font-size: 32px; }

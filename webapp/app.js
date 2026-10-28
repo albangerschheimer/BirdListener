@@ -110,6 +110,7 @@ function compter(noeud, cible) {
 function rond(espece) {
   const r = el("span", "rond");
   if (espece?.photo) r.style.backgroundImage = `url("photos/${encodeURI(espece.photo)}")`;
+  else if (espece?.fr) { r.classList.add("initiale"); r.textContent = espece.fr[0]; }   // photo pas encore trouvée
   return r;
 }
 
@@ -304,6 +305,7 @@ function ouvrirPanneau() {
 }
 function fermerPanneau() {
   if (panneau.hidden) return;
+  if (jeu) { lecteur.pause(); jeu = null; }
   panneau.classList.replace("ouvert", "ferme");
   document.body.classList.remove("bloque");
   setTimeout(() => { panneau.hidden = true; panneau.classList.remove("ferme"); }, calme ? 0 : 230);
@@ -373,9 +375,7 @@ function montrerCollection(nouvelle) {
   $("nb-especes").textContent = String(col.length);
   $("mes-especes").replaceChildren(...col.map(([sci, x]) => {
     const li = el("li", sci === nouvelle ? "nouvelle" : "");
-    const r = rond(x);
-    if (!x.photo) r.textContent = x.fr[0];
-    li.append(r, el("span", "", x.fr));
+    li.append(rond(x), el("span", "", x.fr));
     li.addEventListener("click", async () => {
       vibrer();
       await pret;
@@ -683,17 +683,114 @@ function ordreEspeces() {
   // une recherche fait passer devant les noms qui commencent par le texte tapé
   const devant = (liste) => (q ? liste.sort((a, b) => sansAccents(especes[b].fr).startsWith(q) - sansAccents(especes[a].fr).startsWith(q)) : liste);
   if (tri === "az") return devant(idx.sort((a, b) => especes[a].fr.localeCompare(especes[b].fr, "fr")));
-  // fréquence dans le pays choisi, réduite pour les espèces rarement enregistrées ce mois-ci
-  // (présence plutôt que pic : un migrant de passage ne doit pas passer devant le merle)
-  const c = modele.frequences.pays[choixPays.value], mois = new Date().getMonth();
-  const score = idx.map((i) => {
-    const prof = modele.frequences.mois[i] || [];
-    const total = prof.reduce((a, b) => a + b, 0);
-    return (c ? c[i] || 0 : 1) * Math.min(1, 24 * (prof[mois] + 1) / (total + 12));
-  });
-  const rang = new Map(idx.map((i, k) => [i, score[k]]));
+  const rang = new Map(idx.map((i) => [i, presenceCeMois(i)]));
   return devant(idx.sort((a, b) => rang.get(b) - rang.get(a)));
 }
+
+// fréquence dans le pays choisi, réduite pour les espèces rarement enregistrées ce mois-ci
+// (présence plutôt que pic : un migrant de passage ne doit pas passer devant le merle)
+function presenceCeMois(i) {
+  const c = modele.frequences.pays[choixPays.value], prof = modele.frequences.mois[i] || [];
+  const total = prof.reduce((a, b) => a + b, 0);
+  return (c ? c[i] || 0 : 1) * Math.min(1, 24 * ((prof[new Date().getMonth()] || 0) + 1) / (total + 12));
+}
+
+// ---------- Jeu : quel est ce chant ? ----------
+// Safari ne laisse jouer un son sans toucher qu'après un premier son joué au toucher : on le débloque une fois.
+const SILENCE = "data:audio/wav;base64,UklGRrQBAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YZABAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA";
+function debloquerSon() {
+  removeEventListener("touchend", debloquerSon, true);
+  removeEventListener("click", debloquerSon, true);
+  if (lecteur.src) return;
+  lecteur.src = SILENCE;
+  lecteur.play().then(() => lecteur.pause()).catch(() => {});
+}
+addEventListener("touchend", debloquerSon, true);
+addEventListener("click", debloquerSon, true);
+
+let jeu = null;
+const melanger = (t) => { for (let i = t.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [t[i], t[j]] = [t[j], t[i]]; } return t; };
+
+function poserQuestion() {
+  const especes = modele.meta.especes;
+  // les 60 espèces les plus présentes en ce moment, qui ont un chant de référence
+  const tas = [...especes.keys()].filter((i) => especes[i].son).sort((a, b) => presenceCeMois(b) - presenceCeMois(a)).slice(0, 60);
+  const libres = tas.filter((i) => !jeu.recentes.includes(i));
+  const bonne = libres[Math.floor(Math.random() * libres.length)];
+  jeu.recentes = [bonne, ...jeu.recentes].slice(0, 15);
+  const choix = [bonne];
+  const cousines = melanger(tas.filter((i) => i !== bonne && especes[i].famille === especes[bonne].famille));
+  if (cousines.length) choix.push(cousines[0]);             // une espèce de la même famille : plus difficile
+  for (const i of melanger(tas.slice())) if (choix.length < 4 && !choix.includes(i)) choix.push(i);
+  jeu.question = { bonne, choix: melanger(choix), repondu: false };
+  dessinerJeu();
+  const id = especes[bonne].son[0];
+  jouerSon(id, fichePanneau.querySelector(".ecoute-jeu"));
+  // le chant de la question suivante se prépare pendant que l'on réfléchit
+  const suivante = libres.filter((i) => i !== bonne)[Math.floor(Math.random() * (libres.length - 1))];
+  if (suivante !== undefined) jeu.prochaine = suivante;
+}
+
+function dessinerJeu() {
+  const especes = modele.meta.especes, q = jeu.question;
+  fichePanneau.replaceChildren();
+  const titre = el("h2", "nom titre-jeu", "Quel est ce chant ?");
+  const score = el("div", "score-jeu");
+  const serie = el("p"), record = el("p");
+  serie.append(el("b", "", String(jeu.serie)), el("span", "", "Série"));
+  record.append(el("b", "", String(jeu.record)), el("span", "", "Record"));
+  score.append(serie, record);
+  const ecoute = el("button", "ecoute-jeu");
+  ecoute.dataset.son = especes[q.bonne].son[0];
+  ecoute.append(icone("lecture"));
+  ecoute.setAttribute("aria-label", "Réécouter");
+  ecoute.addEventListener("click", () => { vibrer(); jouerSon(especes[q.bonne].son[0], ecoute); });
+  const ul = el("ul", "choix-jeu");
+  for (const i of q.choix) {
+    const li = el("li"), b = el("button");
+    b.append(rond(especes[i]), el("span", "", especes[i].fr));
+    b.addEventListener("click", () => repondre(i, b, ul));
+    li.append(b);
+    ul.append(li);
+  }
+  fichePanneau.append(titre, score, ecoute, ul);
+  [...fichePanneau.children].forEach((c, i) => c.style.setProperty("--i", i));
+  fichePanneau.classList.remove("apparait"); void fichePanneau.offsetWidth; fichePanneau.classList.add("apparait");
+  majBoutonsSon();
+}
+
+function repondre(i, bouton, ul) {
+  const q = jeu.question, especes = modele.meta.especes;
+  if (q.repondu) return;
+  q.repondu = true;
+  const juste = i === q.bonne;
+  bouton.classList.add(juste ? "juste" : "faux");
+  if (!juste) ul.children[q.choix.indexOf(q.bonne)].firstChild.classList.add("juste");
+  ul.classList.add("repondu");
+  navigator.vibrate?.(juste ? [15, 50, 15] : 60);
+  jeu.serie = juste ? jeu.serie + 1 : 0;
+  jeu.record = Math.max(jeu.record, jeu.serie);
+  memoriser("record_jeu", jeu.record);
+  fichePanneau.querySelector(".score-jeu p b").textContent = String(jeu.serie);
+  fichePanneau.querySelector(".score-jeu p:last-child b").textContent = String(jeu.record);
+  const actions = el("div", "suite-jeu");
+  const fiche = el("button", "action", "Fiche");
+  fiche.addEventListener("click", () => { vibrer(); lecteur.pause(); jeu = null; construireFiche({ ...especes[q.bonne], i: q.bonne }, null); });
+  const suivant = el("button", "encore", "Suivant");
+  suivant.addEventListener("click", () => { vibrer(); poserQuestion(); });
+  actions.append(fiche, suivant);
+  fichePanneau.append(actions);
+  actions.scrollIntoView({ behavior: calme ? "auto" : "smooth", block: "nearest" });
+  if (jeu.prochaine !== undefined) fetch(`api/son?id=${especes[jeu.prochaine].son[0]}`).catch(() => {});
+}
+
+$("jeu").addEventListener("click", async () => {
+  vibrer();
+  await pret;
+  jeu = { serie: 0, record: memoire("record_jeu", 0), recentes: [] };
+  ouvrirPanneau();
+  poserQuestion();
+});
 
 function ligneEspece(i, dejaEntendues) {
   const e = { ...modele.meta.especes[i], i };
