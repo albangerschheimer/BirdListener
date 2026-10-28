@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BirdListener</title>
+<meta name="description" content="Reconnaître les oiseaux à leur chant, directement sur le téléphone.">
+<meta name="theme-color" content="#2f6b4f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BirdListener">
+<link rel="apple-touch-icon" href="icone-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>BirdListener</h1>
+  <p class="sous-titre">Quel oiseau chante ? Enregistre-le ou choisis un fichier audio.</p>
+
+  <div class="actions">
+    <button id="micro" class="principal" disabled>🎙️ Enregistrer</button>
+    <label class="bouton" for="fichier">📁 Choisir un fichier</label>
+    <input id="fichier" type="file" accept="audio/*,video/*">
+  </div>
+  <p id="chargement" class="chargement">Préparation…</p>
+  <div class="options">
+    <label>Pays : <select id="pays"><option value="">Partout</option></select></label>
+    <label><input id="saison" type="checkbox" checked> Tenir compte de la saison</label>
+  </div>
+
+  <div id="etat" class="etat"></div>
+  <div id="resultat"></div>
+
+  <footer>
+    Tout se passe sur ton appareil : aucun son n'est envoyé. Oreille : BirdNET V2.4 (Cornell Lab /
+    TU Chemnitz, CC BY-NC-SA 4.0). Classifieur BirdListener entraîné sur les enregistrements de
+    xeno-canto. Photos : Wikimedia Commons (auteur au survol, lien vers la source).
+  </footer>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>

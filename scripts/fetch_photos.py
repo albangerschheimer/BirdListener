@@ -1,7 +1,7 @@
 """Récupère une photo par espèce (image principale de l'article Wikipédia) avec son auteur et sa licence.
 
 Usage : python scripts/fetch_photos.py [europe|tout]
-Sortie : web/photos/<Genre_espece>.jpg (320 px de large) et web/photos/credits.json
+Sortie : webapp/photos/<Genre_espece>.jpg (320 px de large) et webapp/photos/credits.json
   {nom scientifique: {fichier, auteur, licence, source}}
 Reprend où il s'était arrêté. Requêtes espacées, pour respecter Wikimedia.
 Auteur et licence : complétés par completer_credits() quand l'API classique répond.
@@ -16,7 +16,7 @@ from pathlib import Path
 import requests
 
 RACINE = Path(__file__).resolve().parents[1]
-DOSSIER = RACINE / "web" / "photos"
+DOSSIER = RACINE / "webapp" / "photos"
 API = "https://{}.wikipedia.org/w/api.php"
 SESSION = requests.Session()
 SESSION.headers["User-Agent"] = "BirdListener/0.1 (https://github.com/albangerschheimer/BirdListener)"

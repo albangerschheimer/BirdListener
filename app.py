@@ -25,7 +25,7 @@ def accueil():
 
 @app.get("/photos/<path:fichier>")
 def photo(fichier):
-    return send_from_directory(RACINE / "web" / "photos", fichier, max_age=86400)
+    return send_from_directory(RACINE / "webapp" / "photos", fichier, max_age=86400)
 
 
 @app.post("/predire")

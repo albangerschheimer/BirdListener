@@ -28,7 +28,7 @@ class Predicteur:
         self.modele.eval()
         self.oreille = Oreille(threads=threads)
         self.infos = json.load(open(RACINE / "data" / "especes.json", encoding="utf-8"))
-        credits = RACINE / "web" / "photos" / "credits.json"
+        credits = RACINE / "webapp" / "photos" / "credits.json"
         self.photos = json.load(open(credits, encoding="utf-8")) if credits.exists() else {}
         evaluation = RACINE / "models" / f"{nom}_evaluation.json"
         self.poids_birdnet = json.load(open(evaluation))["poids_birdnet"] if evaluation.exists() else 0.0

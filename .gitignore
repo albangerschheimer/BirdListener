@@ -13,3 +13,5 @@ data/logs/
 data/metadata/
 models/*.pt
 !models/europe_v1.pt
+data/web_models/
+__pycache__/
