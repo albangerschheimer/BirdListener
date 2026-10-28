@@ -23,6 +23,11 @@ def accueil():
     return send_from_directory(RACINE / "web", "index.html")
 
 
+@app.get("/photos/<path:fichier>")
+def photo(fichier):
+    return send_from_directory(RACINE / "web" / "photos", fichier, max_age=86400)
+
+
 @app.post("/predire")
 def predire():
     son = np.frombuffer(request.get_data(), dtype=np.float32)[:DUREE_MAX]

@@ -28,6 +28,8 @@ class Predicteur:
         self.modele.eval()
         self.oreille = Oreille(threads=threads)
         self.infos = json.load(open(RACINE / "data" / "especes.json", encoding="utf-8"))
+        credits = RACINE / "web" / "photos" / "credits.json"
+        self.photos = json.load(open(credits, encoding="utf-8")) if credits.exists() else {}
         evaluation = RACINE / "models" / f"{nom}_evaluation.json"
         self.poids_birdnet = json.load(open(evaluation))["poids_birdnet"] if evaluation.exists() else 0.0
         # Colonne BirdListener de chaque classe BirdNET (-1 si l'espèce n'est pas dans BirdListener)
@@ -38,8 +40,12 @@ class Predicteur:
 
     def fiche(self, espece, proba):
         i = self.infos.get(espece, {})
+        photo = self.photos.get(espece, {})
+        credit = " · ".join(x for x in (photo.get("auteur"), photo.get("licence")) if x)
         return {"scientifique": espece, "fr": i.get("fr") or i.get("en") or espece, "en": i.get("en", ""),
-                "famille": i.get("famille", ""), "proba": round(float(proba), 4)}
+                "famille": i.get("famille", ""), "proba": round(float(proba), 4),
+                "photo": f"photos/{photo['fichier']}" if photo else None,
+                "credit_photo": credit or "Wikimedia Commons", "source_photo": photo.get("source")}
 
     def predire(self, son, top=5, pays=None, mois=None):
         """son : signal mono 48 kHz (float32). pays (nom anglais xeno-canto, ex. « France ») et

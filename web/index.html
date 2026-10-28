@@ -45,8 +45,12 @@
   .pct { font-variant-numeric: tabular-nums; color: var(--doux); font-size: 14px; }
   .type { margin: 4px 0 16px; }
   .avertissement { border-left: 4px solid var(--alerte); padding: 8px 12px; background: var(--carte); border-radius: 6px; }
-  .frise { display: flex; gap: 2px; flex-wrap: wrap; margin-top: 16px; }
-  .frise span { font-size: 12px; padding: 2px 6px; border-radius: 4px; background: var(--barre); }
+  h2 { font-size: 16px; margin: 28px 0 10px; }
+  .frise { display: flex; gap: 8px; flex-wrap: wrap; }
+  .moment { display: flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px; border-radius: 999px;
+            background: var(--barre); font-size: 14px; }
+  .moment img, .moment .vide { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; background: var(--trait); }
+  .lien-photo { display: contents; }
   footer { color: var(--doux); font-size: 13px; margin-top: 40px; }
 </style>
 </head>
@@ -137,31 +141,55 @@ function afficher(d) {
     div.querySelector(".nom").textContent = e.fr;
     div.querySelector(".sci").textContent = `${e.scientifique} · ${e.famille}`;
     liste.appendChild(div);
-    photo(e.scientifique, div.querySelector(".vide"));
+    photo(e, div.querySelector(".vide"));
   }
-  if (d.frise.length > 1) {
+  // Frise : les moments où un oiseau est entendu, regroupés par espèce, avec sa photo
+  const moments = [];
+  for (const t of d.frise) {
+    if (!t.oiseau) continue;
+    const dernier = moments[moments.length - 1];
+    if (dernier && dernier.espece.scientifique === t.espece.scientifique && dernier.fin === t.debut) dernier.fin = t.debut + 3;
+    else moments.push({ debut: t.debut, fin: t.debut + 3, espece: t.espece });
+  }
+  if (moments.length) {
+    const titre = document.createElement("h2");
+    titre.textContent = "Ce que j'entends, moment par moment";
     const f = document.createElement("div");
     f.className = "frise";
-    for (const t of d.frise) {
-      const s = document.createElement("span");
-      s.textContent = t.oiseau ? `${t.debut} s : ${t.espece.fr}` : `${t.debut} s : —`;
-      f.appendChild(s);
+    for (const m of moments) {
+      const puce = document.createElement("div");
+      puce.className = "moment";
+      const place = document.createElement("div");
+      place.className = "vide";
+      const texte = document.createElement("span");
+      texte.textContent = `${m.debut}–${m.fin} s · ${m.espece.fr}`;
+      puce.append(place, texte);
+      f.appendChild(puce);
+      photo(m.espece, place);
     }
-    resultat.appendChild(f);
+    resultat.append(titre, f);
   }
 }
 
-async function photo(sci, place) {
+// Photo de l'espèce : celle livrée avec l'application, sinon celle de Wikipédia (en ligne)
+async function photo(e, place) {
+  const mettre = (src, credit, lien) => {
+    const img = document.createElement("img");
+    img.src = src; img.alt = e.fr; img.title = "Photo : " + credit; img.loading = "lazy";
+    if (lien) {
+      const a = document.createElement("a");
+      a.href = lien; a.target = "_blank"; a.rel = "noopener"; a.className = "lien-photo";
+      a.appendChild(img); place.replaceWith(a);
+    } else place.replaceWith(img);
+  };
+  if (e.photo) { mettre(e.photo, e.credit_photo, e.source_photo); return; }
   try {
-    const r = await fetch("https://fr.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(sci));
+    const r = await fetch("https://fr.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(e.scientifique));
     const d = await r.json();
-    if (d.thumbnail) {
-      const img = document.createElement("img");
-      img.src = d.thumbnail.source; img.alt = d.title;
-      place.replaceWith(img);
-    }
-  } catch (e) { /* pas de photo, tant pis */ }
+    if (d.thumbnail) mettre(d.thumbnail.source, "Wikipédia", null);
+  } catch (err) { /* pas de photo, tant pis */ }
 }
+
 
 document.getElementById("fichier").addEventListener("change", async (ev) => {
   const f = ev.target.files[0];
