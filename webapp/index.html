@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>BirdListener</title>
 <meta name="description" content="Reconnaître les oiseaux à leur chant, directement sur le téléphone.">
-<meta name="theme-color" content="#2f6b4f">
+<meta name="theme-color" content="#F2EEE4">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="BirdListener">
 <link rel="apple-touch-icon" href="icone-180.png">
@@ -13,6 +13,19 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div id="ouverture" aria-hidden="true">
+  <svg viewBox="0 0 393 852" preserveAspectRatio="xMidYMid slice">
+    <path id="trajectoire" d="M-10 700 C120 640 220 520 410 230" fill="none" stroke="#B9B19F" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="0.5 8"/>
+    <g id="martinet" transform="translate(-200 -200)" fill="#1D1C1A">
+      <path d="M100 30 C103.2 30 105.4 33.6 105.4 39 C105.4 51 103.6 61 102.6 67 L107.5 85 L100 77.5 L92.5 85 L97.4 67 C96.4 61 94.6 51 94.6 39 C94.6 33.6 96.8 30 100 30 Z"/><path id="aile-g"/><path id="aile-d"/>
+    </g>
+    <g id="marque" text-anchor="middle">
+      <text x="196.5" y="452" class="nom">BirdListener</text>
+      <text x="196.5" y="486" class="devise">Le carnet sonore des oiseaux</text>
+    </g>
+  </svg>
+</div>
+<script src="ouverture.js"></script>
 <main>
   <h1>BirdListener</h1>
   <p class="sous-titre">Quel oiseau chante ? Enregistre-le ou choisis un fichier audio.</p>
