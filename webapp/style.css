@@ -272,3 +272,13 @@ main { padding-bottom: calc(env(safe-area-inset-bottom) + 96px); }
 .classement li span:last-child { font-variant-numeric: tabular-nums; }
 .action.charge { opacity: 0.6; }
 .action.charge .icone { animation: battement 0.6s ease-in-out infinite; }
+
+/* Mes espèces */
+.collection { margin-top: 48px; }
+.collection h2 { display: flex; justify-content: space-between; align-items: baseline; font-size: 40px; line-height: 1; margin: 0 0 16px; }
+.collection h2 b { color: var(--or); }
+.collection ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 18px 10px; }
+.collection li { display: flex; flex-direction: column; align-items: center; gap: 7px; text-align: center; font-size: 16px; font-weight: 700; line-height: 1.05; cursor: pointer; transition: transform 0.15s; }
+.collection li:active { transform: scale(0.94); }
+.collection .rond { width: 72px; height: 72px; display: grid; place-items: center; font-size: 30px; font-weight: 800; color: var(--feuille); }
+.collection li.nouvelle .rond { box-shadow: 0 0 0 3px var(--or); animation: apparait 0.5s cubic-bezier(0.3, 1.5, 0.5, 1) both; }

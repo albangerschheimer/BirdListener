@@ -284,8 +284,11 @@ function afficher(d) { construireFiche(d.especes[0], d); }
 function noter(d) {
   if (!d.oiseau_entendu) return;
   const e = d.especes[0];
+  const nouvelle = collectionner(e);           // avant le carnet, dont la collection peut partir
   memoriser("carnet", [{ sci: e.sci, fr: e.fr, photo: e.photo, proba: e.proba, date: new Date().toISOString() }, ...memoire("carnet", [])].slice(0, 30));
   montrerCarnet();
+  montrerCollection(nouvelle && e.sci);
+  if (nouvelle) toast("Nouvelle espèce");
 }
 
 function quand(iso) {
@@ -296,6 +299,46 @@ function quand(iso) {
   if (ecart === 0) return heure;
   if (ecart === 1) return `hier, ${heure}`;
   return d.toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
+}
+
+// ---------- Mes espèces : toutes celles déjà entendues, la plus récente en premier ----------
+function collection() {
+  const col = memoire("collection", null);
+  if (col) return col;
+  const depuisCarnet = {};                           // première ouverture : on part du carnet
+  for (const x of [...memoire("carnet", [])].reverse()) {
+    depuisCarnet[x.sci] ??= { fr: x.fr, photo: x.photo, premiere: x.date, fois: 0 };
+    depuisCarnet[x.sci].fois += 1;
+  }
+  return depuisCarnet;
+}
+
+function collectionner(e) {
+  const col = collection();
+  const nouvelle = !col[e.sci];
+  col[e.sci] = { ...(col[e.sci] || { premiere: new Date().toISOString(), fois: 0 }), fr: e.fr, photo: e.photo };
+  col[e.sci].fois += 1;
+  memoriser("collection", col);
+  return nouvelle;
+}
+
+function montrerCollection(nouvelle) {
+  const col = Object.entries(collection()).sort((a, b) => b[1].premiere.localeCompare(a[1].premiere));
+  $("collection").hidden = col.length === 0;
+  $("nb-especes").textContent = String(col.length);
+  $("mes-especes").replaceChildren(...col.map(([sci, x]) => {
+    const li = el("li", sci === nouvelle ? "nouvelle" : "");
+    const r = rond(x);
+    if (!x.photo) r.textContent = x.fr[0];
+    li.append(r, el("span", "", x.fr));
+    li.addEventListener("click", async () => {
+      vibrer();
+      await pret;
+      const i = indice(sci);
+      if (i >= 0) construireFiche({ ...modele.meta.especes[i], i }, null);
+    });
+    return li;
+  }));
 }
 
 function montrerCarnet() {
@@ -317,6 +360,7 @@ function montrerCarnet() {
   }
 }
 montrerCarnet();
+montrerCollection();
 
 // ---------- Fichier audio ----------
 $("fichier").addEventListener("change", async (ev) => {
