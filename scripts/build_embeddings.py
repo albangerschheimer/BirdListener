@@ -26,14 +26,23 @@ _oreille = None
 
 
 def telecharger(xc_id):
+    """Télécharge seulement le début du fichier : de quoi couvrir DUREE_MAX secondes d'un MP3
+    à 320 kbit/s (le serveur ne gère pas les téléchargements partiels, on coupe la connexion)."""
     url = f"https://xeno-canto.org/{xc_id}/download"
+    limite = DUREE_MAX * 40_000
     for essai in range(4):
         try:
-            r = requests.get(url, timeout=120)
-            if r.status_code == 200 and len(r.content) > 1000:
-                return r.content
-            if r.status_code == 404:
-                return None
+            with requests.get(url, timeout=120, stream=True) as r:
+                if r.status_code == 404:
+                    return None
+                if r.status_code == 200:
+                    contenu = bytearray()
+                    for morceau in r.iter_content(65536):
+                        contenu += morceau
+                        if len(contenu) >= limite:
+                            break
+                    if len(contenu) > 1000:
+                        return bytes(contenu)
         except requests.RequestException:
             pass
         time.sleep(2 ** essai)
@@ -75,9 +84,9 @@ def main(selection, nb=4):
     ids = [r["id"] for r in csv.DictReader(open(selection)) if r["id"] not in faits]
     print(f"{len(ids)} enregistrements à traiter ({len(faits)} déjà faits)", flush=True)
     debut, n = time.time(), 0
-    # Chaque processus télécharge puis écoute : un de plus que de processeurs, pour
-    # que le calcul continue pendant les téléchargements
-    with Pool(nb + 2) as calcul:
+    # Chaque processus télécharge puis écoute. xeno-canto envoie lentement chaque fichier
+    # (~16 s pour 2 Mo) : on en télécharge 4 fois plus que de processeurs en même temps
+    with Pool(nb * 4) as calcul:
         for xc_id, nt in calcul.imap_unordered(traiter, ids, chunksize=1):
             n += 1
             if n % 100 == 0:
