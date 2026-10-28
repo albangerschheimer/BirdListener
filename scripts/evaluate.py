@@ -72,22 +72,25 @@ def main(nom):
     modele.load_state_dict(sauv["etat"])
     modele.eval()
     ev = json.load(open(RACINE / "models" / f"{nom}_eval.json", encoding="utf-8"))
-    espece_de = dict(zip(ev["test_ids"], ev["test_especes"]))
     etiquettes = (RACINE / "data" / "models" / "BirdNET_GLOBAL_6K_V2.4_Labels.txt").read_text().splitlines()
     sci_bn = [e.split("_")[0] for e in etiquettes]
     colonne = np.array([num.get(s, -1) for s in sci_bn])
     connues_bn = set(sci_bn)
 
-    P_bl, P_bn, vrais = [], [], []
-    with torch.no_grad():
-        for xc_id in ev["test_ids"]:
-            d = np.load(RACINE / "data" / "emb" / f"{xc_id}.npz")
-            e = torch.from_numpy(d["emb"][:MAX_TRANCHES].astype(np.float32))[None]
-            s, _, _ = modele(e, torch.ones(1, e.shape[1], dtype=torch.bool))
-            P_bl.append(torch.softmax(s[0], 0).numpy())
-            P_bn.append(scores_birdnet(d, colonne, len(especes)))
-            vrais.append(num[espece_de[xc_id]])
-    P_bl, P_bn, vrais = np.array(P_bl), np.array(P_bn), np.array(vrais)
+    def avis(ids, noms):
+        """Avis BirdListener et BirdNET (normalisé en distribution) sur une liste d'enregistrements."""
+        P_bl, P_bn = [], []
+        with torch.no_grad():
+            for xc_id in ids:
+                d = np.load(RACINE / "data" / "emb" / f"{xc_id}.npz")
+                e = torch.from_numpy(d["emb"][:MAX_TRANCHES].astype(np.float32))[None]
+                s, _, _ = modele(e, torch.ones(1, e.shape[1], dtype=torch.bool))
+                P_bl.append(torch.softmax(s[0], 0).numpy())
+                P_bn.append(scores_birdnet(d, colonne, len(especes)))
+        P_bn = np.array(P_bn)
+        return np.array(P_bl), P_bn / np.clip(P_bn.sum(1, keepdims=True), 1e-6, None), np.array([num[n] for n in noms])
+
+    P_bl, P_bn_norm, vrais = avis(ev["test_ids"], ev["test_especes"])
     connue = np.array([especes[v] in connues_bn for v in vrais])
 
     def precision(P, masque=None):
@@ -98,18 +101,23 @@ def main(nom):
             par_esp[v].append(o)
         return float(ok[m].mean()), float(np.mean([np.mean(x) for x in par_esp.values()])), par_esp
 
-    # Combinaison : moyenne pondérée des deux avis (BirdNET normalisé en distribution)
-    P_bn_norm = P_bn / np.clip(P_bn.sum(1, keepdims=True), 1e-6, None)
-    resultats, meilleur = {}, (0, None)
-    for w in (0.0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0):
+    # Combinaison : moyenne pondérée des deux avis. Le poids est choisi sur la validation
+    # (sur le test seulement pour les anciens modèles qui n'ont pas gardé leur validation).
+    poids = (0.0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0)
+    resultats = {}
+    for w in poids:
         P = (1 - w) * P_bl + w * P_bn_norm
         t, tm, _ = precision(P)
         resultats[f"w={w}"] = {"tout": t, "par_espece": tm, "connues_birdnet": precision(P, connue)[0]}
-        if tm > meilleur[0]:
-            meilleur = (tm, w)
-    w = meilleur[1]
+    if ev.get("val_ids"):
+        V_bl, V_bn, v_vrais = avis(ev["val_ids"], ev["val_especes"])
+        w = max(poids, key=lambda w: (((1 - w) * V_bl + w * V_bn).argmax(1) == v_vrais).mean())
+        choix = "validation"
+    else:
+        w = max(poids, key=lambda w: resultats[f"w={w}"]["par_espece"])
+        choix = "test"
     _, _, par_esp = precision((1 - w) * P_bl + w * P_bn_norm)
-    sortie = {"poids_birdnet": w, "n": len(vrais), "n_especes_inconnues_birdnet": int((~connue).sum()),
+    sortie = {"poids_birdnet": w, "poids_choisi_sur": choix, "n": len(vrais), "n_especes_inconnues_birdnet": int((~connue).sum()),
               "resultats": resultats,
               "par_espece": {especes[k]: {"precision": float(np.mean(v)), "n": len(v)} for k, v in par_esp.items()}}
     sortie["filtre_lieu_saison"] = evaluer_contexte(ev["test_ids"], especes, (1 - w) * P_bl + w * P_bn_norm, vrais)
