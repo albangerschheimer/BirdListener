@@ -1,6 +1,6 @@
 """Télécharge chaque enregistrement choisi, le fait écouter par l'oreille, puis efface le son.
 
-Usage : python scripts/build_embeddings.py data/selection.csv [nb_processus]
+Usage : python scripts/build_embeddings.py data/selection.csv [nb_processus] [secondes_max]
 Pour chaque enregistrement XC<id> : data/emb/<id>.npz avec
   emb    : empreintes float16 [n_tranches, 1024]
   top_i / top_s : les 10 meilleures classes BirdNET et leurs scores, par tranche
@@ -20,7 +20,7 @@ RACINE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RACINE / "src"))
 from oreille import FREQ, Oreille  # noqa: E402
 
-DUREE_MAX = 60      # secondes écoutées par enregistrement
+DUREE_MAX = int(sys.argv[3]) if len(sys.argv) > 3 else 60   # secondes écoutées par enregistrement
 SORTIE = RACINE / "data" / "emb"
 _oreille = None
 
