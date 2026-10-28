@@ -132,7 +132,7 @@ export async function predire(m, signal, { pays = null, mois = null, top = 5, pr
   const scoresTranches = [], birdnet = [];
   let chant = 0;
   for (let k = 0; k < T.length; k++) {
-    progression(`J'écoute… ${Math.round(100 * k / T.length)} %`);
+    progression(k / T.length);   // avancement, de 0 à 1
     // Sorties : 0 = scores BirdNET (6522), 1 = empreinte (1024)
     const entree = new Tensor(T[k], [1, TRANCHE]);
     const sorties = await m.birdnet.run(entree);

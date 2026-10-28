@@ -74,7 +74,7 @@ h1 { font-size: clamp(80px, 25.5vw, 120px); margin: 12px 0 6px; letter-spacing: 
 .nom { font-size: clamp(56px, 17vw, 76px); margin: 0; overflow-wrap: break-word; }
 .latin { color: var(--feuille); margin: 8px 0 18px; font-size: 20px; }
 .verdict { font-size: 22px; margin: 0 0 12px; }
-.verdict strong { color: var(--or); font-size: 64px; font-weight: 900; line-height: 0.9; display: block; }
+.verdict strong { color: var(--or); font-size: 64px; font-weight: 900; line-height: 0.9; }
 .jauge { height: 14px; background: var(--sous-bois); border-radius: 7px; overflow: hidden; margin-bottom: 18px; }
 .jauge div { height: 100%; background: var(--or); border-radius: 0 7px 7px 0; }
 .avis { border-left: 4px solid var(--or); padding: 4px 0 4px 12px; margin: 0 0 18px; }
@@ -84,6 +84,8 @@ h1 { font-size: clamp(80px, 25.5vw, 120px); margin: 12px 0 6px; letter-spacing: 
 .autres span:last-child { color: var(--feuille); font-weight: 500; }
 .moments { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .moments li { display: flex; align-items: center; gap: 8px; background: var(--sous-bois); padding: 4px 14px 4px 4px; border-radius: 999px; }
+.moments strong { font-weight: 700; }
+.moments span { color: var(--feuille); }
 .rond { width: 34px; height: 34px; border-radius: 50%; background: var(--sous-bois) center / cover no-repeat; flex: none; }
 .saison { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; align-items: end; height: 92px; }
 .saison div { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; gap: 4px; color: var(--feuille); font-size: 15px; }
@@ -91,17 +93,18 @@ h1 { font-size: clamp(80px, 25.5vw, 120px); margin: 12px 0 6px; letter-spacing: 
 .saison .maintenant i { background: var(--or); }
 .saison .maintenant { color: var(--or); font-weight: 800; }
 .credit { color: var(--feuille); font-size: 16px; margin-top: 18px; }
-.credit a { color: inherit; }
+.credit a, .credit span { color: inherit; display: block; }
 .encore { margin-top: 28px; width: 100%; padding: 16px; border: 0; border-radius: 14px; background: var(--or); color: var(--sous-bois); font: 900 26px/1 "Big Shoulders", sans-serif; text-transform: uppercase; cursor: pointer; }
 
 /* ---------- Carnet ---------- */
 .carnet { margin-top: 48px; }
 .carnet h2 { font-size: 40px; line-height: 1; margin: 0 0 12px; }
 .carnet ol { list-style: none; margin: 0; padding: 0; }
-.carnet li { display: grid; grid-template-columns: 48px 1fr; gap: 12px; align-items: center; padding: 10px 0; border-top: 1.5px solid rgba(244, 238, 220, 0.25); }
+.carnet li { display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-top: 1.5px solid rgba(244, 238, 220, 0.25); }
 .carnet li .rond { width: 48px; height: 48px; }
 .carnet strong { display: block; font-size: 24px; font-weight: 800; text-transform: uppercase; line-height: 1; }
 .carnet span { color: var(--feuille); font-size: 17px; }
+.carnet b { color: var(--or); font-size: 24px; font-weight: 800; }
 
 /* ---------- Réglages et pied ---------- */
 .reglages { margin-top: 40px; border-top: 1.5px solid rgba(244, 238, 220, 0.25); padding-top: 12px; }
@@ -113,7 +116,7 @@ h1 { font-size: clamp(80px, 25.5vw, 120px); margin: 12px 0 6px; letter-spacing: 
 footer { color: var(--feuille); font-size: 16px; margin-top: 36px; }
 
 /* ---------- Ouverture ---------- */
-#ouverture { position: fixed; inset: 0; z-index: 10; background: var(--foret); transition: opacity 0.5s ease; }
+#ouverture { position: fixed; inset: 0; z-index: 10; background: var(--foret); transition: opacity 0.25s ease; cursor: pointer; }
 #ouverture.fini { opacity: 0; pointer-events: none; }
 #ouverture canvas { width: 100%; height: 100%; display: block; }
 
@@ -201,3 +204,71 @@ main { padding-bottom: calc(env(safe-area-inset-bottom) + 96px); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ---------- Analyse : anneau de progression autour du disque ---------- */
+.progression { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); pointer-events: none; }
+.progression circle { fill: none; stroke: var(--creme); stroke-width: 6; stroke-linecap: round; opacity: 0; transition: stroke-dashoffset 0.25s ease, opacity 0.2s; }
+.ecouter.analyse .progression circle { opacity: 1; }
+.ecouter.analyse .disque-texte { font-size: 40px; font-variant-numeric: tabular-nums; }
+.ecouter.analyse .disque { animation: battement 1s ease-in-out infinite; }
+@keyframes battement { 50% { transform: scale(0.96); } }
+.lien-fichier { margin-top: 18px; }
+
+/* ---------- Fiche ---------- */
+.verdict { display: flex; align-items: baseline; gap: 14px; }
+.verdict strong { display: inline; }
+.verdict .type { font-size: 26px; font-weight: 800; text-transform: uppercase; color: var(--feuille); }
+.avis { font-weight: 800; text-transform: uppercase; color: var(--or); }
+.actions { display: flex; gap: 10px; margin: 6px 0 4px; }
+.action {
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px 10px 14px; border-radius: 999px; cursor: pointer;
+  border: 1.5px solid rgba(244, 238, 220, 0.35); background: var(--sous-bois); color: var(--creme);
+  font: 800 20px/1 "Big Shoulders", sans-serif; text-transform: uppercase;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s, color 0.2s;
+}
+.action:active { transform: scale(0.94); }
+.action.joue { background: var(--or); color: var(--ardoise); border-color: var(--or); }
+.icone { width: 20px; height: 20px; fill: currentColor; flex: none; }
+.action.joue .icone { animation: battement 0.8s ease-in-out infinite; }
+.autres li { cursor: pointer; }
+.carnet li { cursor: pointer; transition: transform 0.15s; }
+.carnet li:active, .autres li:active, .classement li:active { transform: translateX(4px); }
+
+/* ---------- Réglages ---------- */
+.credits { color: var(--feuille); font-size: 15px; margin: 14px 0 0; padding: 0; list-style: none; line-height: 1.35; }
+
+/* ---------- Carte : filtres ---------- */
+.recherche { position: relative; margin: 14px 0 10px; }
+.recherche input { width: 100%; padding-right: 44px; }
+.effacer {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border: 0;
+  border-radius: 50%; background: rgba(244, 238, 220, 0.12); color: var(--creme); font: 700 22px/1 sans-serif; cursor: pointer;
+}
+.puces { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.puce {
+  border: 1.5px solid rgba(244, 238, 220, 0.3); background: none; color: var(--creme); border-radius: 999px;
+  padding: 7px 14px; font: 700 18px/1 "Big Shoulders", sans-serif; cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.puce:active { transform: scale(0.93); }
+.puce.actif { background: var(--creme); color: var(--ardoise); border-color: var(--creme); }
+
+/* ---------- Carte : me localiser ---------- */
+.bouton-moi {
+  width: 44px; height: 44px; border-radius: 12px; border: 0; cursor: pointer; display: grid; place-items: center;
+  background: var(--sous-bois); color: var(--creme); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.bouton-moi:active { transform: scale(0.9); }
+.bouton-moi svg { width: 24px; height: 24px; fill: currentColor; }
+.bouton-moi.cherche svg { animation: tourne 1.2s linear infinite; }
+@keyframes tourne { to { transform: rotate(360deg); } }
+.moi i {
+  display: block; width: 22px; height: 22px; border-radius: 50%; background: #5FB0E8; border: 3px solid var(--creme);
+  box-shadow: 0 0 0 0 rgba(95, 176, 232, 0.6); animation: pulse-moi 2s ease-out infinite;
+}
+@keyframes pulse-moi { to { box-shadow: 0 0 0 22px rgba(95, 176, 232, 0); } }
+.leaflet-popup-content a { color: var(--ardoise); font-weight: 800; }
+.classement li span:last-child { font-variant-numeric: tabular-nums; }
+.action.charge { opacity: 0.6; }
+.action.charge .icone { animation: battement 0.6s ease-in-out infinite; }

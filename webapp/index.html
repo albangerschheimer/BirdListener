@@ -24,54 +24,52 @@
   <h1>Qui chante&nbsp;?</h1>
 
   <section class="ecoute">
-    <button id="micro" class="ecouter" disabled>
+    <button id="micro" class="ecouter" aria-label="Écouter">
       <svg class="viseur" viewBox="0 0 260 260" aria-hidden="true">
         <path d="M14 70 V40 A26 26 0 0 1 40 14 H70 M190 14 H220 A26 26 0 0 1 246 40 V70 M246 190 V220 A26 26 0 0 1 220 246 H190 M70 246 H40 A26 26 0 0 1 14 220 V190"/>
       </svg>
+      <svg class="progression" viewBox="0 0 260 260" aria-hidden="true"><circle cx="130" cy="130" r="92"/></svg>
       <span class="disque">
         <span class="disque-texte" id="micro-texte">Écouter</span>
         <span class="niveaux" id="niveaux" aria-hidden="true"></span>
         <span class="chrono" id="chrono"></span>
       </span>
     </button>
-    <p class="aide" id="etat">Préparation de l'oreille…</p>
-    <label class="lien-fichier">ou choisir un fichier audio<input id="fichier" type="file" accept="audio/*,video/*"></label>
+    <label class="lien-fichier">Importer un son<input id="fichier" type="file" accept="audio/*,video/*"></label>
   </section>
 
   <section id="resultat" class="resultat" hidden></section>
 
   <section id="carnet" class="carnet" hidden>
-    <h2>Tes dernières écoutes</h2>
+    <h2>Dernières écoutes</h2>
     <ol id="historique"></ol>
   </section>
 
   <details class="reglages">
     <summary>Réglages</summary>
-    <label>Pays où tu écoutes <select id="pays"><option value="">Partout</option></select></label>
-    <label class="case"><input id="saison" type="checkbox" checked> Tenir compte de la saison</label>
-    <label class="case"><input id="partage" type="checkbox"> Partager mes observations sur la carte</label>
-    <p class="explication">Quand un oiseau est reconnu avec au moins 50 % de certitude, l'app envoie
-    l'espèce, l'heure et ta position arrondie à environ 1 km, sans ton nom ni aucun identifiant.
-    Tout le monde peut voir ces points sur la carte.</p>
+    <label>Pays <select id="pays"><option value="">Partout</option></select></label>
+    <label class="case"><input id="saison" type="checkbox" checked> Saison</label>
+    <label class="case"><input id="partage" type="checkbox"> Partager sur la carte</label>
+    <ul class="credits"><li>BirdNET, Cornell Lab et TU Chemnitz</li><li>Sons xeno-canto</li><li>Photos Wikimedia Commons</li><li>Carte OpenStreetMap</li></ul>
   </details>
-
-  <footer>
-    Tout se passe sur ton téléphone : aucun son n'est envoyé. L'oreille est BirdNET (Cornell Lab et
-    TU Chemnitz, CC BY-NC-SA 4.0), entraînée ici sur les enregistrements de xeno-canto. Photos de
-    Wikimedia Commons.
-  </footer>
 </section>
 
 <section id="vue-carte" class="vue" hidden>
-  <h1 class="titre-carte">Où on les entend</h1>
-  <label class="recherche">
-    <span>Espèce</span>
-    <input id="filtre-espece" list="especes-carte" placeholder="Toutes les espèces" autocomplete="off">
+  <h1 class="titre-carte">Carte</h1>
+  <div class="recherche">
+    <input id="filtre-espece" list="especes-carte" placeholder="Toutes les espèces" autocomplete="off" aria-label="Espèce">
+    <button id="effacer-filtre" class="effacer" aria-label="Effacer" hidden>×</button>
     <datalist id="especes-carte"></datalist>
-  </label>
+  </div>
+  <div class="puces" role="group" aria-label="Filtres">
+    <button class="puce actif" data-periode="0">Tout</button>
+    <button class="puce" data-periode="30">30 jours</button>
+    <button class="puce" data-periode="7">7 jours</button>
+    <button class="puce" id="miennes" aria-pressed="false">Les miennes</button>
+  </div>
   <div id="carte" class="carte"></div>
-  <p id="carte-vide" class="aide" hidden>Personne n'a encore partagé d'observation. Active le partage
-  dans les réglages pour ajouter les tiennes.</p>
+  <h2 id="autour-titre" class="classement-titre" hidden>Autour de toi</h2>
+  <ol id="autour" class="classement"></ol>
   <h2 id="classement-titre" class="classement-titre" hidden>Les plus entendues ici</h2>
   <ol id="classement" class="classement"></ol>
 </section>
@@ -82,6 +80,7 @@
   <button class="onglet" data-vue="vue-carte">Carte</button>
 </nav>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
+<audio id="lecteur" preload="none"></audio>
 <script type="module" src="ouverture.js"></script>
 <script type="module" src="app.js"></script>
 </body>

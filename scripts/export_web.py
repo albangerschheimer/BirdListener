@@ -48,6 +48,30 @@ def main(nom):
                       "credit": " · ".join(x for x in (c.get("auteur"), c.get("licence")) if x) if c else "",
                       "source": c.get("source") if c else None})
 
+    # Un enregistrement de référence par espèce (xeno-canto) : qualité A, chant de préférence, 10 s à 1 min 30
+    sons = {}
+    for f in sorted((RACINE / "data" / "metadata").glob("xc_*.jsonl")):
+        for ligne in f.open(encoding="utf-8"):
+            try:
+                r = json.loads(ligne)
+            except json.JSONDecodeError:
+                continue
+            e = f"{r['gen']} {r['sp']}"
+            if e not in num or r.get("q") not in ("A", "B"):
+                continue
+            mn, _, sec = (r.get("length") or "9:99").partition(":")
+            duree = int(mn) * 60 + int(sec) if mn.isdigit() and sec.isdigit() else 999
+            if not 10 <= duree <= 90:
+                continue
+            note = (r["q"] == "A") * 2 + ("song" in (r.get("type") or ""))
+            if e not in sons or note > sons[e][0]:
+                lic = (r.get("lic") or "").rstrip("/").split("/licenses/")[-1].split("/")
+                lic = f"CC {lic[0].upper()} {lic[1]}" if len(lic) >= 2 else "CC"
+                sons[e] = (note, [r["id"], r.get("rec", ""), lic, "chant" if "song" in (r.get("type") or "") else "cri"])
+    for x in liste:
+        if x["sci"] in sons:
+            x["son"] = sons[x["sci"]][1]
+
     etiquettes = (RACINE / "data" / "models" / "BirdNET_GLOBAL_6K_V2.4_Labels.txt").read_text().splitlines()
     colonne = [num.get(e.split("_")[0], -1) for e in etiquettes]
     evaluation = RACINE / "models" / f"{nom}_evaluation.json"
@@ -71,7 +95,7 @@ def main(nom):
               ensure_ascii=False, separators=(",", ":"))
 
     shutil.copy(RACINE / "data" / "web_models" / "birdnet_empreinte.tflite", SORTIE / "birdnet.tflite")
-    print(f"{len(especes)} espèces, {sum(p['photo'] is not None for p in liste)} avec photo, "
+    print(f"{len(especes)} espèces, {sum(p['photo'] is not None for p in liste)} avec photo, {len(sons)} avec un son, "
           f"{len(pays)} pays, poids BirdNET {w}")
 
 

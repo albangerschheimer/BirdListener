@@ -9,14 +9,18 @@ function chargerImage(src) {
 
 if (ecran) {
   let finie = false;
-  const finir = (delai = 0) => setTimeout(() => {
+  function terminer(instantane) {
     if (finie) return;
     finie = true;
+    dispatchEvent(new Event("ouverture-finie"));
+    if (instantane) { ecran.remove(); return; }
     ecran.classList.add("fini");
-    setTimeout(() => ecran.remove(), 500);
-  }, delai);
-  ecran.addEventListener("click", () => finir());
-  const secours = setTimeout(() => finir(), 6000);      // si les images n'arrivent pas
+    setTimeout(() => ecran.remove(), 260);
+  }
+  const finir = (delai = 0) => setTimeout(() => terminer(false), delai);
+  // un toucher n'importe où fait disparaître l'ouverture immédiatement
+  ecran.addEventListener("pointerdown", () => terminer(true));
+  const secours = setTimeout(() => finir(), 4000);      // si les images n'arrivent pas
 
   const canvas = document.createElement("canvas");
   ecran.append(canvas);
@@ -70,12 +74,12 @@ if (ecran) {
 
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
       dessinerLogo(1, 1); dessinerNom(1);
-      finir(900);
+      finir(600);
       return;
     }
 
     // Étapes (ms) : apparition, logo seul, fondu vers l'oiseau, préparation sur la branche, envol
-    const APPARITION = 350, FONDU = 950, PREPARATION = 1300, ENVOL = 1700, FIN = 3700;
+    const APPARITION = 200, FONDU = 450, PREPARATION = 700, ENVOL = 960, FIN = 2250;
     let debut = null;
     function image(maintenant) {
       debut ??= maintenant;
@@ -83,22 +87,22 @@ if (ecran) {
       ctx.clearRect(0, 0, W, H);
       const apparu = lisse(borne(t / APPARITION));
       const fondu = lisse(borne((t - FONDU) / (PREPARATION - FONDU)));
-      dessinerNom(apparu * (1 - borne((t - ENVOL) / 300)));
+      dessinerNom(apparu * (1 - borne((t - ENVOL) / 200)));
       if (t < PREPARATION) {
         dessinerLogo(apparu * (1 - fondu), 0.97 + 0.03 * apparu);
         if (fondu > 0) dessinerImage(0, gorge0, s0, fondu);
       } else if (t < ENVOL) {
-        dessinerImage(Math.min(3, Math.floor((t - PREPARATION) / 100)), gorge0, s0);
+        dessinerImage(Math.min(3, Math.floor((t - PREPARATION) / 65)), gorge0, s0);
       } else {
         // la branche (image 4) s'estompe pendant que l'oiseau s'arrache
-        dessinerImage(3, gorge0, s0, 1 - borne((t - ENVOL) / 220));
+        dessinerImage(3, gorge0, s0, 1 - borne((t - ENVOL) / 160));
         // envol progressif : il s'élève en ondulant légèrement et rapetisse en s'éloignant
         const u = borne((t - ENVOL) / (FIN - ENVOL)), e = u ** 1.35;
         const gorge = [gorge0[0] + W * 0.62 * e, gorge0[1] - H * 0.5 * e + Math.sin(u * Math.PI * 3) * 10 * (1 - u)];
-        const n = 4 + ((Math.floor((t - ENVOL) / 75)) % 16);
+        const n = 4 + ((Math.floor((t - ENVOL) / 60)) % 16);
         dessinerImage(n, gorge, s0 * (1 - 0.72 * e));
       }
-      if (t >= FIN - 450 && !finie) finir();
+      if (t >= FIN - 300 && !finie) finir();
       if (ecran.isConnected) requestAnimationFrame(image);      // continue pendant le fondu
     }
     requestAnimationFrame(image);
