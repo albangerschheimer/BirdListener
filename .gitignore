@@ -15,3 +15,4 @@ models/*.pt
 !models/europe_v1.pt
 data/web_models/
 __pycache__/
+data/photos_attente/

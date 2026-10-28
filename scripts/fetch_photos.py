@@ -7,6 +7,7 @@ Reprend où il s'était arrêté. Requêtes espacées, pour respecter Wikimedia.
 Auteur et licence : complétés par completer_credits() quand l'API classique répond.
 """
 import json
+import os
 import re
 import subprocess
 import sys
@@ -16,7 +17,7 @@ from pathlib import Path
 import requests
 
 RACINE = Path(__file__).resolve().parents[1]
-DOSSIER = RACINE / "webapp" / "photos"
+DOSSIER = Path(os.environ.get("PHOTOS_DOSSIER", RACINE / "webapp" / "photos"))   # dossier d'attente possible
 API = "https://{}.wikipedia.org/w/api.php"
 SESSION = requests.Session()
 SESSION.headers["User-Agent"] = "BirdListener/0.1 (https://github.com/albangerschheimer/BirdListener)"
