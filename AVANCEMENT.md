@@ -5,13 +5,43 @@ Démarré le 27/10/2026. Budget : 98 $, 7 jours maximum. Estimation : 2 à 3 jou
 | Étape | État |
 |---|---|
 | 0. Dépôt, plan, outils | ✅ fait |
-| 1. Liste des espèces : Europe (769 espèces, 426 725 enregistrements sur xeno-canto), noms français (liste mondiale IOC 15.2, 11 227 espèces) | 🔄 métadonnées en cours |
-| 2. Téléchargement des sons xeno-canto (jusqu'à 120 par espèce, en alternant les auteurs) | 🔄 en cours, ~7 800/h |
-| 3. Empreintes audio avec l'oreille pré-entraînée (BirdNET V2.4) | 🔄 en cours (sons effacés après écoute) |
-| 4. Entraînement du classifieur BirdListener | ✅ testé sur 15 espèces (92 % au test), version Europe à venir |
-| 5. Évaluation (sons jamais entendus) + comparaison avec BirdNET | ⏳ |
-| 6. Page web (micro / fichier) | ⏳ |
-| 7. (option) Version allégée ESP32 | ⏳ |
+| 1. Espèces d'Europe (755) avec noms français (liste IOC 15.2) | ✅ fait |
+| 2-3. 50 674 enregistrements xeno-canto écoutés par BirdNET (jusqu'à 120 par espèce) | ✅ fait |
+| 4. Modèle Europe `europe_v1` | ✅ fait |
+| 5. Évaluation et comparaison avec BirdNET | ✅ fait |
+| 6. Application web (micro / fichier, noms français, chant ou cri, « pas d'oiseau entendu ») | ✅ fait |
+| 7. Monde entier (10 587 espèces sur xeno-canto) | 🔄 métadonnées en cours |
+| 8. Améliorations : filtre par pays et saison, plus d'enregistrements, version ESP32 | ⏳ |
+
+## Résultats `europe_v1` (746 espèces)
+
+Test sur 8 629 enregistrements d'auteurs **jamais entendus** pendant l'entraînement.
+
+| | Bonne réponse en 1er | Moyenne par espèce | Espèces connues de BirdNET |
+|---|---|---|---|
+| BirdNET seul (limité aux mêmes espèces) | 69,6 % | 60,8 % | 73,3 % |
+| BirdListener seul | 74,4 % | 66,4 % | 75,7 % |
+| **Combinaison (utilisée par l'application)** | **76,0 %** | **68,3 %** | **77,8 %** |
+
+Bonne réponse dans les 5 premières : 87,5 % (BirdListener seul).
+Le poids de la combinaison a été choisi sur ce même test : chiffre un peu optimiste, à corriger en v2.
+
+Espèces courantes : Rougegorge familier 94 %, Pinson des arbres 94 %, Pouillot véloce 94 %,
+Pouillot fitis 94 %, Chouette hulotte 100 %, Coucou gris 83 %, Merle noir 82 %,
+Mésange charbonnière 78 %, Vautour fauve 78 % (environ 18 enregistrements de test chacune).
+
+Plus difficiles : oiseaux marins (puffins, guillemots), Gypaète barbu, espèces rares en Europe
+avec peu d'enregistrements.
+
+## Utiliser l'application
+
+```
+git clone https://github.com/albangerschheimer/BirdListener
+cd BirdListener
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt      # Windows : .venv\Scripts\pip
+.venv/bin/python app.py                        # puis ouvrir http://localhost:5000
+```
 
 ## Journal
 
@@ -24,3 +54,6 @@ Démarré le 27/10/2026. Budget : 98 $, 7 jours maximum. Estimation : 2 à 3 jou
   les calculs sont maintenant lancés comme tâches suivies, et tout reprend où ça s'était arrêté.
   Application web locale prête (`python app.py`), et script de comparaison avec BirdNET.
   Essai sur 81 espèces (4 passes seulement) : BirdListener 71 %, BirdNET seul 68,5 %.
+- **28/10, 3 h** : 50 674 enregistrements écoutés, modèle `europe_v1` entraîné en 35 min.
+  BirdListener bat BirdNET seul (74,4 % contre 69,6 %), la combinaison des deux atteint 76 %.
+  Application testée dans un navigateur : Merle noir reconnu en 1er. Détection « pas d'oiseau entendu ».

@@ -41,6 +41,7 @@
   .jauge > div { height: 100%; background: var(--accent); }
   .pct { font-variant-numeric: tabular-nums; color: var(--doux); font-size: 14px; }
   .type { margin: 4px 0 16px; }
+  .avertissement { border-left: 4px solid var(--alerte); padding: 8px 12px; background: var(--carte); border-radius: 6px; }
   .frise { display: flex; gap: 2px; flex-wrap: wrap; margin-top: 16px; }
   .frise span { font-size: 12px; padding: 2px 6px; border-radius: 4px; background: var(--barre); }
   footer { color: var(--doux); font-size: 13px; margin-top: 40px; }
@@ -100,7 +101,10 @@ function afficher(d) {
   const c = d.chant;
   const type = c > 0.65 ? "plutôt un chant" : c < 0.35 ? "plutôt un cri" : "chant ou cri, difficile à dire";
   etat.textContent = `${d.duree} s analysées`;
-  resultat.innerHTML = `<p class="type">Type de son : <strong>${type}</strong></p><div class="resultat"></div>`;
+  let avis = "";
+  if (!d.oiseau_entendu) avis = `<p class="avertissement">Je n'entends pas d'oiseau clairement : rapproche-toi ou enregistre plus longtemps. Voici quand même mes meilleures pistes.</p>`;
+  else if (d.incertain) avis = `<p class="avertissement">Je ne suis pas sûr : plusieurs espèces se ressemblent ici.</p>`;
+  resultat.innerHTML = `${avis}<p class="type">Type de son : <strong>${type}</strong></p><div class="resultat"></div>`;
   const liste = resultat.querySelector(".resultat");
   for (const e of d.especes) {
     const div = document.createElement("div");
@@ -118,7 +122,7 @@ function afficher(d) {
     f.className = "frise";
     for (const t of d.frise) {
       const s = document.createElement("span");
-      s.textContent = `${t.debut} s : ${t.espece.fr}`;
+      s.textContent = t.oiseau ? `${t.debut} s : ${t.espece.fr}` : `${t.debut} s : —`;
       f.appendChild(s);
     }
     resultat.appendChild(f);

@@ -1,0 +1,2501 @@
+{
+ "poids_birdnet": 0.3,
+ "n": 8629,
+ "n_especes_inconnues_birdnet": 444,
+ "resultats": {
+  "w=0.0": {
+   "tout": 0.7441186696025032,
+   "par_espece": 0.6643878523245702,
+   "connues_birdnet": 0.7568723274282224
+  },
+  "w=0.2": {
+   "tout": 0.7598794761849577,
+   "par_espece": 0.6822866786290809,
+   "connues_birdnet": 0.7754428833231521
+  },
+  "w=0.3": {
+   "tout": 0.7602271410360413,
+   "par_espece": 0.6829816676906774,
+   "connues_birdnet": 0.7775198533903482
+  },
+  "w=0.4": {
+   "tout": 0.7566346042415112,
+   "par_espece": 0.6788501764666798,
+   "connues_birdnet": 0.7761759315821625
+  },
+  "w=0.5": {
+   "tout": 0.749217754085062,
+   "par_espece": 0.6684779705286324,
+   "connues_birdnet": 0.7722663408674404
+  },
+  "w=0.6": {
+   "tout": 0.7408737976590567,
+   "par_espece": 0.6540755525187625,
+   "connues_birdnet": 0.7686010995723885
+  },
+  "w=0.8": {
+   "tout": 0.7201297948777379,
+   "par_espece": 0.6300456408747092,
+   "connues_birdnet": 0.7576053756872327
+  },
+  "w=1.0": {
+   "tout": 0.6956773670181945,
+   "par_espece": 0.6075382455141068,
+   "connues_birdnet": 0.7334147831398901
+  }
+ },
+ "par_espece": {
+  "Prinia lepida": {
+   "precision": 0.25,
+   "n": 4
+  },
+  "Alaudala heinei": {
+   "precision": 0.48148148148148145,
+   "n": 27
+  },
+  "Branta bernicla": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Branta ruficollis": {
+   "precision": 0.5,
+   "n": 4
+  },
+  "Branta canadensis": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Branta leucopsis": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Branta hutchinsii": {
+   "precision": 1.0,
+   "n": 2
+  },
+  "Anser indicus": {
+   "precision": 0.5,
+   "n": 4
+  },
+  "Anser caerulescens": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Anser anser": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Anser cygnoides": {
+   "precision": 0.8,
+   "n": 5
+  },
+  "Anser fabalis": {
+   "precision": 0.3157894736842105,
+   "n": 19
+  },
+  "Anser brachyrhynchus": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Anser serrirostris": {
+   "precision": 0.2777777777777778,
+   "n": 18
+  },
+  "Anser albifrons": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Anser erythropus": {
+   "precision": 0.625,
+   "n": 8
+  },
+  "Cygnus atratus": {
+   "precision": 0.2,
+   "n": 5
+  },
+  "Cygnus olor": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Cygnus columbianus": {
+   "precision": 0.85,
+   "n": 20
+  },
+  "Cygnus cygnus": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Alopochen aegyptiaca": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Tadorna tadorna": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Tadorna ferruginea": {
+   "precision": 0.85,
+   "n": 20
+  },
+  "Cairina moschata": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Aix sponsa": {
+   "precision": 0.6,
+   "n": 5
+  },
+  "Aix galericulata": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Callonetta leucophrys": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Spatula querquedula": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Spatula clypeata": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Mareca strepera": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Mareca penelope": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Mareca americana": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Anas platyrhynchos": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Anas acuta": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Anas crecca": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Marmaronetta angustirostris": {
+   "precision": 0.0,
+   "n": 5
+  },
+  "Netta rufina": {
+   "precision": 0.5,
+   "n": 14
+  },
+  "Aythya ferina": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Aythya nyroca": {
+   "precision": 0.4,
+   "n": 5
+  },
+  "Aythya collaris": {
+   "precision": 0.5,
+   "n": 2
+  },
+  "Aythya fuligula": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Aythya marila": {
+   "precision": 0.0,
+   "n": 4
+  },
+  "Somateria spectabilis": {
+   "precision": 0.5,
+   "n": 2
+  },
+  "Somateria mollissima": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Histrionicus histrionicus": {
+   "precision": 0.0,
+   "n": 3
+  },
+  "Melanitta fusca": {
+   "precision": 0.7727272727272727,
+   "n": 22
+  },
+  "Melanitta nigra": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Clangula hyemalis": {
+   "precision": 0.6666666666666666,
+   "n": 21
+  },
+  "Bucephala clangula": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Bucephala islandica": {
+   "precision": 0.25,
+   "n": 4
+  },
+  "Mergellus albellus": {
+   "precision": 0.26666666666666666,
+   "n": 15
+  },
+  "Mergus merganser": {
+   "precision": 0.8095238095238095,
+   "n": 21
+  },
+  "Mergus serrator": {
+   "precision": 0.46153846153846156,
+   "n": 13
+  },
+  "Oxyura jamaicensis": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Oxyura leucocephala": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Numida meleagris": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Callipepla californica": {
+   "precision": 0.7368421052631579,
+   "n": 19
+  },
+  "Colinus virginianus": {
+   "precision": 1.0,
+   "n": 2
+  },
+  "Meleagris gallopavo": {
+   "precision": 0.2,
+   "n": 5
+  },
+  "Tetrastes bonasia": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Lagopus lagopus": {
+   "precision": 1.0,
+   "n": 19
+  },
+  "Lagopus muta": {
+   "precision": 0.8125,
+   "n": 16
+  },
+  "Tetrao urogallus": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Lyrurus tetrix": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Perdix perdix": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Syrmaticus reevesii": {
+   "precision": 0.0,
+   "n": 6
+  },
+  "Chrysolophus pictus": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Chrysolophus amherstiae": {
+   "precision": 0.0,
+   "n": 3
+  },
+  "Phasianus colchicus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Pavo cristatus": {
+   "precision": 0.7142857142857143,
+   "n": 7
+  },
+  "Gallus gallus": {
+   "precision": 0.18181818181818182,
+   "n": 11
+  },
+  "Francolinus francolinus": {
+   "precision": 0.9090909090909091,
+   "n": 11
+  },
+  "Tetraogallus caucasicus": {
+   "precision": 0.6666666666666666,
+   "n": 6
+  },
+  "Tetraogallus caspius": {
+   "precision": 0.75,
+   "n": 4
+  },
+  "Coturnix coturnix": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Coturnix japonica": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Alectoris barbara": {
+   "precision": 0.3333333333333333,
+   "n": 6
+  },
+  "Alectoris rufa": {
+   "precision": 0.7894736842105263,
+   "n": 19
+  },
+  "Alectoris chukar": {
+   "precision": 0.5714285714285714,
+   "n": 14
+  },
+  "Alectoris graeca": {
+   "precision": 0.9047619047619048,
+   "n": 21
+  },
+  "Caprimulgus ruficollis": {
+   "precision": 0.68,
+   "n": 25
+  },
+  "Caprimulgus europaeus": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Tachymarptis melba": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Apus apus": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Apus unicolor": {
+   "precision": 0.7777777777777778,
+   "n": 9
+  },
+  "Apus pallidus": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Apus affinis": {
+   "precision": 0.8,
+   "n": 5
+  },
+  "Apus caffer": {
+   "precision": 0.125,
+   "n": 24
+  },
+  "Otis tarda": {
+   "precision": 0.0,
+   "n": 5
+  },
+  "Tetrax tetrax": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Clamator glandarius": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Cuculus optatus": {
+   "precision": 1.0,
+   "n": 2
+  },
+  "Cuculus canorus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Pterocles alchata": {
+   "precision": 0.8,
+   "n": 45
+  },
+  "Pterocles orientalis": {
+   "precision": 0.38461538461538464,
+   "n": 13
+  },
+  "Columba livia": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Columba oenas": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Columba palumbus": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Columba trocaz": {
+   "precision": 0.0,
+   "n": 3
+  },
+  "Columba bollii": {
+   "precision": 0.4,
+   "n": 5
+  },
+  "Columba junoniae": {
+   "precision": 0.0,
+   "n": 8
+  },
+  "Streptopelia turtur": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Streptopelia decaocto": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Streptopelia roseogrisea": {
+   "precision": 0.5,
+   "n": 2
+  },
+  "Spilopelia senegalensis": {
+   "precision": 0.75,
+   "n": 4
+  },
+  "Rallus aquaticus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Crex crex": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Porzana carolina": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Porzana porzana": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Gallinula chloropus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Fulica atra": {
+   "precision": 0.6111111111111112,
+   "n": 18
+  },
+  "Fulica cristata": {
+   "precision": 0.25,
+   "n": 8
+  },
+  "Porphyrio porphyrio": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Zapornia pusilla": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Zapornia parva": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Leucogeranus leucogeranus": {
+   "precision": 1.0,
+   "n": 2
+  },
+  "Grus virgo": {
+   "precision": 0.8,
+   "n": 5
+  },
+  "Grus japonensis": {
+   "precision": 1.0,
+   "n": 2
+  },
+  "Grus grus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Tachybaptus ruficollis": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Podiceps grisegena": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Podiceps cristatus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Podiceps auritus": {
+   "precision": 0.5185185185185185,
+   "n": 27
+  },
+  "Podiceps nigricollis": {
+   "precision": 0.9166666666666666,
+   "n": 12
+  },
+  "Phoenicopterus roseus": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Burhinus oedicnemus": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Haematopus ostralegus": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Himantopus himantopus": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Recurvirostra avosetta": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Vanellus vanellus": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Vanellus spinosus": {
+   "precision": 1.0,
+   "n": 6
+  },
+  "Vanellus gregarius": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Vanellus leucurus": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Pluvialis apricaria": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Pluvialis fulva": {
+   "precision": 0.6666666666666666,
+   "n": 3
+  },
+  "Pluvialis dominica": {
+   "precision": 0.3333333333333333,
+   "n": 6
+  },
+  "Pluvialis squatarola": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Charadrius hiaticula": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Charadrius semipalmatus": {
+   "precision": 0.5,
+   "n": 4
+  },
+  "Charadrius dubius": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Charadrius vociferus": {
+   "precision": 0.7,
+   "n": 10
+  },
+  "Charadrius alexandrinus": {
+   "precision": 0.8095238095238095,
+   "n": 21
+  },
+  "Charadrius leschenaultii": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Charadrius morinellus": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Numenius phaeopus": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Numenius arquata": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Limosa lapponica": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Limosa limosa": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Arenaria interpres": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Calidris canutus": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Calidris pugnax": {
+   "precision": 0.375,
+   "n": 8
+  },
+  "Calidris falcinellus": {
+   "precision": 0.6129032258064516,
+   "n": 31
+  },
+  "Calidris ferruginea": {
+   "precision": 0.5789473684210527,
+   "n": 19
+  },
+  "Calidris temminckii": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Calidris alba": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Calidris alpina": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Calidris maritima": {
+   "precision": 0.7142857142857143,
+   "n": 14
+  },
+  "Calidris bairdii": {
+   "precision": 0.0,
+   "n": 2
+  },
+  "Calidris minuta": {
+   "precision": 0.47368421052631576,
+   "n": 19
+  },
+  "Calidris fuscicollis": {
+   "precision": 0.75,
+   "n": 4
+  },
+  "Calidris subruficollis": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Calidris melanotos": {
+   "precision": 0.5238095238095238,
+   "n": 21
+  },
+  "Calidris pusilla": {
+   "precision": 0.14285714285714285,
+   "n": 7
+  },
+  "Limnodromus scolopaceus": {
+   "precision": 0.0,
+   "n": 5
+  },
+  "Scolopax rusticola": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Lymnocryptes minimus": {
+   "precision": 0.38095238095238093,
+   "n": 21
+  },
+  "Gallinago megala": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Gallinago media": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Gallinago gallinago": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Gallinago delicata": {
+   "precision": 0.6153846153846154,
+   "n": 13
+  },
+  "Xenus cinereus": {
+   "precision": 0.9090909090909091,
+   "n": 11
+  },
+  "Phalaropus lobatus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Phalaropus fulicarius": {
+   "precision": 0.21621621621621623,
+   "n": 37
+  },
+  "Actitis hypoleucos": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Actitis macularius": {
+   "precision": 0.5,
+   "n": 2
+  },
+  "Tringa ochropus": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Tringa flavipes": {
+   "precision": 0.6666666666666666,
+   "n": 6
+  },
+  "Tringa totanus": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Tringa stagnatilis": {
+   "precision": 0.375,
+   "n": 8
+  },
+  "Tringa glareola": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Tringa erythropus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Tringa nebularia": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Glareola pratincola": {
+   "precision": 1.0,
+   "n": 23
+  },
+  "Glareola nordmanni": {
+   "precision": 0.0,
+   "n": 2
+  },
+  "Rissa tridactyla": {
+   "precision": 0.8421052631578947,
+   "n": 19
+  },
+  "Pagophila eburnea": {
+   "precision": 0.5,
+   "n": 2
+  },
+  "Xema sabini": {
+   "precision": 0.5,
+   "n": 4
+  },
+  "Chroicocephalus genei": {
+   "precision": 0.85,
+   "n": 20
+  },
+  "Chroicocephalus philadelphia": {
+   "precision": 0.0,
+   "n": 2
+  },
+  "Chroicocephalus ridibundus": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Hydrocoloeus minutus": {
+   "precision": 0.5238095238095238,
+   "n": 21
+  },
+  "Rhodostethia rosea": {
+   "precision": 0.3333333333333333,
+   "n": 3
+  },
+  "Leucophaeus atricilla": {
+   "precision": 1.0,
+   "n": 2
+  },
+  "Ichthyaetus audouinii": {
+   "precision": 0.8421052631578947,
+   "n": 19
+  },
+  "Ichthyaetus melanocephalus": {
+   "precision": 0.8823529411764706,
+   "n": 17
+  },
+  "Ichthyaetus ichthyaetus": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Larus canus": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Larus delawarensis": {
+   "precision": 0.2,
+   "n": 5
+  },
+  "Larus marinus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Larus hyperboreus": {
+   "precision": 0.3333333333333333,
+   "n": 6
+  },
+  "Larus glaucoides": {
+   "precision": 0.0,
+   "n": 4
+  },
+  "Larus argentatus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Larus cachinnans": {
+   "precision": 0.7307692307692307,
+   "n": 26
+  },
+  "Larus michahellis": {
+   "precision": 0.6111111111111112,
+   "n": 18
+  },
+  "Larus armenicus": {
+   "precision": 0.0,
+   "n": 2
+  },
+  "Larus fuscus": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Gelochelidon nilotica": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Hydroprogne caspia": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Thalasseus sandvicensis": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Sternula albifrons": {
+   "precision": 0.7368421052631579,
+   "n": 19
+  },
+  "Sternula antillarum": {
+   "precision": 0.16666666666666666,
+   "n": 6
+  },
+  "Onychoprion anaethetus": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Onychoprion fuscatus": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Sterna dougallii": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Sterna hirundo": {
+   "precision": 0.4444444444444444,
+   "n": 18
+  },
+  "Sterna paradisaea": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Chlidonias hybrida": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Chlidonias leucopterus": {
+   "precision": 0.6666666666666666,
+   "n": 15
+  },
+  "Chlidonias niger": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Stercorarius skua": {
+   "precision": 0.8,
+   "n": 10
+  },
+  "Stercorarius parasiticus": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Stercorarius longicaudus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Alle alle": {
+   "precision": 0.6,
+   "n": 5
+  },
+  "Uria lomvia": {
+   "precision": 0.05555555555555555,
+   "n": 18
+  },
+  "Uria aalge": {
+   "precision": 0.9,
+   "n": 20
+  },
+  "Alca torda": {
+   "precision": 0.6363636363636364,
+   "n": 22
+  },
+  "Cepphus grylle": {
+   "precision": 1.0,
+   "n": 10
+  },
+  "Fratercula arctica": {
+   "precision": 0.3,
+   "n": 10
+  },
+  "Gavia stellata": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Gavia arctica": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Gavia immer": {
+   "precision": 0.5454545454545454,
+   "n": 11
+  },
+  "Gavia adamsii": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Hydrobates pelagicus": {
+   "precision": 1.0,
+   "n": 16
+  },
+  "Hydrobates leucorhous": {
+   "precision": 0.5,
+   "n": 2
+  },
+  "Hydrobates castro": {
+   "precision": 1.0,
+   "n": 2
+  },
+  "Hydrobates monteiroi": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Fulmarus glacialis": {
+   "precision": 0.9375,
+   "n": 16
+  },
+  "Pterodroma madeira": {
+   "precision": 1.0,
+   "n": 10
+  },
+  "Pseudobulweria aterrima": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Calonectris diomedea": {
+   "precision": 0.9333333333333333,
+   "n": 15
+  },
+  "Calonectris borealis": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Ardenna gravis": {
+   "precision": 0.0,
+   "n": 20
+  },
+  "Puffinus puffinus": {
+   "precision": 0.8695652173913043,
+   "n": 23
+  },
+  "Puffinus yelkouan": {
+   "precision": 0.0,
+   "n": 11
+  },
+  "Puffinus mauretanicus": {
+   "precision": 0.25,
+   "n": 4
+  },
+  "Puffinus baroli": {
+   "precision": 0.35714285714285715,
+   "n": 14
+  },
+  "Bulweria bulwerii": {
+   "precision": 0.5,
+   "n": 2
+  },
+  "Ciconia nigra": {
+   "precision": 0.5714285714285714,
+   "n": 7
+  },
+  "Ciconia ciconia": {
+   "precision": 0.8947368421052632,
+   "n": 19
+  },
+  "Morus bassanus": {
+   "precision": 0.9076923076923077,
+   "n": 65
+  },
+  "Microcarbo pygmaeus": {
+   "precision": 0.0,
+   "n": 3
+  },
+  "Phalacrocorax carbo": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Gulosus aristotelis": {
+   "precision": 0.2727272727272727,
+   "n": 11
+  },
+  "Geronticus eremita": {
+   "precision": 0.4444444444444444,
+   "n": 9
+  },
+  "Plegadis falcinellus": {
+   "precision": 0.75,
+   "n": 24
+  },
+  "Platalea leucorodia": {
+   "precision": 0.6875,
+   "n": 16
+  },
+  "Botaurus stellaris": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Nycticorax nycticorax": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Ardeola ralloides": {
+   "precision": 0.5555555555555556,
+   "n": 9
+  },
+  "Ardea cinerea": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Ardea purpurea": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Ardea alba": {
+   "precision": 0.8947368421052632,
+   "n": 19
+  },
+  "Egretta garzetta": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Pelecanus onocrotalus": {
+   "precision": 0.0,
+   "n": 5
+  },
+  "Pandion haliaetus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Elanus caeruleus": {
+   "precision": 0.8888888888888888,
+   "n": 27
+  },
+  "Gypaetus barbatus": {
+   "precision": 0.038461538461538464,
+   "n": 26
+  },
+  "Neophron percnopterus": {
+   "precision": 0.0,
+   "n": 2
+  },
+  "Pernis apivorus": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Gyps fulvus": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Aegypius monachus": {
+   "precision": 0.0,
+   "n": 6
+  },
+  "Circaetus gallicus": {
+   "precision": 0.8823529411764706,
+   "n": 17
+  },
+  "Clanga pomarina": {
+   "precision": 0.5714285714285714,
+   "n": 21
+  },
+  "Clanga clanga": {
+   "precision": 0.0,
+   "n": 7
+  },
+  "Hieraaetus pennatus": {
+   "precision": 0.9166666666666666,
+   "n": 12
+  },
+  "Aquila adalberti": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Aquila heliaca": {
+   "precision": 0.0,
+   "n": 2
+  },
+  "Aquila chrysaetos": {
+   "precision": 0.8928571428571429,
+   "n": 28
+  },
+  "Aquila fasciata": {
+   "precision": 0.0,
+   "n": 3
+  },
+  "Accipiter brevipes": {
+   "precision": 0.0,
+   "n": 5
+  },
+  "Accipiter nisus": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Accipiter gentilis": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Circus aeruginosus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Circus cyaneus": {
+   "precision": 0.6666666666666666,
+   "n": 9
+  },
+  "Circus macrourus": {
+   "precision": 0.3333333333333333,
+   "n": 3
+  },
+  "Circus pygargus": {
+   "precision": 0.8,
+   "n": 20
+  },
+  "Milvus milvus": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Milvus migrans": {
+   "precision": 0.7894736842105263,
+   "n": 19
+  },
+  "Haliaeetus albicilla": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Buteo lagopus": {
+   "precision": 0.9375,
+   "n": 16
+  },
+  "Buteo rufinus": {
+   "precision": 0.5,
+   "n": 4
+  },
+  "Buteo buteo": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Tyto alba": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Aegolius funereus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Athene noctua": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Surnia ulula": {
+   "precision": 0.64,
+   "n": 25
+  },
+  "Glaucidium passerinum": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Otus scops": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Otus cyprius": {
+   "precision": 1.0,
+   "n": 13
+  },
+  "Asio otus": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Asio flammeus": {
+   "precision": 0.6190476190476191,
+   "n": 21
+  },
+  "Bubo scandiacus": {
+   "precision": 0.2,
+   "n": 5
+  },
+  "Bubo bubo": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Strix aluco": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Strix uralensis": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Strix nebulosa": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Upupa epops": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Coracias garrulus": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Halcyon smyrnensis": {
+   "precision": 1.0,
+   "n": 2
+  },
+  "Alcedo atthis": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Megaceryle alcyon": {
+   "precision": 1.0,
+   "n": 4
+  },
+  "Ceryle rudis": {
+   "precision": 0.75,
+   "n": 4
+  },
+  "Merops persicus": {
+   "precision": 1.0,
+   "n": 7
+  },
+  "Merops apiaster": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Jynx torquilla": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Picoides tridactylus": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Dendrocoptes medius": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Dryobates minor": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Dendrocopos syriacus": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Dendrocopos major": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Dendrocopos leucotos": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Dryocopus martius": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Picus viridis": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Picus sharpei": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Picus canus": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Falco naumanni": {
+   "precision": 1.0,
+   "n": 19
+  },
+  "Falco tinnunculus": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Falco vespertinus": {
+   "precision": 0.25,
+   "n": 12
+  },
+  "Falco eleonorae": {
+   "precision": 0.5,
+   "n": 4
+  },
+  "Falco columbarius": {
+   "precision": 0.8,
+   "n": 10
+  },
+  "Falco subbuteo": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Falco biarmicus": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Falco rusticolus": {
+   "precision": 0.0,
+   "n": 5
+  },
+  "Falco peregrinus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Nymphicus hollandicus": {
+   "precision": 0.625,
+   "n": 8
+  },
+  "Myiopsitta monachus": {
+   "precision": 0.875,
+   "n": 16
+  },
+  "Amazona oratrix": {
+   "precision": 0.8695652173913043,
+   "n": 23
+  },
+  "Amazona aestiva": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Thectocercus acuticaudatus": {
+   "precision": 1.0,
+   "n": 2
+  },
+  "Psittacara erythrogenys": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Psittacula eupatria": {
+   "precision": 0.5714285714285714,
+   "n": 7
+  },
+  "Psittacula krameri": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Melopsittacus undulatus": {
+   "precision": 0.0,
+   "n": 2
+  },
+  "Agapornis roseicollis": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Agapornis fischeri": {
+   "precision": 0.0,
+   "n": 2
+  },
+  "Lanius collurio": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Lanius isabellinus": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Lanius minor": {
+   "precision": 0.5714285714285714,
+   "n": 7
+  },
+  "Lanius excubitor": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Lanius meridionalis": {
+   "precision": 0.3888888888888889,
+   "n": 18
+  },
+  "Lanius senator": {
+   "precision": 0.47368421052631576,
+   "n": 19
+  },
+  "Lanius nubicus": {
+   "precision": 1.0,
+   "n": 6
+  },
+  "Vireo olivaceus": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Oriolus oriolus": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Perisoreus infaustus": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Garrulus glandarius": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Cyanopica cooki": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Pica pica": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Nucifraga caryocatactes": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Pyrrhocorax pyrrhocorax": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Pyrrhocorax graculus": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Coloeus monedula": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Corvus frugilegus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Corvus corone": {
+   "precision": 0.5,
+   "n": 18
+  },
+  "Corvus cornix": {
+   "precision": 0.4444444444444444,
+   "n": 18
+  },
+  "Corvus albus": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Corvus corax": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Bombycilla garrulus": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Periparus ater": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Lophophanes cristatus": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Poecile lugubris": {
+   "precision": 0.9,
+   "n": 10
+  },
+  "Poecile cinctus": {
+   "precision": 0.5172413793103449,
+   "n": 29
+  },
+  "Poecile palustris": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Poecile hyrcanus": {
+   "precision": 0.2,
+   "n": 5
+  },
+  "Poecile montanus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Cyanistes teneriffae": {
+   "precision": 0.8947368421052632,
+   "n": 19
+  },
+  "Cyanistes caeruleus": {
+   "precision": 0.8823529411764706,
+   "n": 17
+  },
+  "Cyanistes cyanus": {
+   "precision": 0.5454545454545454,
+   "n": 11
+  },
+  "Parus major": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Remiz pendulinus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Panurus biarmicus": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Lullula arborea": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Alauda arvensis": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Galerida theklae": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Galerida cristata": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Eremophila alpestris": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Calandrella brachydactyla": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Melanocorypha bimaculata": {
+   "precision": 1.0,
+   "n": 3
+  },
+  "Melanocorypha calandra": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Chersophilus duponti": {
+   "precision": 0.92,
+   "n": 25
+  },
+  "Alaudala rufescens": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Pycnonotus xanthopygos": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Pycnonotus barbatus": {
+   "precision": 0.0,
+   "n": 2
+  },
+  "Riparia riparia": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Ptyonoprogne rupestris": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Hirundo rustica": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Delichon urbicum": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Cecropis daurica": {
+   "precision": 0.8947368421052632,
+   "n": 19
+  },
+  "Cettia cetti": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Aegithalos caudatus": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Phylloscopus sibilatrix": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Phylloscopus bonelli": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Phylloscopus orientalis": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Phylloscopus humei": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Phylloscopus inornatus": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Phylloscopus proregulus": {
+   "precision": 0.84,
+   "n": 25
+  },
+  "Phylloscopus schwarzi": {
+   "precision": 0.4444444444444444,
+   "n": 9
+  },
+  "Phylloscopus griseolus": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Phylloscopus fuscatus": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Phylloscopus trochilus": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Phylloscopus sindianus": {
+   "precision": 0.7857142857142857,
+   "n": 14
+  },
+  "Phylloscopus canariensis": {
+   "precision": 0.6842105263157895,
+   "n": 19
+  },
+  "Phylloscopus collybita": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Phylloscopus ibericus": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Phylloscopus nitidus": {
+   "precision": 1.0,
+   "n": 16
+  },
+  "Phylloscopus plumbeitarsus": {
+   "precision": 0.0,
+   "n": 2
+  },
+  "Phylloscopus trochiloides": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Phylloscopus tenellipes": {
+   "precision": 1.0,
+   "n": 2
+  },
+  "Phylloscopus borealis": {
+   "precision": 0.8823529411764706,
+   "n": 17
+  },
+  "Acrocephalus arundinaceus": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Acrocephalus melanopogon": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Acrocephalus paludicola": {
+   "precision": 0.95,
+   "n": 20
+  },
+  "Acrocephalus schoenobaenus": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Acrocephalus agricola": {
+   "precision": 0.19047619047619047,
+   "n": 42
+  },
+  "Acrocephalus dumetorum": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Acrocephalus scirpaceus": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Acrocephalus baeticatus": {
+   "precision": 0.5,
+   "n": 20
+  },
+  "Acrocephalus palustris": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Iduna caligata": {
+   "precision": 0.65625,
+   "n": 32
+  },
+  "Iduna rama": {
+   "precision": 0.0,
+   "n": 2
+  },
+  "Iduna pallida": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Iduna opaca": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Hippolais languida": {
+   "precision": 0.25,
+   "n": 8
+  },
+  "Hippolais olivetorum": {
+   "precision": 0.8,
+   "n": 15
+  },
+  "Hippolais polyglotta": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Hippolais icterina": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Locustella lanceolata": {
+   "precision": 1.0,
+   "n": 3
+  },
+  "Locustella fluviatilis": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Locustella luscinioides": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Locustella naevia": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Cisticola juncidis": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Sylvia atricapilla": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Sylvia borin": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Curruca nisoria": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Curruca minula": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Curruca curruca": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Curruca hortensis": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Curruca crassirostris": {
+   "precision": 0.7333333333333333,
+   "n": 15
+  },
+  "Curruca nana": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Curruca mystacea": {
+   "precision": 0.125,
+   "n": 16
+  },
+  "Curruca ruppeli": {
+   "precision": 0.5555555555555556,
+   "n": 9
+  },
+  "Curruca melanothorax": {
+   "precision": 0.5,
+   "n": 10
+  },
+  "Curruca melanocephala": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Curruca iberiae": {
+   "precision": 0.631578947368421,
+   "n": 19
+  },
+  "Curruca subalpina": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Curruca cantillans": {
+   "precision": 0.6111111111111112,
+   "n": 18
+  },
+  "Curruca communis": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Curruca conspicillata": {
+   "precision": 0.6842105263157895,
+   "n": 19
+  },
+  "Curruca sarda": {
+   "precision": 0.8421052631578947,
+   "n": 19
+  },
+  "Curruca undata": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Curruca balearica": {
+   "precision": 1.0,
+   "n": 8
+  },
+  "Argya altirostris": {
+   "precision": 0.5,
+   "n": 2
+  },
+  "Regulus ignicapilla": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Regulus madeirensis": {
+   "precision": 0.8620689655172413,
+   "n": 29
+  },
+  "Regulus regulus": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Troglodytes troglodytes": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Sitta krueperi": {
+   "precision": 0.47058823529411764,
+   "n": 17
+  },
+  "Sitta canadensis": {
+   "precision": 0.6666666666666666,
+   "n": 3
+  },
+  "Sitta whiteheadi": {
+   "precision": 0.6,
+   "n": 15
+  },
+  "Sitta neumayer": {
+   "precision": 0.7894736842105263,
+   "n": 19
+  },
+  "Sitta tephronota": {
+   "precision": 1.0,
+   "n": 4
+  },
+  "Sitta europaea": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Tichodroma muraria": {
+   "precision": 0.5,
+   "n": 12
+  },
+  "Certhia familiaris": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Certhia brachydactyla": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Mimus polyglottos": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Acridotheres cristatellus": {
+   "precision": 0.0,
+   "n": 2
+  },
+  "Acridotheres tristis": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Pastor roseus": {
+   "precision": 0.7,
+   "n": 10
+  },
+  "Sturnus vulgaris": {
+   "precision": 0.6111111111111112,
+   "n": 18
+  },
+  "Sturnus unicolor": {
+   "precision": 0.5,
+   "n": 18
+  },
+  "Zoothera aurea": {
+   "precision": 0.6,
+   "n": 5
+  },
+  "Turdus philomelos": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Turdus viscivorus": {
+   "precision": 0.5555555555555556,
+   "n": 18
+  },
+  "Turdus iliacus": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Turdus merula": {
+   "precision": 0.8235294117647058,
+   "n": 17
+  },
+  "Turdus obscurus": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Turdus pilaris": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Turdus torquatus": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Turdus atrogularis": {
+   "precision": 0.4722222222222222,
+   "n": 36
+  },
+  "Cercotrichas galactotes": {
+   "precision": 0.9629629629629629,
+   "n": 27
+  },
+  "Muscicapa striata": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Muscicapa tyrrhenica": {
+   "precision": 0.3333333333333333,
+   "n": 30
+  },
+  "Erithacus rubecula": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Luscinia svecica": {
+   "precision": 0.5555555555555556,
+   "n": 18
+  },
+  "Luscinia luscinia": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Luscinia megarhynchos": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Irania gutturalis": {
+   "precision": 0.3333333333333333,
+   "n": 6
+  },
+  "Calliope calliope": {
+   "precision": 0.3333333333333333,
+   "n": 3
+  },
+  "Tarsiger cyanurus": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Ficedula albicilla": {
+   "precision": 1.0,
+   "n": 1
+  },
+  "Ficedula parva": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Ficedula semitorquata": {
+   "precision": 0.5,
+   "n": 12
+  },
+  "Ficedula hypoleuca": {
+   "precision": 0.7058823529411765,
+   "n": 17
+  },
+  "Ficedula albicollis": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Phoenicurus ochruros": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Phoenicurus phoenicurus": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Phoenicurus erythrogastrus": {
+   "precision": 0.0,
+   "n": 2
+  },
+  "Monticola saxatilis": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Monticola solitarius": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Saxicola rubetra": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Saxicola dacotiae": {
+   "precision": 0.0,
+   "n": 3
+  },
+  "Saxicola rubicola": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Saxicola maurus": {
+   "precision": 0.14285714285714285,
+   "n": 7
+  },
+  "Oenanthe oenanthe": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Oenanthe isabellina": {
+   "precision": 0.2857142857142857,
+   "n": 7
+  },
+  "Oenanthe hispanica": {
+   "precision": 0.6190476190476191,
+   "n": 21
+  },
+  "Oenanthe melanoleuca": {
+   "precision": 0.3333333333333333,
+   "n": 15
+  },
+  "Oenanthe cypriaca": {
+   "precision": 0.5714285714285714,
+   "n": 7
+  },
+  "Oenanthe pleschanka": {
+   "precision": 0.0,
+   "n": 3
+  },
+  "Oenanthe leucura": {
+   "precision": 0.46153846153846156,
+   "n": 13
+  },
+  "Oenanthe finschii": {
+   "precision": 0.0,
+   "n": 3
+  },
+  "Oenanthe xanthoprymna": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Cinclus cinclus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Carpospiza brachydactyla": {
+   "precision": 1.0,
+   "n": 2
+  },
+  "Petronia petronia": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Montifringilla nivalis": {
+   "precision": 0.8,
+   "n": 20
+  },
+  "Passer montanus": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Passer hispaniolensis": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Passer italiae": {
+   "precision": 0.3157894736842105,
+   "n": 19
+  },
+  "Passer domesticus": {
+   "precision": 0.8235294117647058,
+   "n": 17
+  },
+  "Passer luteus": {
+   "precision": 0.0,
+   "n": 5
+  },
+  "Passer moabiticus": {
+   "precision": 1.0,
+   "n": 3
+  },
+  "Ploceus melanocephalus": {
+   "precision": 0.8181818181818182,
+   "n": 11
+  },
+  "Euplectes afer": {
+   "precision": 0.4444444444444444,
+   "n": 9
+  },
+  "Euodice malabarica": {
+   "precision": 0.5,
+   "n": 2
+  },
+  "Lonchura punctulata": {
+   "precision": 1.0,
+   "n": 8
+  },
+  "Estrilda astrild": {
+   "precision": 0.8947368421052632,
+   "n": 19
+  },
+  "Amandava amandava": {
+   "precision": 0.5,
+   "n": 4
+  },
+  "Prunella collaris": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Prunella montanella": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Prunella ocularis": {
+   "precision": 0.5,
+   "n": 4
+  },
+  "Prunella atrogularis": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Prunella modularis": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Motacilla flava": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Motacilla tschutschensis": {
+   "precision": 0.8125,
+   "n": 16
+  },
+  "Motacilla citreola": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Motacilla cinerea": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Motacilla alba": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Anthus richardi": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Anthus godlewskii": {
+   "precision": 0.36363636363636365,
+   "n": 11
+  },
+  "Anthus campestris": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Anthus pratensis": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Anthus trivialis": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Anthus hodgsoni": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Anthus gustavi": {
+   "precision": 0.0,
+   "n": 2
+  },
+  "Anthus cervinus": {
+   "precision": 0.8823529411764706,
+   "n": 17
+  },
+  "Anthus rubescens": {
+   "precision": 0.76,
+   "n": 25
+  },
+  "Anthus spinoletta": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Anthus petrosus": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Anthus berthelotii": {
+   "precision": 0.875,
+   "n": 16
+  },
+  "Fringilla coelebs": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Fringilla teydea": {
+   "precision": 0.7692307692307693,
+   "n": 13
+  },
+  "Fringilla montifringilla": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Coccothraustes coccothraustes": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Pinicola enucleator": {
+   "precision": 0.8421052631578947,
+   "n": 19
+  },
+  "Pyrrhula pyrrhula": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Pyrrhula murina": {
+   "precision": 0.7777777777777778,
+   "n": 9
+  },
+  "Rhodopechys sanguineus": {
+   "precision": 0.0,
+   "n": 3
+  },
+  "Bucanetes githagineus": {
+   "precision": 0.5,
+   "n": 6
+  },
+  "Carpodacus erythrinus": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Carpodacus rubicilla": {
+   "precision": 0.5,
+   "n": 10
+  },
+  "Haemorhous mexicanus": {
+   "precision": 0.36363636363636365,
+   "n": 11
+  },
+  "Chloris chloris": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Linaria flavirostris": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Linaria cannabina": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Acanthis flammea": {
+   "precision": 0.6111111111111112,
+   "n": 18
+  },
+  "Acanthis cabaret": {
+   "precision": 0.47368421052631576,
+   "n": 19
+  },
+  "Acanthis hornemanni": {
+   "precision": 0.3333333333333333,
+   "n": 9
+  },
+  "Loxia pytyopsittacus": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Loxia scotica": {
+   "precision": 0.26666666666666666,
+   "n": 15
+  },
+  "Loxia curvirostra": {
+   "precision": 0.6666666666666666,
+   "n": 18
+  },
+  "Loxia leucoptera": {
+   "precision": 0.8421052631578947,
+   "n": 19
+  },
+  "Carduelis carduelis": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Carduelis citrinella": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Carduelis corsicana": {
+   "precision": 0.46153846153846156,
+   "n": 13
+  },
+  "Serinus pusillus": {
+   "precision": 1.0,
+   "n": 7
+  },
+  "Serinus serinus": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Serinus canaria": {
+   "precision": 0.8888888888888888,
+   "n": 18
+  },
+  "Spinus spinus": {
+   "precision": 0.9444444444444444,
+   "n": 18
+  },
+  "Calcarius lapponicus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Plectrophenax nivalis": {
+   "precision": 0.7222222222222222,
+   "n": 18
+  },
+  "Emberiza calandra": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Emberiza citrinella": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Emberiza leucocephalos": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Emberiza cia": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Emberiza buchanani": {
+   "precision": 0.5,
+   "n": 4
+  },
+  "Emberiza cineracea": {
+   "precision": 0.5555555555555556,
+   "n": 27
+  },
+  "Emberiza hortulana": {
+   "precision": 0.7777777777777778,
+   "n": 18
+  },
+  "Emberiza caesia": {
+   "precision": 0.7083333333333334,
+   "n": 48
+  },
+  "Emberiza cirlus": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Emberiza pusilla": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Emberiza rustica": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Emberiza melanocephala": {
+   "precision": 0.8333333333333334,
+   "n": 18
+  },
+  "Emberiza spodocephala": {
+   "precision": 1.0,
+   "n": 4
+  },
+  "Emberiza schoeniclus": {
+   "precision": 1.0,
+   "n": 18
+  },
+  "Junco hyemalis": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Zonotrichia albicollis": {
+   "precision": 1.0,
+   "n": 7
+  },
+  "Melospiza melodia": {
+   "precision": 1.0,
+   "n": 3
+  },
+  "Quiscalus mexicanus": {
+   "precision": 0.0,
+   "n": 1
+  },
+  "Geothlypis trichas": {
+   "precision": 1.0,
+   "n": 2
+  },
+  "Setophaga aestiva": {
+   "precision": 0.6,
+   "n": 5
+  },
+  "Setophaga coronata": {
+   "precision": 0.0,
+   "n": 1
+  }
+ }
+}

@@ -12,3 +12,4 @@ data/emb/
 data/logs/
 data/metadata/
 models/*.pt
+!models/europe_v1.pt
