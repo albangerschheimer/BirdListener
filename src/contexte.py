@@ -17,19 +17,36 @@ class Contexte:
         self.especes = especes
         self.pays = f["pays"]
         self.mois = np.array([f["mois"].get(e, [0] * 12) for e in especes], dtype=np.float32)
+        self.total = self.mois.sum(1)
+        self._vecteurs = {}
 
     def liste_pays(self):
         return sorted(self.pays, key=lambda p: -sum(self.pays[p].values()))
 
-    def a_priori(self, pays=None, mois=None, fond=0.002):
-        """Vecteur de probabilités a priori sur les espèces (somme 1)."""
+    def vecteur_pays(self, pays):
+        """Nombre d'enregistrements de chaque espèce dans le pays (calculé une fois par pays)."""
+        if pays not in self._vecteurs:
+            self._vecteurs[pays] = np.array([self.pays[pays].get(e, 0) for e in self.especes], dtype=np.float32)
+        return self._vecteurs[pays]
+
+    def a_priori(self, pays=None, mois=None, fond=0.002, retirer=None):
+        """Vecteur de probabilités a priori sur les espèces (somme 1).
+        retirer : indice d'une espèce dont on enlève un enregistrement des comptes (pour évaluer
+        sans que l'enregistrement testé s'aide lui-même)."""
         n = len(self.especes)
         p = np.ones(n, dtype=np.float32)
         if pays in self.pays:
-            c = np.array([self.pays[pays].get(e, 0) for e in self.especes], dtype=np.float32)
+            c = self.vecteur_pays(pays)
+            if retirer is not None:
+                c = c.copy()
+                c[retirer] = max(c[retirer] - 1, 0)
             p = (1 - fond) * c / max(c.sum(), 1) + fond / n
         if mois and 1 <= mois <= 12:
-            total = self.mois.sum(1)
-            part = (self.mois[:, mois - 1] + 1) / (total + 12)        # part de l'année, lissée
+            m, total = self.mois[:, mois - 1], self.total
+            if retirer is not None and m[retirer] > 0:
+                m, total = m.copy(), total.copy()
+                m[retirer] -= 1
+                total[retirer] -= 1
+            part = (m + 1) / (total + 12)                                # part de l'année, lissée
             p = p * (0.3 + part * 12)                                   # saison : effet modéré
         return p / p.sum()
