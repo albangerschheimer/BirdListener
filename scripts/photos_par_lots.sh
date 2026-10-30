@@ -12,8 +12,5 @@ cp "$ATTENTE/credits.json" webapp/photos/credits.json
 rm -f "$ATTENTE"/*.jpg
 .venv/bin/python scripts/export_web.py monde_v1 | tail -1
 git add webapp/photos webapp/modele/meta.json
-git commit -qm "Photos d'espèces : nouvel arrivage
-
-Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
-Claude-Session: https://claude.ai/code/session_01RrUncK9USTUXU3CcHACP8m" && git push -q 2>&1 | grep -v "^remote:"
+git commit -qm "Photos d'espèces : nouvel arrivage" && git push -q 2>&1 | grep -v "^remote:"
 tail -1 data/logs/photos.log
