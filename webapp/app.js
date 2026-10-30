@@ -270,13 +270,18 @@ function saison(i) {
 function construireFiche(e, d) {
   const cible = d ? resultat : fichePanneau;   // une écoute s'affiche dans la page, le reste dans le panneau
   cible.replaceChildren();
+  const titre = el("div", e.photo ? "heros" : "heros sans-photo");
   if (e.photo) {
     const img = el("img", "fiche-photo");
     img.src = "photos/" + e.photo;
     img.alt = e.fr;
-    cible.append(img);
+    titre.append(img);
   }
-  cible.append(el("h2", "nom", e.fr), el("p", "latin", e.sci));
+  const noms = el("div", "heros-texte");
+  noms.append(el("h2", "nom", e.fr), el("p", "latin", e.sci));
+  if (e.famille) noms.append(el("p", "famille", e.famille));
+  titre.append(noms);
+  cible.append(titre);
 
   if (d) {
     const verdict = el("p", "verdict");
@@ -484,11 +489,15 @@ const SEUIL_DIRECT = 0.55;            // certitude minimale d'une espèce sur un
 let continu = memoire("continu", false);
 const boutonContinu = $("continu");
 function montrerMode() {
-  boutonContinu.classList.toggle("actif", continu);
-  boutonContinu.setAttribute("aria-pressed", String(continu));
+  for (const [b, actif] of [[boutonContinu, continu], [$("simple"), !continu]]) {
+    b.classList.toggle("actif", actif);
+    b.setAttribute("aria-pressed", String(actif));
+  }
 }
 montrerMode();
-boutonContinu.addEventListener("click", () => { vibrer(); continu = !continu; memoriser("continu", continu); montrerMode(); });
+for (const [b, valeur] of [[boutonContinu, true], [$("simple"), false]]) {
+  b.addEventListener("click", () => { vibrer(); continu = valeur; memoriser("continu", continu); montrerMode(); });
+}
 
 // Barres de niveau (9 bandes de 1 à 9 kHz) et spectrogramme défilant, tirés du vrai son du micro
 const barres = Array.from({ length: 9 }, () => document.createElement("i"));

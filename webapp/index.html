@@ -13,6 +13,7 @@
 <link rel="apple-touch-icon" href="icone-180.png">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preload" href="polices/big-shoulders.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="polices/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="ouverture/oiseau.webp" as="image">
 <link rel="preload" href="ouverture/logo.webp" as="image">
 <link rel="stylesheet" href="style.css">
@@ -37,8 +38,11 @@
     </button>
     <canvas id="spectre" class="spectre" aria-hidden="true"></canvas>
     <div class="sous-bouton">
-      <button id="continu" class="puce" aria-pressed="false">En continu</button>
-      <label class="lien-fichier">Importer un son<input id="fichier" type="file" accept="audio/*,video/*"></label>
+      <div class="mode" role="group" aria-label="Mode d'écoute">
+        <button id="simple" class="actif" aria-pressed="true">Une écoute</button>
+        <button id="continu" aria-pressed="false">En continu</button>
+      </div>
+      <label class="lien-fichier"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M5 14v5h14v-5"/></svg>Importer un son<input id="fichier" type="file" accept="audio/*,video/*"></label>
     </div>
   </section>
 
@@ -60,15 +64,17 @@
 
   <details class="reglages">
     <summary>Réglages</summary>
-    <label>Pays <select id="pays"><option value="">Partout</option></select></label>
-    <label class="case"><input id="saison" type="checkbox" checked> Saison</label>
-    <label class="case"><input id="partage" type="checkbox"> Partager sur la carte</label>
+    <div class="groupe">
+      <label>Pays <select id="pays"><option value="">Partout</option></select></label>
+      <label class="case">Tenir compte de la saison <input id="saison" type="checkbox" class="interrupteur" checked></label>
+      <label class="case">Partager sur la carte <input id="partage" type="checkbox" class="interrupteur"></label>
+    </div>
     <ul class="credits"><li>BirdNET, Cornell Lab et TU Chemnitz</li><li>Sons xeno-canto</li><li>Photos Wikimedia Commons</li><li>Carte OpenStreetMap</li></ul>
   </details>
 </section>
 
 <section id="vue-especes" class="vue" hidden>
-  <h1 class="titre-carte">Espèces</h1>
+  <h1 class="titre-page">Espèces</h1>
   <button id="jeu" class="carte-jeu"><span>Quel est ce chant&nbsp;?</span><i aria-hidden="true"></i></button>
   <div class="recherche">
     <input id="cherche" type="search" placeholder="Rechercher" autocomplete="off" aria-label="Rechercher une espèce">
@@ -82,7 +88,7 @@
 </section>
 
 <section id="vue-carte" class="vue" hidden>
-  <h1 class="titre-carte">Carte</h1>
+  <h1 class="titre-page">Carte</h1>
   <div class="recherche">
     <input id="filtre-espece" list="especes-carte" placeholder="Toutes les espèces" autocomplete="off" aria-label="Espèce">
     <button id="effacer-filtre" class="effacer" aria-label="Effacer" hidden>×</button>
@@ -103,9 +109,9 @@
 </main>
 
 <nav class="onglets" aria-label="Sections">
-  <button class="onglet actif" data-vue="vue-ecoute">Écouter</button>
-  <button class="onglet" data-vue="vue-especes">Espèces</button>
-  <button class="onglet" data-vue="vue-carte">Carte</button>
+  <button class="onglet actif" data-vue="vue-ecoute"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4M8 6v12M12 3v18M16 7v10M20 10v4"/></svg>Écouter</button>
+  <button class="onglet" data-vue="vue-especes"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5c-.8 0-1.5-.7-1.5-1.5zM13 4h5.5c.8 0 1.5.7 1.5 1.5v13c0 .8-.7 1.5-1.5 1.5H13z"/></svg>Espèces</button>
+  <button class="onglet" data-vue="vue-carte"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Carte</button>
 </nav>
 <div id="panneau" class="panneau" role="dialog" aria-modal="true" aria-label="Fiche" hidden>
   <button id="fermer-panneau" class="fermer" aria-label="Fermer">×</button>
