@@ -10,7 +10,7 @@ Démarré le 27/10/2026. Budget : 98 $, 7 jours maximum. Estimation : 2 à 3 jou
 | 4. Modèle Europe `europe_v1` | ✅ fait |
 | 5. Évaluation et comparaison avec BirdNET | ✅ fait |
 | 6. Application web en ligne, sans serveur (https://birdlistener.vercel.app), identité « Huppe » | ✅ fait |
-| 7. Monde entier (10 458 espèces, 269 815 enregistrements) | 🔄 écoute par BirdNET aux deux tiers |
+| 7. Modèle monde `monde_v1` (10 281 espèces), en ligne dans l'app | ✅ fait |
 | 8. Filtre pays et saison, photos, carte partagée, écoute continue, guide, jeu | ✅ fait (photos en cours) |
 
 ## Résultats `europe_v1` (746 espèces)
@@ -74,3 +74,8 @@ python -m venv .venv
   - **Onglet Espèces** : guide des 746 espèces (présentes ce mois-ci ou A à Z, recherche), chant de
     référence xeno-canto pour 743 espèces, fiches dans un panneau, jeu **« Quel est ce chant ? »**.
   - **Mes espèces** (collection), carnet, partage d'une **image** de l'observation.
+- **29-30/10** : modèle monde `monde_v1` entraîné sur 272 600 enregistrements (10 281 espèces).
+  Test sur 51 793 enregistrements d'auteurs jamais entendus : 57,0 % seul, 60,7 % avec BirdNET,
+  **66,5 %** avec le filtre pays + mois (BirdNET seul : 54,9 %). Sur les espèces d'Europe, dans les
+  conditions de l'app, il fait mieux que le modèle Europe (72,1 % contre 71,0 %) : il le remplace.
+  L'app reconnaît maintenant les oiseaux du monde entier ; 9 910 espèces ont un chant de référence.

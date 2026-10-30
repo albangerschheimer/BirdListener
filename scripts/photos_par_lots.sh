@@ -10,7 +10,7 @@ PHOTOS_DOSSIER="$ATTENTE" timeout 6900 .venv/bin/python scripts/fetch_photos.py 
 cp "$ATTENTE"/*.jpg webapp/photos/ 2>/dev/null
 cp "$ATTENTE/credits.json" webapp/photos/credits.json
 rm -f "$ATTENTE"/*.jpg
-.venv/bin/python scripts/export_web.py europe_v1 | tail -1
+.venv/bin/python scripts/export_web.py monde_v1 | tail -1
 git add webapp/photos webapp/modele/meta.json
 git commit -qm "Photos d'espèces : nouvel arrivage
 
