@@ -1,10 +1,11 @@
-// Carte des observations partagées : regroupées en cercles (plus il y a d'écoutes, plus le
-// cercle est grand), filtres par espèce, période et « les miennes », recentrage sur ma
+// Carte des observations partagées : regroupées en épingles (plus il y a d'écoutes, plus
+// l'épingle est grande), filtres par espèce, période et « les miennes », recentrage sur ma
 // position et espèces entendues autour de moi.
 const $ = (id) => document.getElementById(id);
 let carte = null, couche = null, moi = null, maPosition = null, observations = [];
 let nomFr = (sci) => sci, toast = () => {}, periode = 0, seulementMiennes = false;
 const RAYON_AUTOUR = 10;   // km
+const EPINGLE = '<svg viewBox="0 0 12 12" aria-hidden="true"><path fill="#21150F" d="M3 0h6v1h1v1h1v5h-1v1H9v1H8v1H7v2H5v-2H4V9H3V8H2V7H1V2h1V1h1z"/><path fill="#E8741A" d="M4 1h4v1h1v1h1v3H9v1H8v1H4V7H3V6H2V3h1V2h1z"/></svg>';
 
 function chargerLeaflet() {
   if (window.L) return Promise.resolve();
@@ -71,9 +72,9 @@ function dessiner() {
     const classement = Object.entries(parEspece).sort((a, b) => b[1] - a[1]);
     const lignes = classement.slice(0, 5).map(([sci, n]) => `<a href="#" data-sci="${sci}">${nomFr(sci)}</a> ${n}`).join("<br>")
       + (classement.length > 5 ? `<br>+ ${classement.length - 5}` : "");
-    const point = L.circleMarker([lat, lon], {
-      radius: 7 + 4.5 * Math.sqrt(groupe.length), color: "#F4EEDC", weight: 1.5,
-      fillColor: "#F8B946", fillOpacity: 0.78, className: "point-carte",
+    const cote = groupe.length < 4 ? 36 : groupe.length < 16 ? 48 : 60;      // multiples de la grille de 12 : pixels nets
+    const point = L.marker([lat, lon], {
+      icon: L.divIcon({ className: "point-carte", html: EPINGLE, iconSize: [cote, cote], iconAnchor: [cote / 2, cote], popupAnchor: [0, -cote] }),
     }).bindPopup(`<strong>${groupe.length}</strong><br>${lignes}`);
     // un groupe étalé : on zoome dessus ; un point précis : on ouvre la bulle
     point.on("click", (ev) => {
@@ -136,7 +137,7 @@ function controleMoi() {
     onAdd() {
       const b = L.DomUtil.create("button", "bouton-moi");
       b.id = "bouton-moi"; b.type = "button"; b.setAttribute("aria-label", "Me localiser");
-      b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>';
+      b.innerHTML = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M5 0h2v2H5zM5 10h2v2H5zM0 5h2v2H0zM10 5h2v2h-2zM3 2h6v1h1v6H9v1H3V9H2V3h1zM4 4v4h4V4zM5 5h2v2H5z"/></svg>';
       L.DomEvent.disableClickPropagation(b);
       L.DomEvent.on(b, "click", () => { navigator.vibrate?.(12); localiser(); });
       return b;

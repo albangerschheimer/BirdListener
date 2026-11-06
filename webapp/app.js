@@ -18,13 +18,13 @@ function el(balise, classe, texte) {
 }
 function icone(nom) {
   const traces = {
-    lecture: '<path d="M8 5.5v13l11-6.5z"/>',
-    pause: '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>',
-    partage: '<path d="M12 3v12M7.5 7.5 12 3l4.5 4.5M5 13v6h14v-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>',
-    carte: '<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4" fill="var(--creme)"/>',
+    lecture: '<path d="M3 1h2v1h2v1h2v1h2v4H9v1H7v1H5v1H3z"/>',
+    pause: '<path d="M2 2h3v8H2zM7 2h3v8H7z"/>',
+    partage: '<path d="M5 1h2v1h1v1h1v1h1v1H7v4H5V5H2V4h1V3h1V2h1zM1 8h2v2h6V8h2v3H1z"/>',
+    carte: '<path d="M3 0h6v1h1v1h1v5h-1v1H9v1H8v1H7v2H5v-2H4V9H3V8H2V7H1V2h1V1h1zM5 3v1H4v2h1v1h2V6h1V4H7V3z"/>',
   };
   const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("aria-hidden", "true"); s.classList.add("icone");
+  s.setAttribute("viewBox", "0 0 12 12"); s.setAttribute("aria-hidden", "true"); s.classList.add("icone");
   s.innerHTML = traces[nom];
   return s;
 }
@@ -64,12 +64,15 @@ const nomFr = (sci) => modele?.meta.especes[indice(sci)]?.fr || sci;
 
 // ---------- États du bouton ----------
 const progression = $("micro").querySelector(".progression circle");
-const TOUR = 2 * Math.PI * 92;
+const TOUR = 2 * Math.PI * 124;
 progression.style.strokeDasharray = TOUR;
 function etatBouton(nom, avance = 0) {
-  micro.classList.toggle("en-cours", nom === "ecoute");
   micro.classList.toggle("analyse", nom === "analyse");
-  $("micro-texte").textContent = nom === "ecoute" ? "Arrêter" : nom === "analyse" ? `${Math.round(avance * 100)} %` : "Écouter";
+  document.body.classList.toggle("ecoute-active", nom === "ecoute");
+  document.querySelector('meta[name="theme-color"]').content = nom === "ecoute" ? "#172D23" : "#F5EEDD";
+  micro.setAttribute("aria-label", nom === "ecoute" ? "Arrêter" : "Écouter");
+  $("titre-ecoute").textContent = nom === "ecoute" ? "J'écoute…" : "Qui chante\u00a0?";
+  $("micro-texte").textContent = nom === "analyse" ? `${Math.round(avance * 100)} %` : "Écouter";
   progression.style.strokeDashoffset = TOUR * (1 - avance);
   if (nom !== "ecoute") $("chrono").textContent = "";
 }
@@ -192,16 +195,14 @@ async function imagePartage(e, proba, chant) {
   await document.fonts.load('900 100px "Big Shoulders"').catch(() => {});
   const charger = (src) => new Promise((ok) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ok(null); i.src = src; });
   const [photo, logo] = await Promise.all([e.photo ? charger("photos/" + encodeURI(e.photo)) : null, charger("icone-192.png")]);
-  c.fillStyle = "#172D23"; c.fillRect(0, 0, L, H);
-  const hautPhoto = 640;
+  c.fillStyle = "#F5EEDD"; c.fillRect(0, 0, L, H);
+  const hautPhoto = 560;
   if (photo) {
     const r = Math.max(L / photo.width, hautPhoto / photo.height), w = photo.width * r, h = photo.height * r;
     c.save(); c.beginPath(); c.rect(0, 0, L, hautPhoto); c.clip();
     c.drawImage(photo, (L - w) / 2, (hautPhoto - h) / 2, w, h);
     c.restore();
-    const fondu = c.createLinearGradient(0, hautPhoto - 260, 0, hautPhoto);
-    fondu.addColorStop(0, "rgba(23,45,35,0)"); fondu.addColorStop(1, "#172D23");
-    c.fillStyle = fondu; c.fillRect(0, hautPhoto - 260, L, 260);
+    c.fillStyle = "#21150F"; c.fillRect(0, hautPhoto, L, 8);
   }
   // nom : la plus grande taille qui tient en trois lignes
   const marge = 72, largeur = L - 2 * marge, nom = e.fr.toUpperCase();
@@ -217,14 +218,14 @@ async function imagePartage(e, proba, chant) {
     lignes.push(ligne);
     if (lignes.length <= 3 && lignes.every((l) => c.measureText(l).width <= largeur)) break;
   }
-  let y = photo ? hautPhoto - 40 : 300;
-  c.fillStyle = "#F4EEDC"; c.textBaseline = "alphabetic";
+  let y = photo ? hautPhoto + 20 : 300;
+  c.fillStyle = "#21150F"; c.textBaseline = "alphabetic";
   for (const l of lignes) { y += taille * 0.92; c.fillText(l, marge, y); }
-  c.font = 'italic 500 40px "Big Shoulders", sans-serif'; c.fillStyle = "#9DB477";
+  c.font = 'italic 500 40px "Big Shoulders", sans-serif'; c.fillStyle = "#6F6330";
   y += 64; c.fillText(e.sci, marge, y);
   if (proba) {
     y += 130;
-    c.font = '900 120px "Big Shoulders", sans-serif'; c.fillStyle = "#F8B946";
+    c.font = '900 120px "Big Shoulders", sans-serif'; c.fillStyle = "#B9520A";
     const pct = `${pourcent(proba)} %`, largeurPct = c.measureText(pct).width;
     c.fillText(pct, marge, y);
     if (chant !== undefined) {
@@ -234,9 +235,9 @@ async function imagePartage(e, proba, chant) {
   }
   // pied : logo, nom de l'app, date
   if (logo) c.drawImage(logo, marge, H - 72 - 84, 84, 84);
-  c.fillStyle = "#F4EEDC"; c.font = '900 46px "Big Shoulders", sans-serif';
+  c.fillStyle = "#21150F"; c.font = '900 46px "Big Shoulders", sans-serif';
   c.fillText("BIRDLISTENER", marge + 108, H - 72 - 30);
-  c.textAlign = "right"; c.fillStyle = "#9DB477"; c.font = '600 36px "Big Shoulders", sans-serif';
+  c.textAlign = "right"; c.fillStyle = "#6F6330"; c.font = '600 36px "Big Shoulders", sans-serif';
   c.fillText(new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }), L - marge, H - 72 - 30);
   return new Promise((ok, ko) => toile.toBlob((b) => (b ? ok(b) : ko(new Error("image"))), "image/png"));
 }
@@ -499,12 +500,10 @@ for (const [b, valeur] of [[boutonContinu, true], [$("simple"), false]]) {
   b.addEventListener("click", () => { vibrer(); continu = valeur; memoriser("continu", continu); montrerMode(); });
 }
 
-// Barres de niveau (9 bandes de 1 à 9 kHz) et spectrogramme défilant, tirés du vrai son du micro
-const barres = Array.from({ length: 9 }, () => document.createElement("i"));
-$("niveaux").append(...barres);
+// Spectrogramme défilant, tiré du vrai son du micro
 const toile = $("spectre"), pinceau = toile.getContext("2d");
 const COULEURS = (() => {
-  const reperes = [[0, 0x10, 0x23, 0x1b], [0.35, 0x31, 0x41, 0x45], [0.62, 0x9d, 0xb4, 0x77], [0.85, 0xf8, 0xb9, 0x46], [1, 0xf4, 0xee, 0xdc]];
+  const reperes = [[0, 0x17, 0x2d, 0x23], [0.4, 0x3c, 0x5a, 0x49], [0.75, 0xe8, 0x74, 0x1a], [1, 0xf5, 0xee, 0xdd]];
   const c = new Uint8ClampedArray(256 * 3);
   for (let v = 0; v < 256; v++) {
     const x = v / 255;
@@ -528,43 +527,39 @@ function suivreSon(ctx, source) {
   analyse.smoothingTimeConstant = 0.2;
   source.connect(analyse);
   const db = new Float32Array(analyse.frequencyBinCount), hz = ctx.sampleRate / analyse.fftSize;
-  const dpr = Math.min(2, window.devicePixelRatio || 1);
-  toile.width = Math.round(toile.clientWidth * dpr) || 600; toile.height = Math.round(88 * dpr);
-  const L = toile.width, H = toile.height, pas = Math.max(1, Math.round(dpr));
-  pinceau.fillStyle = "#10231B"; pinceau.fillRect(0, 0, L, H);
-  const colonne = pinceau.createImageData(pas, H);
+  // peu de grosses cases agrandies sans lissage : le spectrogramme parle la langue de la mascotte
+  const L = toile.width = 88, H = toile.height = 24;
+  pinceau.fillStyle = "#172D23"; pinceau.fillRect(0, 0, L, H);
+  const colonne = pinceau.createImageData(1, H);
   // de 400 Hz à 11 kHz sur une échelle logarithmique : les chants occupent la hauteur, le grondement est coupé
   const F_MIN = 400, F_MAX = 11000, ECART = 48, BAS = Math.round(F_MIN / hz), HAUT = Math.round(F_MAX / hz);
   const lignes = Array.from({ length: H }, (_, y) => Math.min(db.length - 1, Math.round(F_MIN * (F_MAX / F_MIN) ** (1 - y / H) / hz)));
   // gain automatique : l'échelle suit le son le plus fort entendu récemment, pour voir aussi les chants lointains
   let plafond = -60;
   const niveau = (v) => Math.min(1, Math.max(0, (v - plafond + ECART) / ECART));
-  let actif = true;
-  (function tracer() {
+  let actif = true, prochaine = 0;
+  const pics = new Float32Array(H).fill(-Infinity);        // le plus fort entendu depuis la dernière colonne
+  (function tracer(t = 0) {
     if (!actif) return;
     analyse.getFloatFrequencyData(db);
     let fort = -Infinity;
     for (let i = BAS; i < HAUT; i++) if (db[i] > fort) fort = db[i];
     plafond = Math.max(fort, plafond - 0.12, -80);
-    barres.forEach((b, k) => {
-      const de = Math.round((1000 + k * 900) / hz), a = Math.round((1900 + k * 900) / hz);
-      let max = -Infinity;
-      for (let i = de; i < a; i++) max = Math.max(max, db[i]);
-      b.style.height = `${8 + Math.round(niveau(max) ** 1.5 * 36)}px`;
-    });
-    // le spectrogramme glisse vers la gauche ; la nouvelle colonne s'ajoute à droite (aigus en haut)
-    pinceau.drawImage(toile, -pas, 0);
-    for (let y = 0; y < H; y++) {
-      const v = Math.round(255 * niveau(db[lignes[y]]) ** 1.6) * 3;
-      for (let x = 0; x < pas; x++) {
-        const o = (y * pas + x) * 4;
+    for (let y = 0; y < H; y++) pics[y] = Math.max(pics[y], db[lignes[y]]);
+    if (t >= prochaine) {
+      prochaine = t + 100;
+      // le spectrogramme glisse vers la gauche ; la nouvelle colonne s'ajoute à droite (aigus en haut)
+      pinceau.drawImage(toile, -1, 0);
+      for (let y = 0; y < H; y++) {
+        const v = Math.round(255 * niveau(pics[y]) ** 1.6) * 3, o = y * 4;
         colonne.data[o] = COULEURS[v]; colonne.data[o + 1] = COULEURS[v + 1]; colonne.data[o + 2] = COULEURS[v + 2]; colonne.data[o + 3] = 255;
       }
+      pinceau.putImageData(colonne, L - 1, 0);
+      pics.fill(-Infinity);
     }
-    pinceau.putImageData(colonne, L - pas, 0);
     requestAnimationFrame(tracer);
   })();
-  return () => { actif = false; barres.forEach((b) => { b.style.height = "8px"; }); };
+  return () => { actif = false; };
 }
 
 // ---------- Écoute continue : chaque tranche de 3 s est analysée pendant que l'on marche ----------
@@ -706,7 +701,6 @@ micro.addEventListener("click", async () => {
   try { veille = await navigator.wakeLock?.request("screen"); } catch (err) { veille = null; }   // écran allumé
   const debut = Date.now();
   etatBouton("ecoute");
-  $("zone-ecoute").classList.add("en-cours");
   const limite = enContinu ? DUREE_MAX_CONTINU : DUREE_MAX;
   minuteur = setInterval(() => {
     const s = Math.floor((Date.now() - debut) / 1000);
@@ -718,13 +712,14 @@ micro.addEventListener("click", async () => {
     clearInterval(minuteur);
     arretSon?.();
     veille?.release().catch(() => {}); veille = null;
-    $("zone-ecoute").classList.remove("en-cours");
     if (enregistreur && enregistreur.state !== "inactive") enregistreur.stop();
     flux.getTracks().forEach((t) => t.stop());
     setTimeout(() => ctx.close().catch(() => {}), 300);
     if (enContinu) { finContinue(); etatBouton("repos"); terminerContinue(); }
   };
 });
+
+$("arreter").addEventListener("click", arreter);
 
 // ---------- Onglets Écouter / Carte ----------
 async function allerA(vue, espece) {
@@ -816,6 +811,9 @@ function dessinerJeu() {
   ecoute.append(icone("lecture"));
   ecoute.setAttribute("aria-label", "Réécouter");
   ecoute.addEventListener("click", () => { vibrer(); jouerSon(especes[q.bonne].son[0], ecoute); });
+  const scene = el("div", "scene-jeu"), bulle = el("span", "bulle", "Écoute bien…");
+  bulle.setAttribute("aria-live", "polite");
+  scene.append(ecoute, bulle, el("span", "oiseau"));
   const ul = el("ul", "choix-jeu");
   for (const i of q.choix) {
     const li = el("li"), b = el("button");
@@ -824,7 +822,7 @@ function dessinerJeu() {
     li.append(b);
     ul.append(li);
   }
-  fichePanneau.append(titre, score, ecoute, ul);
+  fichePanneau.append(titre, score, scene, ul);
   [...fichePanneau.children].forEach((c, i) => c.style.setProperty("--i", i));
   fichePanneau.classList.remove("apparait"); void fichePanneau.offsetWidth; fichePanneau.classList.add("apparait");
   majBoutonsSon();
@@ -838,6 +836,8 @@ function repondre(i, bouton, ul) {
   bouton.classList.add(juste ? "juste" : "faux");
   if (!juste) ul.children[q.choix.indexOf(q.bonne)].firstChild.classList.add("juste");
   ul.classList.add("repondu");
+  fichePanneau.querySelector(".scene-jeu .bulle").textContent = juste ? "Bien vu !" : "Raté !";
+  fichePanneau.querySelector(".scene-jeu .oiseau").classList.toggle("saute", juste);
   navigator.vibrate?.(juste ? [15, 50, 15] : 60);
   jeu.serie = juste ? jeu.serie + 1 : 0;
   jeu.record = Math.max(jeu.record, jeu.serie);
