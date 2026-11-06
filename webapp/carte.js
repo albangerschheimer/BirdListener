@@ -5,6 +5,8 @@ const $ = (id) => document.getElementById(id);
 let carte = null, couche = null, moi = null, maPosition = null, observations = [];
 let nomFr = (sci) => sci, toast = () => {}, periode = 0, seulementMiennes = false;
 const RAYON_AUTOUR = 10;   // km
+// Dans l'app iOS, les pages sont sur le téléphone : l'API reste sur le site
+export const API = window.Capacitor ? "https://birdlistener.vercel.app/api/" : "api/";
 const EPINGLE = '<svg viewBox="0 0 12 12" aria-hidden="true"><path fill="#21150F" d="M3 0h6v1h1v1h1v5h-1v1H9v1H8v1H7v2H5v-2H4V9H3V8H2V7H1V2h1V1h1z"/><path fill="#E8741A" d="M4 1h4v1h1v1h1v3H9v1H8v1H4V7H3V6H2V3h1V2h1z"/></svg>';
 
 function chargerLeaflet() {
@@ -28,7 +30,7 @@ const cle = (o) => `${o[0]}|${o[1].toFixed(2)}|${o[2].toFixed(2)}|${o[3]}`;
 async function chargerObservations() {
   let serveur = [];
   try {
-    const r = await fetch("api/observations");
+    const r = await fetch(`${API}observations`);
     if (r.ok) serveur = (await r.json()).observations;
   } catch (e) { /* hors ligne : on montre au moins les miennes */ }
   const connues = new Set(serveur.map(cle));

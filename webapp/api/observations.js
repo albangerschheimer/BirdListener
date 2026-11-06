@@ -10,8 +10,15 @@
 import { list, put } from "@vercel/blob";
 
 const NOM_LATIN = /^[A-Z][a-z]+ [a-z-]+$/;
+const CORS = {      // l'app iOS sert ses pages depuis cette origine
+  "access-control-allow-origin": "capacitor://localhost",
+  "access-control-allow-headers": "content-type",
+  "access-control-allow-methods": "GET, POST",
+};
 const json = (donnees, statut = 200, entetes = {}) =>
-  new Response(JSON.stringify(donnees), { status: statut, headers: { "content-type": "application/json", ...entetes } });
+  new Response(JSON.stringify(donnees), { status: statut, headers: { "content-type": "application/json", ...CORS, ...entetes } });
+
+export function OPTIONS() { return new Response(null, { status: 204, headers: CORS }); }
 
 export async function POST(requete) {
   let o;

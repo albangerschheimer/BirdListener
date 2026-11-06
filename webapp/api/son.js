@@ -16,6 +16,7 @@ export async function GET(requete) {
   return new Response(r.body, {
     headers: {
       "content-type": "audio/mpeg",
+      "access-control-allow-origin": "capacitor://localhost",   // l'app iOS
       "cache-control": "public, max-age=604800, s-maxage=31536000, immutable",
     },
   });

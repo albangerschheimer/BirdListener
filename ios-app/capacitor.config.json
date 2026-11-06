@@ -1,0 +1,7 @@
+{
+  "appId": "app.birdlistener",
+  "appName": "BirdListener",
+  "webDir": "www",
+  "backgroundColor": "#F5EEDD",
+  "ios": { "contentInset": "never", "allowsLinkPreview": false }
+}

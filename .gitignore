@@ -16,3 +16,9 @@ models/*.pt
 data/web_models/
 __pycache__/
 data/photos_attente/
+ios-app/node_modules/
+ios-app/www/
+ios-app/ios/
+ios-app/build/
+ios-app/Payload/
+ios-app/*.ipa

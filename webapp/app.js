@@ -1,4 +1,4 @@
-import { mesPartages, ouvrirCarte } from "./carte.js";
+import { API, mesPartages, ouvrirCarte } from "./carte.js";
 import { charger, predire, predireTranche, versSignal, FREQUENCE } from "./reconnaissance.js";
 
 const $ = (id) => document.getElementById(id);
@@ -125,7 +125,7 @@ async function jouerSon(id, bouton) {
   }
   bouton.classList.add("charge");
   try {
-    const r = await fetch(`api/son?id=${id}`);
+    const r = await fetch(`${API}son?id=${id}`);
     if (!r.ok) throw new Error(r.status);
     const url = URL.createObjectURL(await r.blob());
     if (lecteur.src.startsWith("blob:")) URL.revokeObjectURL(lecteur.src);
@@ -852,7 +852,7 @@ function repondre(i, bouton, ul) {
   actions.append(fiche, suivant);
   fichePanneau.append(actions);
   actions.scrollIntoView({ behavior: calme ? "auto" : "smooth", block: "nearest" });
-  if (jeu.prochaine !== undefined) fetch(`api/son?id=${especes[jeu.prochaine].son[0]}`).catch(() => {});
+  if (jeu.prochaine !== undefined) fetch(`${API}son?id=${especes[jeu.prochaine].son[0]}`).catch(() => {});
 }
 
 $("jeu").addEventListener("click", async () => {
@@ -926,7 +926,7 @@ function position() {
 }
 
 async function envoyer(o) {
-  const r = await fetch("api/observations", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(o) });
+  const r = await fetch(`${API}observations`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(o) });
   if (!r.ok) throw new Error(`serveur ${r.status}`);
 }
 

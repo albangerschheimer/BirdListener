@@ -1,0 +1,13 @@
+{
+  "name": "birdlistener-ios",
+  "private": true,
+  "description": "Coquille iOS (Capacitor) de webapp/ : le projet Xcode est généré à la compilation.",
+  "scripts": {
+    "www": "rm -rf www && rsync -a --exclude api --exclude package.json ../webapp/ www/"
+  },
+  "dependencies": {
+    "@capacitor/cli": "8.6.0",
+    "@capacitor/core": "8.6.0",
+    "@capacitor/ios": "8.6.0"
+  }
+}
